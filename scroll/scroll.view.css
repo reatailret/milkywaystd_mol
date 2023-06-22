@@ -1,0 +1,43 @@
+
+[milkywaystd_scroll_virtualscrollviewport] {
+	display: block;
+	position: relative;
+	transform: translateZ(0);
+  }
+  
+  
+  .cdk-virtual-scrollable {
+	overflow: auto;
+	will-change: scroll-position;
+	contain: strict;
+	-webkit-overflow-scrolling: touch;
+  }
+  
+  
+  [milkywaystd_scroll_virtualforof] {
+	position: absolute;
+	top: 0;
+	left: 0;
+	contain: content;
+  width: 100%;
+   
+  }
+  
+  .cdk-virtual-scroll-orientation-horizontal .cdk-virtual-scroll-content-wrapper {
+	min-height: 100%;
+	
+  }
+  
+  .cdk-virtual-scroll-orientation-vertical .cdk-virtual-scroll-content-wrapper {
+	min-width: 100%;
+  
+  }
+  
+  
+  [milkywaystd_scroll_virtualscrollspacer] {
+	height: 1px;
+	transform-origin: 0 0;
+	flex: 0 0 auto; 
+  display: block;
+   
+  }

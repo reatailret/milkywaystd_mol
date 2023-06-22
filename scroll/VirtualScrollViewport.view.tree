@@ -1,0 +1,9 @@
+$milkywaystd_scroll_VirtualScrollViewport $mol_view
+	pre_sub /
+	post_sub /
+	sub /
+		<= getForOf
+		<= spacer $milkywaystd_scroll_VirtualScrollSpacer
+			style *
+				width <= totalContentWidth
+				height <= totalContentHeight

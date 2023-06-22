@@ -1,0 +1,14 @@
+$milkywaystd_scroll_demo $mol_example_large
+	title \milkywaystd_scrol lib
+	sub /
+		<= viewPort $milkywaystd_scroll_VirtualScrollViewport
+			itemRendererFactory <= itemRendererFactory
+			itemHeight 40
+			minBufferPx 3200
+			maxBufferPx 5000
+			style *
+				height \100%
+			pre_sub /
+			post_sub /
+	tags /
+		\scroll

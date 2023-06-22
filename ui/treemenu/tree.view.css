@@ -1,0 +1,15 @@
+[milkywaystd_ui_treemenu_content] {
+	padding-left: 1.5rem;
+}
+[milkywaystd_ui_treemenu_container]{
+	
+		will-change: contents;
+		display: flex;
+		flex-direction: column;
+		flex-shrink: 0;
+		max-width: 100%;
+		transition: none;
+		min-height: .5rem;
+	
+}
+

@@ -1,0 +1,24 @@
+$milkywaystd_ui_treemenu $mol_list
+	Trigger* $mol_check_expand
+		checked?val <=> expanded*?val false
+		enabled <= itemexpandable* false
+		label <= label* /
+			<= Trigger_title* $mol_dimmer
+				haystack <= itemtitle* \
+				needle <= filter_title?val \
+	Tools* null
+	items /
+	Label* $mol_view
+		sub <= TriggerOrLink* /
+	Content* $mol_view
+		sub /
+			<= container* $mol_view
+				sub <= subcontent* /
+	subitem* $mol_list
+		rows <= rows_list* /$mol_view
+	subitem_link* $mol_link
+		arg <= linkarg* *
+		sub /
+			<= Option_title* $mol_dimmer
+				haystack <= linktitle* \
+				needle <= filter?val \
