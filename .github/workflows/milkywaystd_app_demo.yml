@@ -10,6 +10,8 @@ jobs:
       with:
         token: ${{ secrets.GH_PAT }}
         package: 'milkywaystd/app/demo'
+		meta: |
+          milkywaystd https://github.com/reatailret/milkywaystd_mol
     - uses: alex-page/blazing-fast-gh-pages-deploy@v1.1.0
       if: github.ref == 'refs/heads/develop'
       with:
