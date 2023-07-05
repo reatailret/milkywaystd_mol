@@ -1,19 +1,24 @@
-name: $milkywaystd_app_demo
+name: Deploy demo app
 on:
   workflow_dispatch:
   push:
 jobs:
   build:
     runs-on: ubuntu-latest
+    
     steps:
-    - uses: hyoo-ru/mam_build@master2
+    
+    - name: Build app
+      uses: hyoo-ru/mam_build@master2
       with:
         token: ${{ secrets.GH_PAT }}
         package: 'milkywaystd/app/demo'
-		meta: |
+        meta: |
           milkywaystd https://github.com/reatailret/milkywaystd_mol
-    - uses: alex-page/blazing-fast-gh-pages-deploy@v1.1.0
-      if: github.ref == 'refs/heads/develop'
+    
+    - name: Deploy on GitHub Pages
+      if: github.ref == 'refs/heads/main'
+      uses: alex-page/blazing-fast-gh-pages-deploy@v1.1.0
       with:
         repo-token: ${{ secrets.GH_PAT }}
         site-directory: 'milkywaystd/app/demo/-'
