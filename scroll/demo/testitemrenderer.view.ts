@@ -1,5 +1,5 @@
 namespace $.$$ {
-	export class $milkywaystd_scroll_testitemrenderer extends $.$milkywaystd_scroll_demo_testitemrenderer {
+	export class $milkywaystd_scroll_demo_testitemrenderer extends $.$milkywaystd_scroll_demo_testitemrenderer {
 		onData(obj:CdkVirtualForOfContext<any>){
 			
 			this.context(obj)
@@ -38,12 +38,5 @@ namespace $.$$ {
 			return 'milkywaystd_scroll_testitemrenderer_' + this.title()
 		}
 
-		style_size() {
-			return {
-		
-			} as {
-				[key: string]: string | number;
-			}
-		}
 	}
 }

@@ -3,16 +3,16 @@ namespace $.$$ {
 		
 		ar: any = [];
 		itemRendererFactory() {
-			return new $milkywaystd_scroll_testitemrenderer()
+			return new $milkywaystd_scroll_demo_testitemrenderer()
 		}
 
 		auto() {
-			if (!this.ar.length) {
-				for (let index = 0; index < 1000; index++) {
+			this.ar = []
+				for (let index = 0; index < 500000; index++) {
 					this.ar.push({ title: index });
 				}
 				this.viewPort().setData(this.ar);
-			}
+			
 			
 		}
 	}

@@ -3,6 +3,7 @@ namespace $.$$ {
 		
 		protected forOf:null|$milkywaystd_scroll_VirtualForOf = null;
 		public forOfCtl:null|$milkywaystd_scroll_VirtualScrollViewportController = null;
+		
 		getForOf(){
 
 			if(!this.forOf){
@@ -15,7 +16,9 @@ namespace $.$$ {
 						this.maxBufferPx()
 					),
 					null,
-					new $milkywaystd_scroll_ScrollDispatcher(window.document)
+					
+					new $milkywaystd_scroll_ScrollDispatcher(window.document),
+					new $milkywaystd_scroll_ViewportRuler(window.document),
 				);
 
 				this.forOfCtl.Init();
@@ -31,8 +34,13 @@ namespace $.$$ {
 			return this.forOf
 
 		}
+		auto()
+		{
+			console.log("AAA")
+			//this.forOfCtl?.checkViewportSize()
+		}
 		itemHeight(){
-			return 50
+			throw new Error("Need to override this function");
 		}
 		itemRendererFactory(){
 			throw new Error("Need to override this function");

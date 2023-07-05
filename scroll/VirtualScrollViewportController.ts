@@ -121,7 +121,7 @@ namespace $.$$ {
 		  scrollStrategy: $milkywaystd_scroll_interface_IVirtualScrollStrategy,
 		  dir: any,
 		  scrollDispatcher: $milkywaystd_scroll_ScrollDispatcher,
-		  //viewportRuler: ViewportRuler,
+		  viewportRuler: $milkywaystd_scroll_ViewportRuler,
 		  scrollable?: $milkywaystd_scroll_VirtualScrollable,
 		) {
 		  super(elementRef, scrollDispatcher,dir);
@@ -131,13 +131,13 @@ namespace $.$$ {
 		  }
 		  this.scrollable = scrollable
 		  this._scrollStrategy = scrollStrategy
-		/*  this._viewportChanges = viewportRuler.change().subscribe(() => {
+		  this._viewportChanges = viewportRuler.change().subscribe(() => {
 			this.checkViewportSize();
 		  });
-	  */
+	  
 		  if (!this.scrollable) {
 			// No scrollable is provided, so the virtual-scroll-viewport needs to become a scrollable
-			this._elementRef.classList.add('cdk-virtual-scrollable');
+			this._elementRef.classList.add('cdkvirtualscrollable');
 			this.scrollable = this;
 		  }
 		  this._scrollStrategy.scrolledIndexChange.subscribe(()=>Promise.resolve().then(this.scrolledIndexChange))
@@ -242,6 +242,7 @@ namespace $.$$ {
 		 * rendered.
 		 */
 		setTotalContentSize(size: number) {
+			
 		  if (this._totalContentSize() !== size) {
 			this._totalContentSize(size);
 			
@@ -256,6 +257,7 @@ namespace $.$$ {
 			  range = {start: 0, end: Math.max(this._renderedRange.end, range.end)};
 			}
 			this._renderedRangeSubject((this._renderedRange = range));
+			
 			this._markChangeDetectionNeeded(() => this._scrollStrategy.onContentRendered());
 		  }
 		}
@@ -283,6 +285,7 @@ namespace $.$$ {
 		  const axisDirection = isHorizontal && isRtl ? -1 : 1;
 		  let transform = `translate${axis}(${Number(axisDirection * offset)}px)`;
 		  this._renderedContentOffset = offset;
+		  //console.debug("setRenderedContentOffset", transform)
 		  if (to === 'to-end') {
 			transform += ` translate${axis}(-100%)`;
 			// The viewport should rewrite this as a `to-start` offset on the next render cycle. Otherwise
@@ -291,19 +294,24 @@ namespace $.$$ {
 			this._renderedContentOffsetNeedsRewrite = true;
 		  }
 		  if (this._renderedContentTransform != transform) {
+			
 			// We know this value is safe because we parse `offset` with `Number()` before passing it
 			// into the string.
+			//console.debug("SET transform", transform)
 			this._renderedContentTransform = transform;
 			this._markChangeDetectionNeeded(() => {
 			  if (this._renderedContentOffsetNeedsRewrite) {
+				
 				this._renderedContentOffset -= this.measureRenderedContentSize();
 				this._renderedContentOffsetNeedsRewrite = false;
+				
 				this.setRenderedContentOffset(this._renderedContentOffset);
 			  } else {
 				this._scrollStrategy.onRenderedOffsetChanged();
 			  }
 			});
 		  }
+		  
 		}
 	  
 		/**
@@ -437,7 +445,7 @@ namespace $.$$ {
 		/** Run change detection. */
 		private _doChangeDetection() {
 		  this._isChangeDetectionPending = false;
-			console.log("_doChangeDetection")
+			//console.log("_doChangeDetection")
 		  // Apply the content transform. The transform can't be set via an Angular binding because
 		  // bypassSecurityTrustStyle is banned in Google. However the value is safe, it's composed of
 		  // string literals, a variable that can only be 'X' or 'Y', and user input that is run through

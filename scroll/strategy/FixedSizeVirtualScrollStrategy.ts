@@ -111,15 +111,21 @@ export class $milkywaystd_scroll_strategy_FixedSizeVirtualScrollStrategy  implem
 	  }
   
 	  const renderedRange = this._viewport.getRenderedRange();
+	  
 	  const newRange = {start: renderedRange.start, end: renderedRange.end};
+	  
 	  const viewportSize = this._viewport.getViewportSize();
+	  
 	  const dataLength = this._viewport.getDataLength();
 	  let scrollOffset = this._viewport.measureScrollOffset();
+	  
+	  
 	  // Prevent NaN as result when dividing by zero.
 	  let firstVisibleIndex = this._itemSize > 0 ? scrollOffset / this._itemSize : 0;
   
 	  // If user scrolls to the bottom of the list and data changes to a smaller list
 	  if (newRange.end > dataLength) {
+	
 		// We have to recalculate the first visible index based on new data length and viewport size.
 		const maxVisibleItems = Math.ceil(viewportSize / this._itemSize);
 		const newVisibleIndex = Math.max(
@@ -130,6 +136,7 @@ export class $milkywaystd_scroll_strategy_FixedSizeVirtualScrollStrategy  implem
 		// If first visible index changed we must update scroll offset to handle start/end buffers
 		// Current range must also be adjusted to cover the new position (bottom of new list).
 		if (firstVisibleIndex != newVisibleIndex) {
+			
 		  firstVisibleIndex = newVisibleIndex;
 		  scrollOffset = newVisibleIndex * this._itemSize;
 		  newRange.start = Math.floor(firstVisibleIndex);
@@ -138,8 +145,11 @@ export class $milkywaystd_scroll_strategy_FixedSizeVirtualScrollStrategy  implem
 		newRange.end = Math.max(0, Math.min(dataLength, newRange.start + maxVisibleItems));
 	  }
   
+	  
+
 	  const startBuffer = scrollOffset - newRange.start * this._itemSize;
 	  if (startBuffer < this._minBufferPx && newRange.start != 0) {
+		
 		const expandStart = Math.ceil((this._maxBufferPx - startBuffer) / this._itemSize);
 		newRange.start = Math.max(0, newRange.start - expandStart);
 		newRange.end = Math.min(
@@ -147,6 +157,7 @@ export class $milkywaystd_scroll_strategy_FixedSizeVirtualScrollStrategy  implem
 		  Math.ceil(firstVisibleIndex + (viewportSize + this._minBufferPx) / this._itemSize),
 		);
 	  } else {
+		
 		const endBuffer = newRange.end * this._itemSize - (scrollOffset + viewportSize);
 		if (endBuffer < this._minBufferPx && newRange.end != dataLength) {
 		  const expandEnd = Math.ceil((this._maxBufferPx - endBuffer) / this._itemSize);
@@ -159,7 +170,7 @@ export class $milkywaystd_scroll_strategy_FixedSizeVirtualScrollStrategy  implem
 		  }
 		}
 	  }
-  
+	  //console.debug("RANGE", newRange)
 	  this._viewport.setRenderedRange(newRange);
 	  this._viewport.setRenderedContentOffset(this._itemSize * newRange.start);
 	  this._scrolledIndexChange(Math.floor(firstVisibleIndex));

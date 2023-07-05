@@ -6,7 +6,7 @@
   }
   
   
-  .cdk-virtual-scrollable {
+  .cdkvirtualscrollable {
 	overflow: auto;
 	will-change: scroll-position;
 	contain: strict;
@@ -19,11 +19,12 @@
 	top: 0;
 	left: 0;
 	contain: content;
-  width: 100%;
-   
+  	width: 100%;
+	transition: none;
+	display: block;
   }
   
-  .cdk-virtual-scroll-orientation-horizontal .cdk-virtual-scroll-content-wrapper {
+  /*.cdk-virtual-scroll-orientation-horizontal .cdk-virtual-scroll-content-wrapper {
 	min-height: 100%;
 	
   }
@@ -31,7 +32,7 @@
   .cdk-virtual-scroll-orientation-vertical .cdk-virtual-scroll-content-wrapper {
 	min-width: 100%;
   
-  }
+  }*/
   
   
   [milkywaystd_scroll_virtualscrollspacer] {

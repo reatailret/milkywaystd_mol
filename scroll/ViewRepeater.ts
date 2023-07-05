@@ -339,7 +339,8 @@ namespace $.$$ {
 				// destroy the view on its own, otherwise destroy it through the
 				// container to ensure that all the references are removed.
 				if (index === -1) {
-					view.destroy();
+					console.warn("SET DESTROY FUNCTION!")
+					//view.destroy();
 				} else {
 					viewContainerRef.remove(index);
 				}
@@ -353,7 +354,7 @@ namespace $.$$ {
 		): EmbeddedViewRef<C> | null {
 			const cachedView = this._viewCache.pop();
 			if (cachedView) {
-				console.log("GET CACHED ", cachedView)
+				//console.log("GET CACHED ", cachedView)
 				viewContainerRef.insert(cachedView, index);
 			}
 			return cachedView || null;

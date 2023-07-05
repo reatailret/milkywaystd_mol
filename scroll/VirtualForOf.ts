@@ -175,12 +175,12 @@ namespace $.$$ {
 
 		init() {
 			this.dataStream.subscribe((data) => {
-				console.log("forof dataStream", data);
+				//console.log("forof dataStream", data);
 				this._data = data;
 				this._onRenderedDataChange();
 			});
 			this._viewport.renderedRangeStream.subscribe((range) => {
-				console.log("forof renderedRangeStream", range);
+				//console.log("forof renderedRangeStream", range);
 				this._renderedRange = range;
 
 				this.viewChange(this._renderedRange);
@@ -198,7 +198,7 @@ namespace $.$$ {
 			range: ListRange,
 			orientation: "horizontal" | "vertical"
 		): number {
-			console.log("measureRangeSize", range);
+			//console.log("measureRangeSize", range);
 			if (range.start >= range.end) {
 				return 0;
 			}
@@ -242,7 +242,7 @@ namespace $.$$ {
 					break;
 				}
 			}
-			console.log("measureRangeSize", firstNode, lastNode);
+			//console.log("measureRangeSize", firstNode, lastNode);
 			return firstNode && lastNode
 				? getOffset(orientation, "end", lastNode) -
 						getOffset(orientation, "start", firstNode)
@@ -255,14 +255,16 @@ namespace $.$$ {
 				// this list being rendered (can use simpler algorithm) vs needs update due to data actually
 				// changing (need to do this diff).
 				const changes = this._differ.diff(this._renderedItems);
-				console.log(
+				/*console.log(
 					"onRenderedDataChange",
 					this._renderedRange,
 					changes
-				);
+				);*/
 				if (!changes) {
+					
 					this._updateContext();
 				} else {
+					
 					this._applyChanges(changes);
 				}
 				this._needsUpdate = false;
@@ -291,6 +293,7 @@ namespace $.$$ {
 				this._renderedRange.start,
 				this._renderedRange.end
 			);
+			//console.log("_onRenderedDataChange",this._renderedRange)
 			this._needsUpdate = true;
 			this.ngDoCheck();
 		}
@@ -345,21 +348,21 @@ namespace $.$$ {
 	  });
   		*/
 			for (const iterator of changes) {
-				console.log(
+				/*console.log(
 					"UPDATE ITEM ON INDEX",
 					iterator.currentIndex,
 					this.calculatedSubs().length
-				);
+				);*/
 				if (iterator.currentIndex !== null) {
 					const view = this._viewContainerRef().get(
 						iterator.currentIndex!
 					);
-					console.log("UPDATE ITEM ON INDEX", view);
+					//console.log("UPDATE ITEM ON INDEX", view);
 					//view.onData(iterator.item);
 				}
 			}
 			// Update the context variables on all items.
-			/*
+			
 	  const count = this._data.length;
 	  let i = this._viewContainerRef().length;
 	  while (i--) {
@@ -368,7 +371,7 @@ namespace $.$$ {
 		view.context.count = count;
 		this._updateComputedContextProperties(view.context);
 	  }
-	  */
+	  
 		}
 		private _applyChanges(changes) {
 			
@@ -389,7 +392,7 @@ namespace $.$$ {
 					record.currentIndex!
 				) as EmbeddedViewRef<CdkVirtualForOfContext<T>>;
 				view.implicit(record.item);
-				console.log("forEachIdentityChange", record.item);
+				//console.log("forEachIdentityChange", record.item);
 			});
 
 			// Update the context variables on all items.
@@ -456,19 +459,19 @@ namespace $.$$ {
 			this.mutationstarted = false;
 		}
 		public indexOf(view: any) {
-			return this.tempSubs[this.tempSubs.indexOf(view)]
+			return this.tempSubs.indexOf(view)
 		}
 		public insert(view: any, index: number) {
-			console.log("call insert", index);
+			//console.log("call insert", index);
 			
 			this.tempSubs.splice(index,0,view);
 		}
 		public move(view: any, index: number) {
-			console.log("call move", index);
+			//console.log("call move", index);
 			//view._index = index;
 		}
 		public remove(index: number) {
-			console.log("call remove", index);
+			//console.log("call remove", index);
 
 			let removed = this.tempSubs.splice(index, 1);
 			if (removed && removed.length) {
@@ -481,13 +484,13 @@ namespace $.$$ {
 			return removed;
 		}
 		public detach(index: number) {
-			console.log("call detach", index);
+			//console.log("call detach", index);
 			const detached = this.remove(index);
 			//if (!detached) throw new Error("Detached can not be null");
 			return detached;
 		}
 		public get(index: number) {
-			console.log("call get", index);
+			//console.log("call get", index);
 			return this.tempSubs[index];
 		}
 		public createEmbeddedView(templateRef, context, index) {

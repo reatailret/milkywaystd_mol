@@ -15,6 +15,7 @@ namespace $.$$ {
 		   */
 		  measureViewportSize(orientation: 'horizontal' | 'vertical') {
 			const viewportEl = this._elementRef;
+			
 			return orientation === 'horizontal' ? viewportEl.clientWidth : viewportEl.clientHeight;
 		  }
 		

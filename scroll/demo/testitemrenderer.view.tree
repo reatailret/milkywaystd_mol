@@ -1,3 +1,4 @@
 $milkywaystd_scroll_demo_testitemrenderer $mol_row
 	sub /
 		<= title
+	minimal_height 50
