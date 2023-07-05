@@ -1,27 +1,17 @@
 name: $milkywaystd_app_demo
-
 on:
   workflow_dispatch:
   push:
-  pull_request:
-  schedule:
-  - cron: "0 7 * * *"
-
 jobs:
   build:
-
     runs-on: ubuntu-latest
-    
     steps:
-    
     - uses: hyoo-ru/mam_build@master2
       with:
-        package: 'milkywaystd'
-        modules: 'app/demo'
-    
-    #FIXME remove one of the following
-        
-    - uses: hyoo-ru/gh-deploy@v4.4.1
-      if: github.ref == 'refs/heads/develop'
+        token: ${{ secrets.GH_PAT }}
+        package: 'milkywaystd/app/demo'
+    - uses: alex-page/blazing-fast-gh-pages-deploy@v1.1.0
+      if: github.ref == 'refs/heads/master'
       with:
-        folder: 'milkywaystd/app/demo/-' #FIXME path to build app
+        repo-token: ${{ secrets.GH_PAT }}
+        site-directory: 'milkywaystd/app/demo/-'
