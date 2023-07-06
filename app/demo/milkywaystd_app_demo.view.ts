@@ -1,9 +1,10 @@
 namespace $.$$ {
 	export class $milkywaystd_app_demo extends $.$milkywaystd_app_demo {
 		
-		auto()
-		{
-			
+		milkywaystd_app_demo_menu_factory():any {
+			const menu = new $milkywaystd_app_demo_menu_tree();
+			menu.tree_menu_items = this.tree_menu_items.bind(this)
+			return menu
 		}
 		@$mol_mem
 		tree_menu_items(){
