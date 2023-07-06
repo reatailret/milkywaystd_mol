@@ -1,21 +1,16 @@
 namespace $.$$ {
 	export class $milkywaystd_app_demo extends $.$milkywaystd_app_demo {
 		
-		@$mol_mem
-		names_demo_filtered_(){
-			return this.names()
-		}
-		@$mol_mem
-		filter_suggests_()
+		auto()
 		{
-			return (this as any).filter_suggests()
+			
 		}
-		
-	
 		@$mol_mem
 		tree_menu_items(){
 			
-			const names = this.names();
+			
+			const names = this.names().filter(el=>el.toLowerCase().indexOf(this.Menu().filter().toLowerCase())!==-1);
+			
 	
 			let stack = [] as {label:string, tags?:string[], parent?:any, items?:any[]}[];
 			const result_items = [];
@@ -75,15 +70,6 @@ namespace $.$$ {
 			return result_items
 		}
 	}
-	export class $milkywaystd_app_demo_menu_tree extends $.$milkywaystd_app_demo_menu_tree {
-
-		@ $mol_mem
-		override filter( next?: string ) {
-			return this.$.$mol_state_session.value( 'filter' , next === '' ? null : next ) ?? super.filter() as string
-		}
-		
-		
-		
-	}
+	
 }
 

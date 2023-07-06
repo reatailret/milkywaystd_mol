@@ -39,22 +39,22 @@ namespace $.$$ {
 			console.log("AAA")
 			//this.forOfCtl?.checkViewportSize()
 		}
-		itemHeight(){
-			throw new Error("Need to override this function");
+		itemHeight():number{
+			return 0;
 		}
-		itemRendererFactory(){
-			throw new Error("Need to override this function");
+		itemRendererFactory():any{
+			return null
 		}
 
-		setData(data){
+		setData(data:any){
 			this.forOf?.dataStream(data)
 		}
 		@$mol_mem
-		totalContentWidth(){
+		totalContentWidth():any{
 			return this.forOfCtl?._totalContentWidth()
 		}
 		@$mol_mem
-		totalContentHeight(){
+		totalContentHeight():any{
 			return this.forOfCtl?._totalContentHeight()
 		}
 		minBufferPx(){

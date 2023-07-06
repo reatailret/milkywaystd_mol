@@ -42,7 +42,7 @@ namespace $.$$
 			return this.container( id ).sub().length > 0
 		}
 		@$mol_mem_key
-		linkarg( id: string )
+		linkarg( id: string ):any
 		{
 			return this.cache( id ).link
 		}

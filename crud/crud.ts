@@ -1,4 +1,4 @@
-namespace $.$$
+namespace $
 {
 	type $milkywaystd_crud_id_type = string | number
 	export enum $milkywaystd_crud_events
@@ -27,7 +27,7 @@ namespace $.$$
 		CREATE_END,
 		CREATE_ERROR,
 	}
-	export class $milkywaystd_crud<T> extends $mol_object2
+	export class $milkywaystd_crud<T> extends $.$mol_object2
 	{
 		_headers: Record<string, string> = {
 			"Content-Type": "application/json",

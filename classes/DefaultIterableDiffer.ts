@@ -892,7 +892,7 @@ export interface IterableDifferFactory {
 }
 
 export function defaultIterableDiffersFactory() {
-  return new IterableDiffers([new DefaultIterableDifferFactory()]);
+  return new IterableDiffers([new $milkywaystd_classes_DefaultIterableDifferFactory()]);
 }
 
 /**
@@ -1041,7 +1041,7 @@ const _global: any = (/* @__PURE__ */ (
  * entry into the corresponding `....externs.js` file,
  * so that closure won't use that global for its purposes.
  */
-export {_global as global};
+
 /**
  * @license
  * Copyright Google LLC All Rights Reserved.

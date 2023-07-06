@@ -1,12 +1,12 @@
 namespace $.$$ {
-	export class $milkywaystd_scroll_ScrollDispatcher extends $.$mol_object2 {
+	export class $milkywaystd_scroll_ScrollDispatcher {
 		/** Used to reference correct document/window */
 		protected _document: Document;
 
 		constructor(
 		 document: any
 		) {
-		super()
+		
 		  this._document = document;
 		}
 	  
@@ -34,7 +34,7 @@ namespace $.$$ {
 		  if (!this.scrollContainers.has(scrollable)) {
 			this.scrollContainers.set(
 			  scrollable,
-			  scrollable.elementScrolled().subscribe(() => this._scrolled(scrollable)),
+			  scrollable.elementScrolled()!.subscribe(() => this._scrolled(scrollable)),
 			);
 		  }
 		}

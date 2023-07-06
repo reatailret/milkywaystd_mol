@@ -47,7 +47,7 @@ namespace $.$$ {
 		readonly scrolledIndexChange: $milkywaystd_classes_stream<number> = $milkywaystd_classes_stream();
 	  
 		/** The element that wraps the rendered content. */
-		_contentWrapper = null;
+		_contentWrapper:any = null;
 	  
 		/** A stream that emits whenever the rendered range changes. */
 		readonly renderedRangeStream: $milkywaystd_classes_stream<ListRange> = this._renderedRangeSubject;
@@ -77,7 +77,7 @@ namespace $.$$ {
 		 * The CSS transform applied to the rendered subset of items so that they appear within the bounds
 		 * of the visible viewport.
 		 */
-		private _renderedContentTransform: string;
+		private _renderedContentTransform: string = '';
 	  
 		/** The currently rendered range of indices. */
 		private _renderedRange: ListRange = {start: 0, end: 0};
@@ -112,7 +112,7 @@ namespace $.$$ {
 		_scrollStrategy:$milkywaystd_scroll_interface_IVirtualScrollStrategy
 		scrollable:$milkywaystd_scroll_VirtualScrollable
 
-		subscripion:$milkywaystd_classes_stream<Event>
+		subscripion:$milkywaystd_classes_stream<Event>|any
 	  
 		constructor(
 		  elementRef: Element,
@@ -129,18 +129,18 @@ namespace $.$$ {
 		  if (!scrollStrategy) {
 			throw Error('Error: cdk-virtual-scroll-viewport requires the "itemSize" property to be set.');
 		  }
-		  this.scrollable = scrollable
+		  this.scrollable = scrollable!
 		  this._scrollStrategy = scrollStrategy
 		  this._viewportChanges = viewportRuler.change().subscribe(() => {
 			this.checkViewportSize();
-		  });
+		  }) as any;
 	  
 		  if (!this.scrollable) {
 			// No scrollable is provided, so the virtual-scroll-viewport needs to become a scrollable
 			this._elementRef.classList.add('cdkvirtualscrollable');
 			this.scrollable = this;
 		  }
-		  this._scrollStrategy.scrolledIndexChange.subscribe(()=>Promise.resolve().then(this.scrolledIndexChange))
+		  this._scrollStrategy.scrolledIndexChange?.subscribe(()=>Promise.resolve().then(this.scrolledIndexChange))
 		}
 	  
 		Init() {
@@ -161,11 +161,10 @@ namespace $.$$ {
 			  this._measureViewportSize();
 			  this._scrollStrategy.attach(this);
 	  
-			  this.subscripion = this.scrollable
-				.elementScrolled()
+			  this.subscripion = this.scrollable?.elementScrolled()!
 				.auditTime(0)
 				.subscribe(() => this._scrollStrategy.onContentScrolled());
-				this.subscripion(null)
+				this.subscripion(null!)
 	  
 			  this._markChangeDetectionNeeded();
 			})
@@ -450,7 +449,7 @@ namespace $.$$ {
 		  // bypassSecurityTrustStyle is banned in Google. However the value is safe, it's composed of
 		  // string literals, a variable that can only be 'X' or 'Y', and user input that is run through
 		  // the `Number` function first to coerce it to a numeric value.
-		  this._contentWrapper.style.transform = this._renderedContentTransform;
+		  this._contentWrapper!.style.transform = this._renderedContentTransform;
 		  // Apply changes to Angular bindings. Note: We must call `markForCheck` to run change detection
 		  // from the root, since the repeated items are content projected in. Calling `detectChanges`
 		  // instead does not properly check the projected content.

@@ -4,7 +4,7 @@ namespace $.$$ {
 		/** The item value. */
 		implicit: T;
 		/** The DataSource, Observable, or NgIterable that was passed to *cdkVirtualFor. */
-		cdkVirtualForOf: DataSource<T> | Observable<T[]> | NgIterable<T>;
+		cdkVirtualForOf: DataSource;
 		/** The index of the item in the DataSource. */
 		index: number;
 		/** The number of items in the DataSource. */
@@ -45,7 +45,7 @@ namespace $.$$ {
 	type DataSource = any;
 	export class $milkywaystd_scroll_VirtualForOf extends $.$mol_view {
 		/** Emits when the rendered view of the data changes. */
-		readonly viewChange = $milkywaystd_classes_stream<ListRange>();
+		readonly viewChange:any = $milkywaystd_classes_stream<ListRange>();
 
 		/** Subject that emits when a new DataSource instance is given. */
 		private readonly _dataSourceChanges =
@@ -102,7 +102,7 @@ namespace $.$$ {
 		set cdkVirtualForTrackBy(fn) {
 			this._needsUpdate = true;
 			this._cdkVirtualForTrackBy = fn
-				? (index, item) =>
+				? (index:any, item:any) =>
 						fn(
 							index +
 								(this._renderedRange
@@ -112,11 +112,11 @@ namespace $.$$ {
 						)
 				: undefined;
 		}
-		private _cdkVirtualForTrackBy;
+		private _cdkVirtualForTrackBy:any;
 
 		/** The template used to stamp out new elements. */
 
-		set cdkVirtualForTemplate(value) {
+		set cdkVirtualForTemplate(value:any) {
 			if (value) {
 				this._needsUpdate = true;
 				this._template = value;
@@ -144,13 +144,13 @@ namespace $.$$ {
 			new $milkywaystd_classes_DefaultIterableDifferFactory().create();
 
 		/** The most recent data emitted from the DataSource. */
-		private _data;
+		private _data:any;
 
 		/** The currently rendered items. */
-		private _renderedItems;
+		private _renderedItems:any;
 
 		/** The currently rendered range of indices. */
-		private _renderedRange: ListRange;
+		private _renderedRange: ListRange = {start:0,end:0};
 
 		/** Whether the rendered data should be updated during the next ngDoCheck cycle. */
 		private _needsUpdate = false;
@@ -179,7 +179,7 @@ namespace $.$$ {
 				this._data = data;
 				this._onRenderedDataChange();
 			});
-			this._viewport.renderedRangeStream.subscribe((range) => {
+			this._viewport?.renderedRangeStream.subscribe((range) => {
 				//console.log("forof renderedRangeStream", range);
 				this._renderedRange = range;
 
@@ -187,7 +187,7 @@ namespace $.$$ {
 
 				this._onRenderedDataChange();
 			});
-			this._viewport.attach(this);
+			this._viewport?.attach(this);
 		}
 		/**
 		 * Measures the combined size (width for horizontal orientation, height for vertical) of all items
@@ -299,6 +299,7 @@ namespace $.$$ {
 		}
 
 		/** Swap out one `DataSource` for another. */
+		/*
 		private _changeDataSource(
 			oldDs: DataSource<T> | null,
 			newDs: DataSource<T> | null
@@ -310,15 +311,13 @@ namespace $.$$ {
 			this._needsUpdate = true;
 			return newDs ? newDs.connect(this) : observableOf();
 		}
-
+		*/
 		/** Update the `CdkVirtualForOfContext` for all views. */
 		private _updateContext() {
 			const count = this._data.length;
-			let i = this._viewContainerRef().length;
+			let i = this.tempSubs.length;
 			while (i--) {
-				const view = this._viewContainerRef().get(i) as EmbeddedViewRef<
-					CdkVirtualForOfContext<T>
-				>;
+				const view = this._viewContainerRef().get(i) as any;
 				view.context.index = this._renderedRange.start + i;
 				view.context.count = count;
 				this._updateComputedContextProperties(view.context);
@@ -326,13 +325,14 @@ namespace $.$$ {
 			}
 		}
 
-		/** Apply changes to the DOM. */
-		private _applyChanges2(changes: Array<$milkywaystd_scroll_Diff>) {
+		
+		private _applyChanges(changes:any) {
+			
 			this._viewRepeater.applyChanges(
 				changes,
 				this._viewContainerRef(),
 				(
-					record: IterableChangeRecord<T>,
+					record: any,
 					_adjustedPreviousIndex: number | null,
 					currentIndex: number | null
 				) => this._getEmbeddedViewArgs(record, currentIndex!),
@@ -340,57 +340,10 @@ namespace $.$$ {
 			);
 
 			// Update implicit for any items that had an identity change.
-			/* changes.forEachIdentityChange((record: IterableChangeRecord<T>) => {
-		const view = this._viewContainerRef().get(record.currentIndex!) as EmbeddedViewRef<
-		  CdkVirtualForOfContext<T>
-		>;
-		view.context.implicit = record.item;
-	  });
-  		*/
-			for (const iterator of changes) {
-				/*console.log(
-					"UPDATE ITEM ON INDEX",
-					iterator.currentIndex,
-					this.calculatedSubs().length
-				);*/
-				if (iterator.currentIndex !== null) {
-					const view = this._viewContainerRef().get(
-						iterator.currentIndex!
-					);
-					//console.log("UPDATE ITEM ON INDEX", view);
-					//view.onData(iterator.item);
-				}
-			}
-			// Update the context variables on all items.
-			
-	  const count = this._data.length;
-	  let i = this._viewContainerRef().length;
-	  while (i--) {
-		const view = this._viewContainerRef().get(i) as EmbeddedViewRef<CdkVirtualForOfContext<T>>;
-		view.context.index = this._renderedRange.start + i;
-		view.context.count = count;
-		this._updateComputedContextProperties(view.context);
-	  }
-	  
-		}
-		private _applyChanges(changes) {
-			
-			this._viewRepeater.applyChanges(
-				changes,
-				this._viewContainerRef(),
-				(
-					record: IterableChangeRecord<T>,
-					_adjustedPreviousIndex: number | null,
-					currentIndex: number | null
-				) => this._getEmbeddedViewArgs(record, currentIndex!),
-				(record) => record.item
-			);
-
-			// Update implicit for any items that had an identity change.
-			changes.forEachIdentityChange((record: IterableChangeRecord<T>) => {
+			changes.forEachIdentityChange((record: any) => {
 				const view = this._viewContainerRef().get(
 					record.currentIndex!
-				) as EmbeddedViewRef<CdkVirtualForOfContext<T>>;
+				) as any;
 				view.implicit(record.item);
 				//console.log("forEachIdentityChange", record.item);
 			});
@@ -400,9 +353,7 @@ namespace $.$$ {
 			const count = this._data.length;
 			let i = this.tempSubs.length;
 			while (i--) {
-				const view = this._viewContainerRef().get(i) as EmbeddedViewRef<
-					CdkVirtualForOfContext<T>
-				>;
+				const view = this._viewContainerRef().get(i) as any;
 				const context = view.context();
 				context.index = this._renderedRange.start + i;
 				context.count = count;
@@ -421,9 +372,9 @@ namespace $.$$ {
 		}
 
 		private _getEmbeddedViewArgs(
-			record: IterableChangeRecord<T>,
+			record: any,
 			index: number
-		): _ViewRepeaterItemInsertArgs<CdkVirtualForOfContext<T>> {
+		): any {
 			// Note that it's important that we insert the item directly at the proper index,
 			// rather than inserting it and the moving it in place, because if there's a directive
 			// on the same node that injects the `ViewContainerRef`, Angular will insert another
@@ -493,7 +444,7 @@ namespace $.$$ {
 			//console.log("call get", index);
 			return this.tempSubs[index];
 		}
-		public createEmbeddedView(templateRef, context, index) {
+		public createEmbeddedView(templateRef:any, context:any, index:number) {
 			if (!templateRef) throw new Error("templateRef is not a function");
 
 			const b = templateRef();

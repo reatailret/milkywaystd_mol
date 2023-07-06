@@ -1,4 +1,5 @@
 namespace $.$$ {
+	
 	export interface _ViewRepeaterItemContext<T> {
 		implicit?: T;
 	}
@@ -10,7 +11,7 @@ namespace $.$$ {
 	 * @template C The type for the context passed to each embedded view.
 	 */
 	export interface _ViewRepeaterItemInsertArgs<C> {
-		templateRef: TemplateRef<C>;
+		templateRef: any;
 		context?: C;
 		index?: number;
 	}
@@ -28,7 +29,7 @@ namespace $.$$ {
 		R,
 		C extends _ViewRepeaterItemContext<T>
 	> = (
-		record: IterableChangeRecord<R>,
+		record: any,
 		adjustedPreviousIndex: number | null,
 		currentIndex: number | null
 	) => _ViewRepeaterItemInsertArgs<C>;
@@ -40,7 +41,7 @@ namespace $.$$ {
 	 * @template R The type for the item in each IterableDiffer change record.
 	 */
 	export type _ViewRepeaterItemValueResolver<T, R> = (
-		record: IterableChangeRecord<R>
+		record: any
 	) => T;
 
 	/** Indicates how a view was changed by a {@link _ViewRepeater}. */
@@ -78,7 +79,7 @@ namespace $.$$ {
 	 * @template C The type for the context passed to each embedded view.
 	 */
 	export type _ViewRepeaterItemChanged<R, C> = (
-		change: _ViewRepeaterItemChange<R, C>
+		change: any
 	) => void;
 
 	/**
@@ -134,7 +135,7 @@ namespace $.$$ {
 		 *
 		 * TODO(michaeljamesparsons) Investigate whether using a linked list would improve performance.
 		 */
-		private _viewCache: EmbeddedViewRef<C>[] = [];
+		private _viewCache: any[] = [];
 
 		/** Apply changes to the DOM. */
 		applyChanges2(
@@ -214,7 +215,7 @@ namespace $.$$ {
 				currentIndex: number | null,
 			  ) => {
 				
-				let view: EmbeddedViewRef<C> | undefined;
+				let view: any | undefined;
 				let operation: _ViewRepeaterOperation;
 				if (record.previousIndex == null) {
 				  // Item added.
@@ -270,7 +271,7 @@ namespace $.$$ {
 			currentIndex: number,
 			viewContainerRef: $milkywaystd_scroll_VirtualForOf,
 			value: T
-		): EmbeddedViewRef<C> | undefined {
+		): any | undefined {
 			const cachedView = this._insertViewFromCache(
 				currentIndex!,
 				viewContainerRef
@@ -287,7 +288,7 @@ namespace $.$$ {
 			return viewContainerRef.createEmbeddedView(
 				viewArgs.templateRef,
 				viewArgs.context,
-				viewArgs.index
+				viewArgs.index!
 			);
 		}
 
@@ -298,7 +299,7 @@ namespace $.$$ {
 		) {
 			const detachedView = viewContainerRef.detach(
 				index
-			) as EmbeddedViewRef<C>;
+			) as any;
 			if(detachedView)
 			this._maybeCacheView(detachedView, viewContainerRef);
 		}
@@ -309,10 +310,10 @@ namespace $.$$ {
 			currentIndex: number,
 			viewContainerRef: $milkywaystd_scroll_VirtualForOf,
 			value: T
-		): EmbeddedViewRef<C> {
+		): any {
 			const view = viewContainerRef.get(
 				adjustedPreviousIndex!
-			) as EmbeddedViewRef<C>;
+			) as any;
 			viewContainerRef.move(view, currentIndex);
 			
 			view.implicit(value);
@@ -324,7 +325,7 @@ namespace $.$$ {
 		 * destroyed.
 		 */
 		private _maybeCacheView(
-			view: EmbeddedViewRef<C>,
+			view: any,
 			viewContainerRef: $milkywaystd_scroll_VirtualForOf
 		) {
 			if (this._viewCache.length < this.viewCacheSize) {
@@ -351,7 +352,7 @@ namespace $.$$ {
 		private _insertViewFromCache(
 			index: number,
 			viewContainerRef: $milkywaystd_scroll_VirtualForOf
-		): EmbeddedViewRef<C> | null {
+		): any | null {
 			const cachedView = this._viewCache.pop();
 			if (cachedView) {
 				//console.log("GET CACHED ", cachedView)
@@ -377,16 +378,16 @@ namespace $.$$ {
 	> implements _ViewRepeater<T, R, C>
 	{
 		applyChanges(
-			changes: Array<$milkywaystd_scroll_Diff>,
-			viewContainerRef: $milkywaystd_scroll_VirtualForOf,
-			itemContextFactory: _ViewRepeaterItemContextFactory<T, R, C>,
-			itemValueResolver: _ViewRepeaterItemValueResolver<T, R>,
-			itemViewChanged?: _ViewRepeaterItemChanged<R, C>
+			changes: any,
+			viewContainerRef: any,
+			itemContextFactory: any,
+			itemValueResolver: any,
+			itemViewChanged?: any
 		) {
 			let mutStarted = false;
-			changes.forEachOperation(
+			(changes as any).forEachOperation(
 			  (
-				record: IterableChangeRecord<R>,
+				record: any,
 				adjustedPreviousIndex: number | null,
 				currentIndex: number | null,
 			  ) => {
@@ -405,7 +406,7 @@ namespace $.$$ {
 						view = viewContainerRef.createEmbeddedView(
 							insertContext.templateRef,
 							insertContext.context,
-							insertContext.index
+							insertContext.index!
 						);
 						operation = _ViewRepeaterOperation.INSERTED;
 					} else if (currentIndex == null) {
@@ -414,7 +415,7 @@ namespace $.$$ {
 					} else {
 						view = viewContainerRef.get(
 							adjustedPreviousIndex!
-						) as EmbeddedViewRef<C>;
+						) as any;
 						viewContainerRef.move(view!, currentIndex);
 						operation = _ViewRepeaterOperation.MOVED;
 					}

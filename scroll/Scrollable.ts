@@ -75,7 +75,7 @@ namespace $.$$ {
 		 * in an RTL context.
 		 * @param options specified the offsets to scroll to.
 		 */
-		dir = null;
+		dir:any = null;
 		scrollTo(options: ExtendedScrollToOptions): void {
 			const el = this._elementRef;
 			const isRtl = this.dir && this.dir.value == "rtl";

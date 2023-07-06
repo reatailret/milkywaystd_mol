@@ -24,7 +24,7 @@ export interface ViewportScrollPosition {
 
 export class $milkywaystd_scroll_ViewportRuler  {
   /** Cached viewport dimensions. */
-  private _viewportSize: {width: number; height: number} | null;
+  private _viewportSize: {width: number; height: number} | null = null;
 
   /** Stream of viewport change events. */
   private readonly _change = $milkywaystd_classes_stream<Event>();
