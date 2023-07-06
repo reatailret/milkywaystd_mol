@@ -14,7 +14,7 @@ jobs:
           package: milkywaystd/app/demo
           meta: |
             milkywaystd https://github.com/reatailret/milkywaystd_mol
-            examples https://github.com/reatailret/mam_examples
+            
       - name: Deploy on GitHub Pages
         if: github.ref == 'refs/heads/master'
         uses: alex-page/blazing-fast-gh-pages-deploy@v1.1.0
