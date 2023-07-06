@@ -17823,6 +17823,9 @@ var $;
         }
         __decorate([
             $mol_mem
+        ], $milkywaystd_app_demo.prototype, "milkywaystd_app_demo_menu_factory", null);
+        __decorate([
+            $mol_mem
         ], $milkywaystd_app_demo.prototype, "tree_menu_items", null);
         $$.$milkywaystd_app_demo = $milkywaystd_app_demo;
     })($$ = $.$$ || ($.$$ = {}));
