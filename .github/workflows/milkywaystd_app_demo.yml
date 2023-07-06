@@ -11,7 +11,8 @@ jobs:
         uses: hyoo-ru/mam_build@master2
         with:
           token: ${{ secrets.GH_PAT }}
-          package: milkywaystd/app/demo
+          package: milkywaystd
+          modules: /app/demo
           meta: |
             examples https://github.com/reatailret/mam_examples
             
@@ -20,4 +21,4 @@ jobs:
         uses: alex-page/blazing-fast-gh-pages-deploy@v1.1.0
         with:
           repo-token: ${{ secrets.GH_PAT }}
-          site-directory: milkywaystd/app/demo/-
+          site-directory: milkywaystd/app/demo/-/
