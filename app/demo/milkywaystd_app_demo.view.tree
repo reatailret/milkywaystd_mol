@@ -1,6 +1,5 @@
 $milkywaystd_app_demo $mol_app_demo
-	Menu $milkywaystd_app_demo_menu_tree2
-		tree_menu_items <= tree_menu_items /
+	Menu <= milkywaystd_app_demo_menu_factory null
 	menu_items /any
 		<= p1 *
 			label \Misc
@@ -12,7 +11,7 @@ $milkywaystd_app_demo $mol_app_demo
 				\scroll
 				\menu
 -
-$milkywaystd_app_demo_menu_tree2 $mol_app_demo_menu
+$milkywaystd_app_demo_menu_tree $mol_app_demo_menu
 	title \$milkywaystd examples
 	Body $mol_scroll
 		sub /
