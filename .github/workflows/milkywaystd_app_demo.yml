@@ -11,9 +11,9 @@ jobs:
         uses: hyoo-ru/mam_build@master2
         with:
           token: ${{ secrets.GH_PAT }}
-          package: milkywaystd/app/demo
+          package: milkywaystd
           meta: |
-            milkywaystd https://github.com/reatailret/milkywaystd_mol
+            examples https://github.com/reatailret/mam_examples
             
       - name: Deploy on GitHub Pages
         if: github.ref == 'refs/heads/master'
