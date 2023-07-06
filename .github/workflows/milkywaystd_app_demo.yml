@@ -11,7 +11,7 @@ jobs:
         uses: hyoo-ru/mam_build@master2
         with:
           token: ${{ secrets.GH_PAT }}
-          package: milkywaystd
+          package: milkywaystd/app/demo
           meta: |
             milkywaystd https://github.com/reatailret/milkywaystd_mol
             examples https://github.com/reatailret/mam_examples
