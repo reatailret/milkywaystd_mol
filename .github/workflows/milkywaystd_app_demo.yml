@@ -12,7 +12,7 @@ jobs:
         with:
           token: ${{ secrets.GH_PAT }}
           package: milkywaystd
-          modules: milkywaystd/app/demo
+          modules: /app/demo
           meta: |
             examples https://github.com/reatailret/mam_examples
             
