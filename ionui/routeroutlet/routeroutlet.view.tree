@@ -1,0 +1,3 @@
+$milkywaystd_ionui_routeroutlet $mol_view
+	dom_name \ion-router-outlet
+	sub <= getSubs /

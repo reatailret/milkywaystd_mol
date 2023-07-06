@@ -1,0 +1,19 @@
+$milkywaystd_ui_treemenu_demo $mol_example_large
+	title \Tree menu
+	tree_menu_items /
+		<= p1 *
+			label \label 1
+			link *
+				a \0
+		<= p2 *
+			label \label 2
+			items /
+				<= p22 *
+					label \sub link 2
+					link *
+						a \1
+	sub /
+		<= menu $milkywaystd_ui_treemenu
+			items <= tree_menu_items
+	tags /
+		\menu

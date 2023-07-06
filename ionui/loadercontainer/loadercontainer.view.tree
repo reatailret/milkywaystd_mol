@@ -1,0 +1,3 @@
+$milkywaystd_ionui_loadercontainer $milkywaystd_ionui_component
+	sub <= getSub
+	Spinner $milkywaystd_ionui_spinner
