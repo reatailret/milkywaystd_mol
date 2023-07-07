@@ -321,7 +321,7 @@ namespace $.$$ {
 				view.context.index = this._renderedRange.start + i;
 				view.context.count = count;
 				this._updateComputedContextProperties(view.context);
-				view.detectChanges();
+				//view.detectChanges();
 			}
 		}
 

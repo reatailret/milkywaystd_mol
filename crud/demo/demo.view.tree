@@ -4,10 +4,10 @@ $milkywaystd_crud_demo $mol_example_large
 		<= View $mol_book2_catalog
 			menu_title \
 			spreads *
-				p <= products $examples_products
+				p <= products $milkywaystd_crud_demo_products
 					param \mol_book2_crud_demo_1
 					menu_title \Classic
-				p2 <= products2 $examples_products2
+				p2 <= products2 $milkywaystd_crud_demo_products2
 					param \mol_book2_crud_demo_2
 					menu_title \Optimistic
 	tags /

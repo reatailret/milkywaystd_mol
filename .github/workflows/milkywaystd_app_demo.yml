@@ -13,9 +13,7 @@ jobs:
           token: ${{ secrets.GH_PAT }}
           package: milkywaystd
           modules: /app/demo
-          meta: |
-            examples https://github.com/reatailret/mam_examples
-            
+					            
       - name: Deploy on GitHub Pages
         if: github.ref == 'refs/heads/master'
         uses: alex-page/blazing-fast-gh-pages-deploy@v1.1.0

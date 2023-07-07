@@ -1,0 +1,12 @@
+[examples_crudapi_products_tablepage]{
+	width: 100%;
+	
+}
+
+[examples_products_tablepage].editmode{
+	width: unset;
+	transition: width 1s;
+}
+[examples_products_productrow] {
+	align-items: center;
+}

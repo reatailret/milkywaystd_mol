@@ -1,0 +1,8 @@
+$milkywaystd_crud_demo_products $mol_book2
+	tablepage $milkywaystd_crud_demo_products_tablepage
+		editCallback?val <=> editCallback?val null
+	editpage <= form_factory null
+	pages <= pages_visible /
+	param \
+	menu_title \
+
