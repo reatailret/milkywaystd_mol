@@ -6,6 +6,6 @@ $milkywaystd_ionui_demo_iframe $mol_example_large
 				height \100%
 				width \100%
 			attr *
-				src \/milkywaystd/ionui/demo/-/index.html
+				src \https://reatailret.github.io/milkywaystd_mol/ionui/demo/-/index.html
 	tags /
 		\ionic
