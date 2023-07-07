@@ -1,9 +1,9 @@
-namespace $.$$ {
+namespace $ {
 
 	const error_showed = new WeakMap< Error, $mol_view >()
-	export class $milkywaystd_viewcontainer extends $.$milkywaystd_viewcontainer {
+	export class $milkywaystd_viewcontainer extends $mol_view {
 
-		loaderElement = null;
+		loaderElement:any = null;
 		addLoaderElement(){
 			if(!this.loaderElement){
 				this.loaderElement = this.getLoaderElement();
@@ -15,7 +15,7 @@ namespace $.$$ {
 		removeLoaderElement(){
 			
 			this.dom_node().parentNode?.parentNode?.insertBefore(this.dom_node(),this.loaderElement);
-			this.loaderElement.remove();
+			this.loaderElement?.remove();
 		}
 		getLoaderElement()
 		{
@@ -38,7 +38,7 @@ namespace $.$$ {
 		}
 		
 		@ $mol_mem
-		dom_tree( next? : Element ) : Element {
+		override dom_tree( next? : Element ) : Element {
 			const node = this.dom_node( next )
 			
 			render: try {

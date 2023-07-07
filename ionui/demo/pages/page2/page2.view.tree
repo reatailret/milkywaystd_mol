@@ -1,0 +1,22 @@
+$milkywaystd_ionui_demo_pages_page2 $milkywaystd_ionui_component
+	sub /
+		<= IonHeader $milkywaystd_ionui_header
+			sub /
+				<= IonTollbar $milkywaystd_ionui_toolbar
+					sub /
+						<= IonButtons $milkywaystd_ionui_buttons
+							attr *
+								slot \start
+							sub /
+								<= IonMenuButton $milkywaystd_ionui_menubutton
+						<= IonTitle $milkywaystd_ionui_title
+							sub /
+								<= Text \Main
+		<= IonContent $IC2
+$IC2 $milkywaystd_ionui_content
+	classes /
+		\ion-padding
+	sub /
+		<= titleel $milkywaystd_ionui_title
+			sub /
+				<= text1 \Hello $mol!

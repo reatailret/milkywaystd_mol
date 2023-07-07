@@ -1,0 +1,35 @@
+$milkywaystd_crud_demo_products_productrow $mol_row
+	minimal_height 100
+	minimal_width 200
+	data null
+	editCallback?val null
+	deleteCallback?val null
+	ondelete?val null
+	sub /
+		<= Id_labeler $mol_labeler
+			title \ID
+			Content <= View $mol_text
+				text <= row_id \
+		<= Title_labeler $mol_labeler
+			title \Product Name
+			Content <= View2 $mol_text
+				text <= row_name \
+		<= Price_labeler $mol_labeler
+			title \Product Price
+			Content <= View3 $mol_text
+				text <= row_price \
+		<= EditlButton $mol_link
+			hint \Редактировать
+			arg <= editArg null
+			sub /
+				<= edIcon $mol_icon_edit
+				<= edLabel \Редактировать
+		<= DelButton $mol_button_minor
+			hint \Удалить
+			hint \Удалить
+			event *
+				click? <=> ondelete?
+			sub /
+				<= delIcon $mol_icon_trash_can
+				<= delLabel \Удалить
+				<= uiblocker null

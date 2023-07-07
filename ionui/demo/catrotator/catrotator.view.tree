@@ -1,0 +1,21 @@
+$milkywaystd_ionui_demo_catrotator $milkywaystd_viewcontainer
+	
+	sub /
+		<= IonCard $milkywaystd_ionui_card
+			sub /
+				<= IonImg $milkywaystd_ionui_img
+					attr *
+						src <= imgSrc null
+				<= IonCardHeader $milkywaystd_ionui_cardheader
+					sub /
+						<= IonCardSubitle $milkywaystd_ionui_cardsubtitle
+							sub /
+								<= txt \Awesome images
+				<= IonCardcontent $milkywaystd_ionui_cardcontent
+					sub /
+						<= idx 0
+						<= btn $milkywaystd_ionui_button
+							sub /
+								<= txt2 \Vote
+							event *
+								click?val <=> rotate?val null

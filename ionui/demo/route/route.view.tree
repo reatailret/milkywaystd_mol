@@ -1,0 +1,57 @@
+$milkywaystd_ionui_demo_route $mol_view
+	sub /
+		<= IonRouter $milkywaystd_ionui_router
+			sub <= getRoutes /
+		<= IonApp $milkywaystd_ionui_app
+			sub /
+				<= IonMenuI $IonMenu
+				<= RouterOutlet $RouterOutlet
+$RouterOutlet $milkywaystd_ionui_routeroutlet
+	attr *
+		^
+		id \outlet
+$IonMenu $milkywaystd_ionui_menu
+	attr *
+		^
+		content-id \outlet
+	sub /
+		<= IonHeader $milkywaystd_ionui_header
+			sub /
+				<= IonToolbar $milkywaystd_ionui_toolbar
+					sub /
+						<= IonTitle $milkywaystd_ionui_title
+							sub /
+								<= MenuTitleText \Menu
+		<= MenuContent $milkywaystd_ionui_content
+			sub /
+				<= IonListHeader $milkywaystd_ionui_listheader
+					sub /
+						<= ilh \Navigation
+				<= IonMenuToggle $milkywaystd_ionui_menutoggle
+					sub /
+						<= IonItem $milkywaystd_ionui_item
+							attr *
+								button \true
+								href \/
+							sub /
+								<= ic1 $milkywaystd_ionui_icon
+									attr *
+										slot \start
+										name \home
+								<= il1 $milkywaystd_ionui_label
+									sub /
+										<= hl \Home
+				<= IonMenuToggle3 $milkywaystd_ionui_menutoggle
+					sub /
+						<= IonItem3 $milkywaystd_ionui_item
+							attr *
+								button \true
+								href \virtual
+							sub /
+								<= ic3 $milkywaystd_ionui_icon
+									attr *
+										slot \start
+										name \logo-octocat
+								<= il3 $milkywaystd_ionui_label
+									sub /
+										<= hl3 \Foto feed

@@ -1,0 +1,46 @@
+$milkywaystd_ionui_demo_pages_page4 $milkywaystd_ionui_component
+	sub /
+		<= IonHeader $milkywaystd_ionui_header
+			sub /
+				<= IonTollbar $milkywaystd_ionui_toolbar
+					sub /
+						<= IonButtons $milkywaystd_ionui_buttons
+							attr *
+								slot \start
+							sub /
+								<= IonMenuButton $milkywaystd_ionui_menubutton
+						<= IonTitle $milkywaystd_ionui_title
+							sub /
+								<= Text \Foto feed
+		<= IonContent $IC4
+			sub /
+				<= Refresher $milkywaystd_ionui_refresher
+					event *
+						ionRefresh?val <=> ionRefresh?val null
+					attr *
+						slot \fixed
+						disabled <= getRefersherDisabled true
+					sub /
+						<= RefresherContent $milkywaystd_ionui_refreshercontent
+				<= viewPort $milkywaystd_scroll_VirtualScrollViewport
+					itemRendererFactory <= itemRendererFactory null
+					itemHeight 600
+					minBufferPx 2400
+					maxBufferPx 4800
+					style *
+						height \100%
+					pre_sub /
+					post_sub /
+						<= infspin $milkywaystd_ionui_spinner
+							attr *
+								slot \fixed
+							style *
+								width \100%
+								height \32px
+								margin-top \22px
+								display <= getSpinnerDisplay \flex
+$IC4 $milkywaystd_ionui_content
+	attr *
+		scroll-y \false
+	classes /
+		\ion-padding
