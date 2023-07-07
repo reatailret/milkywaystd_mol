@@ -16,7 +16,7 @@ namespace $.$$ {
 
 		@$mol_mem
 		attr(): {} {
-			return {
+			return {...super.attr(),
 				url: this.url,
 				id: "route_" + this.component?.toString(),
 				component: "component_" + this.component?.toString(),

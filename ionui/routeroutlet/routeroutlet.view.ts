@@ -1,7 +1,7 @@
 namespace $.$$ {
 	export class $milkywaystd_ionui_routeroutlet extends $.$milkywaystd_ionui_routeroutlet {
 		auto() {
-			//console.log("DELEGATE");
+			
 			(this.dom_node() as any).delegate = this.delegate();
 			this.dom_node().addEventListener('ionNavWillLoad',this.ionNavWillLoad);
 			this.dom_node().addEventListener('ionNavWillChange',this.ionNavWillChange);
@@ -45,11 +45,11 @@ namespace $.$$ {
 			el.classList.add(...cssClasses!);	
 			el.style.removeProperty('display');
 			this.subelement(comp);
+			
 			return el;
 			
 		}
 		removeViewFromDom(container: any, component: any) {
-			console.log("removeViewFromDom", container, component);
 			return Promise.resolve();
 		}
 	}

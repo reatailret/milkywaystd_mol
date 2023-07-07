@@ -10,7 +10,11 @@ $milkywaystd_app_demo $mol_app_demo
 			tags /
 				\scroll
 				\menu
--
+		<= p3 *
+			label \Ionic
+			tags /
+				\ionic
+				
 $milkywaystd_app_demo_menu_tree $mol_app_demo_menu
 	title \$milkywaystd examples
 	Body $mol_scroll

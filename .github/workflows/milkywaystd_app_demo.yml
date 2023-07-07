@@ -12,7 +12,7 @@ jobs:
         with:
           token: ${{ secrets.GH_PAT }}
           package: milkywaystd
-          modules: /app/demo
+          modules: 'app/demo ionui/demo'
 					            
       - name: Deploy on GitHub Pages
         if: github.ref == 'refs/heads/master'

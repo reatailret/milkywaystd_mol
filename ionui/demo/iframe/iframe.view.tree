@@ -1,0 +1,11 @@
+$milkywaystd_ionui_demo_iframe $mol_example_large
+	title \Ionic example
+	sub /
+		<= iframe $milkywaystd_ui_iframe
+			style *
+				height \100%
+				width \100%
+			attr *
+				src \/milkywaystd/ionui/demo/-/index.html
+	tags /
+		\ionic

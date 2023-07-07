@@ -1,0 +1,5 @@
+$milkywaystd_ionui_demo $mol_example_large
+	title \Ionic implementation
+	sub /
+		<= View $milkywaystd_ionui_demo_route
+
