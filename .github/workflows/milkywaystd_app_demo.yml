@@ -13,6 +13,8 @@ jobs:
           token: ${{ secrets.GH_PAT }}
           package: milkywaystd
           modules: app/demo ionui/demo
+      - name: remove git directory
+        run: rm -r .git
       - name: Deploy on GitHub Pages
         if: github.ref == 'refs/heads/master'
         uses: alex-page/blazing-fast-gh-pages-deploy@v1.1.0
