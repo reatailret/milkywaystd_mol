@@ -1,0 +1,39 @@
+$milkywaystd_crud_demo_products_tablepage $mol_page
+	title \CRUD example
+	body /
+		<= Rows $mol_list rows <= rows /
+			<= Row*0 $milkywaystd_crud_demo_products_productrow
+				data <= item* null
+				editCallback?val <=> editCallback?val null
+				deleteCallback?val <=> deleteCallback?val null
+	foot /
+		<= frow $mol_row
+			sub /
+				<= page_labeler $mol_labeler
+					title \Страница
+					Content <= paginator $mol_paginator
+						value?val <=> page?val 5
+				<= PRP_labeler $mol_labeler
+					title \Записей на страницу
+					Content <= perPageSelector $mol_select
+						value?val <=> per_page?val \5
+						hint \Количество записей на страницу
+						dictionary *
+							5 \5
+							10 \10
+							15 \15
+				<= Total_labeler $mol_labeler
+					title \Всего записей
+					Content <= View2 $mol_text
+						text <= totalItems \
+				<= refresh_labeler $mol_labeler
+					title \
+					Content <= View3 $mol_button_minor
+						title \Обновить
+						click? <=> refresh? null
+				<= create_labeler $mol_labeler
+					title \
+					Content <= View4 $mol_button_major
+						title \Создать
+						click? <=> goToCreateNew? null
+				<= uiblocker \

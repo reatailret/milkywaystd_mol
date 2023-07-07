@@ -1,0 +1,27 @@
+$milkywaystd_app_demo $mol_app_demo
+	Menu <= milkywaystd_app_demo_menu_factory null
+	menu_items /any
+		<= p1 *
+			label \Misc
+			tags /
+				\crud
+		<= p2 *
+			label \Ui
+			tags /
+				\scroll
+				\menu
+		<= p3 *
+			label \Ionic
+			tags /
+				\ionic
+				
+$milkywaystd_app_demo_menu_tree $mol_app_demo_menu
+	title \$milkywaystd examples
+	Body $mol_scroll
+		sub /
+			<= List $mol_list rows /
+				<= Filter $mol_search
+					query?val <=> filter?val \
+			<= menu $milkywaystd_ui_treemenu
+				items <= tree_menu_items /
+				filter <= filter

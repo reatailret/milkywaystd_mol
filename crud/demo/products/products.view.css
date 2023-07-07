@@ -1,0 +1,12 @@
+[milkywaystd_crud_demo_products_tablepage]{
+	width: 100%;
+	
+}
+
+[milkywaystd_crud_demo_tablepage].editmode{
+	width: unset;
+	transition: width 1s;
+}
+[milkywaystd_crud_demo_products_productrow] {
+	align-items: center;
+}
