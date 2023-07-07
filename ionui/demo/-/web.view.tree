@@ -1,0 +1,253 @@
+$mol_example $mol_view
+	tags /string
+	aspects /string
+
+$mol_example_large $mol_example
+
+$milkywaystd_ionui_router $mol_view
+	dom_name \ion-router
+
+$milkywaystd_ionui_app $milkywaystd_ionui_component
+	dom_name \ion-app
+
+$milkywaystd_ionui_routeroutlet $mol_view
+	dom_name \ion-router-outlet
+	sub <= getSubs /
+
+$milkywaystd_ionui_menu $mol_view
+	dom_name \ion-menu
+
+$milkywaystd_ionui_title $mol_view
+	dom_name \ion-title
+
+$milkywaystd_ionui_toolbar $mol_view
+	dom_name \ion-toolbar
+
+$milkywaystd_ionui_header $mol_view
+	dom_name \ion-header
+
+$milkywaystd_ionui_listheader $mol_view
+	dom_name \ion-list-header
+
+$milkywaystd_ionui_icon $mol_view
+	dom_name \ion-icon
+
+$milkywaystd_ionui_label $milkywaystd_ionui_component
+	dom_name \ion-label
+
+$milkywaystd_ionui_item $mol_view
+	dom_name \ion-item
+
+$milkywaystd_ionui_menutoggle $mol_view
+	dom_name \ion-menu-toggle
+
+$milkywaystd_ionui_content $milkywaystd_ionui_component
+	dom_name \ion-content
+
+$milkywaystd_ionui_demo_route $mol_view
+	sub /
+		<= IonRouter $milkywaystd_ionui_router
+			sub <= getRoutes /
+		<= IonApp $milkywaystd_ionui_app
+			sub /
+				<= IonMenuI $IonMenu
+				<= RouterOutlet $RouterOutlet
+$RouterOutlet $milkywaystd_ionui_routeroutlet
+	attr *
+		^
+		id \outlet
+$IonMenu $milkywaystd_ionui_menu
+	attr *
+		^
+		content-id \outlet
+	sub /
+		<= IonHeader $milkywaystd_ionui_header
+			sub /
+				<= IonToolbar $milkywaystd_ionui_toolbar
+					sub /
+						<= IonTitle $milkywaystd_ionui_title
+							sub /
+								<= MenuTitleText \Menu
+		<= MenuContent $milkywaystd_ionui_content
+			sub /
+				<= IonListHeader $milkywaystd_ionui_listheader
+					sub /
+						<= ilh \Navigation
+				<= IonMenuToggle $milkywaystd_ionui_menutoggle
+					sub /
+						<= IonItem $milkywaystd_ionui_item
+							attr *
+								button \true
+								href \/
+							sub /
+								<= ic1 $milkywaystd_ionui_icon
+									attr *
+										slot \start
+										name \home
+								<= il1 $milkywaystd_ionui_label
+									sub /
+										<= hl \Home
+				<= IonMenuToggle3 $milkywaystd_ionui_menutoggle
+					sub /
+						<= IonItem3 $milkywaystd_ionui_item
+							attr *
+								button \true
+								href \virtual
+							sub /
+								<= ic3 $milkywaystd_ionui_icon
+									attr *
+										slot \start
+										name \logo-octocat
+								<= il3 $milkywaystd_ionui_label
+									sub /
+										<= hl3 \Foto feed
+
+$milkywaystd_ionui_route $mol_view
+	dom_name \ion-route
+
+$milkywaystd_ionui_menubutton $milkywaystd_ionui_component
+	dom_name \ion-menu-button
+
+$milkywaystd_ionui_buttons $mol_view
+	dom_name \ion-buttons
+
+$milkywaystd_ionui_demo_pages_page2 $milkywaystd_ionui_component
+	sub /
+		<= IonHeader $milkywaystd_ionui_header
+			sub /
+				<= IonTollbar $milkywaystd_ionui_toolbar
+					sub /
+						<= IonButtons $milkywaystd_ionui_buttons
+							attr *
+								slot \start
+							sub /
+								<= IonMenuButton $milkywaystd_ionui_menubutton
+						<= IonTitle $milkywaystd_ionui_title
+							sub /
+								<= Text \Main
+		<= IonContent $IC2
+$IC2 $milkywaystd_ionui_content
+	classes /
+		\ion-padding
+	sub /
+		<= titleel $milkywaystd_ionui_title
+			sub /
+				<= text1 \Hello $mol!
+
+$milkywaystd_ionui_refreshercontent $milkywaystd_ionui_component
+	dom_name \ion-refresher-content
+
+$milkywaystd_ionui_refresher $milkywaystd_ionui_component
+	dom_name \ion-refresher
+
+$milkywaystd_ionui_spinner $milkywaystd_ionui_component
+	dom_name \ion-spinner
+
+$milkywaystd_scroll_VirtualScrollViewport $mol_view
+	pre_sub /
+	post_sub /
+	sub /
+		<= getForOf null
+		<= spacer $milkywaystd_scroll_VirtualScrollSpacer
+			style *
+				width <= totalContentWidth 0
+				height <= totalContentHeight 0
+
+$milkywaystd_scroll_VirtualForOf $mol_view
+
+$milkywaystd_scroll_VirtualScrollSpacer $mol_view
+
+$milkywaystd_ionui_demo_pages_page4 $milkywaystd_ionui_component
+	sub /
+		<= IonHeader $milkywaystd_ionui_header
+			sub /
+				<= IonTollbar $milkywaystd_ionui_toolbar
+					sub /
+						<= IonButtons $milkywaystd_ionui_buttons
+							attr *
+								slot \start
+							sub /
+								<= IonMenuButton $milkywaystd_ionui_menubutton
+						<= IonTitle $milkywaystd_ionui_title
+							sub /
+								<= Text \Foto feed
+		<= IonContent $IC4
+			sub /
+				<= Refresher $milkywaystd_ionui_refresher
+					event *
+						ionRefresh?val <=> ionRefresh?val null
+					attr *
+						slot \fixed
+						disabled <= getRefersherDisabled true
+					sub /
+						<= RefresherContent $milkywaystd_ionui_refreshercontent
+				<= viewPort $milkywaystd_scroll_VirtualScrollViewport
+					itemRendererFactory <= itemRendererFactory null
+					itemHeight 600
+					minBufferPx 2400
+					maxBufferPx 4800
+					style *
+						height \100%
+					pre_sub /
+					post_sub /
+						<= infspin $milkywaystd_ionui_spinner
+							attr *
+								slot \fixed
+							style *
+								width \100%
+								height \32px
+								margin-top \22px
+								display <= getSpinnerDisplay \flex
+$IC4 $milkywaystd_ionui_content
+	attr *
+		scroll-y \false
+	classes /
+		\ion-padding
+
+$milkywaystd_ionui_img $milkywaystd_ionui_component
+	dom_name \ion-img
+
+$milkywaystd_ionui_cardsubtitle $milkywaystd_ionui_component
+	dom_name \ion-card-subtitle
+
+$milkywaystd_ionui_cardheader $milkywaystd_ionui_component
+	dom_name \ion-card-header
+
+$milkywaystd_ionui_button $milkywaystd_ionui_component
+	dom_name \ion-button
+	sub /
+		<= title
+
+$milkywaystd_ionui_cardcontent $milkywaystd_ionui_component
+	dom_name \ion-card-content
+
+$milkywaystd_ionui_card $milkywaystd_ionui_component
+	dom_name \ion-card
+
+$milkywaystd_ionui_demo_catrotator $milkywaystd_viewcontainer
+	
+	sub /
+		<= IonCard $milkywaystd_ionui_card
+			sub /
+				<= IonImg $milkywaystd_ionui_img
+					attr *
+						src <= imgSrc null
+				<= IonCardHeader $milkywaystd_ionui_cardheader
+					sub /
+						<= IonCardSubitle $milkywaystd_ionui_cardsubtitle
+							sub /
+								<= txt \Awesome images
+				<= IonCardcontent $milkywaystd_ionui_cardcontent
+					sub /
+						<= idx 0
+						<= btn $milkywaystd_ionui_button
+							sub /
+								<= txt2 \Vote
+							event *
+								click?val <=> rotate?val null
+
+$milkywaystd_ionui_demo $mol_example_large
+	title \Ionic implementation
+	sub /
+		<= View $milkywaystd_ionui_demo_route
+
