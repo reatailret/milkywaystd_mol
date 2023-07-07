@@ -14,12 +14,11 @@ jobs:
           package: milkywaystd
           modules: app/demo ionui/demo
       - name: remove git directory
-        run: rm -r .git
+        run: rm -rf milkywaystd/.git
       - name: Deploy on GitHub Pages
         if: github.ref == 'refs/heads/master'
         uses: alex-page/blazing-fast-gh-pages-deploy@v1.1.0
         with:
           repo-token: ${{ secrets.GH_PAT }}
-          site-directory: ./
-          
+          site-directory: milkywaystd/
           
