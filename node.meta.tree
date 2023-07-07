@@ -70,9 +70,12 @@
 	pack home git \https://github.com/hyoo-ru/hyoo.ru.git
 	pack idea git \https://github.com/hyoo-ru/idea.hyoo.ru.git
 	pack intern git \https://github.com/hyoo-ru/intern.hyoo.ru.git
+\/milkywaystd/ionui/demo
+	deploy \/milkywaystd/ionui/demo/svg/loader.svg
 \/mol/app/demo/main
 	deploy \/mol/readme.md
 \/milkywaystd/app/demo
 	include \/milkywaystd/crud/demo
 	include \/milkywaystd/scroll/demo
 	include \/milkywaystd/ui/treemenu/demo
+	include \/milkywaystd/ionui/demo/iframe
