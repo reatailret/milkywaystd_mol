@@ -1,0 +1,72 @@
+$mol_form_draft_demo_person $mol_object2
+	name? \
+	email? \
+	title? \
+	type? \
+	adult? false
+	content? \
+	friends? /string
+	hobbies? *
+
+$milkywaystd_form_validator_demo $mol_example_large
+	title \Article draft form demo
+	-
+	message_done \Done
+	-
+	
+	sub /
+		<= Form $mol_form_draft
+			-
+			validator <= validator $milkywaystd_form_validator
+				bids* => bids*
+				model_value* <= value_str*
+				validation *
+					name *
+						rules /
+							<= required_name $milkywaystd_form_rules_required
+					email *
+						rules /
+							<= required_email $milkywaystd_form_rules_required
+							<= email_email $milkywaystd_form_rules_email
+								error_message \Введите верный email адрес
+			-
+			model <= model $mol_form_draft_demo_person
+			submit? => publish?
+			submit_allowed => publish_allowed
+			value_str*? => value_str*?
+			list_string*? => list_string*?
+			dictionary_bool*? => dictionary_bool*?
+			changed => changed
+			reset? => reset?
+			form_fields /
+				<= Name_field $mol_form_field
+					name \Name
+					bids / 
+						^ bids*name
+					Content <= Name $mol_string
+						hint \Enter name
+						value? <=> value_str*name?
+				<= Email_field $mol_form_field
+					name \email
+					bids / 
+						^ bids*email
+					Content <= Email $mol_string
+						hint \Your email?
+						value? <=> value_str*email?
+			-
+			body <= form_body /
+				<= Name_field
+				<= Email_field
+			buttons /
+				<= Publish $mol_button_major
+					title \Publish
+					click? <=> publish?
+					enabled <= publish_allowed
+				<= Result $mol_status
+					message <= result? \
+				<= Reset $mol_button_minor
+					title \Сбросить
+					click? <=> reset?
+					enabled <= changed
+	tags /
+		\form

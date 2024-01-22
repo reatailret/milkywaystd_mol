@@ -14,6 +14,10 @@ $milkywaystd_app_demo $mol_app_demo
 			label \Ionic
 			tags /
 				\ionic
+		<= p4 *
+			label \Form validator
+			tags /
+				\form
 				
 $milkywaystd_app_demo_menu_tree $mol_app_demo_menu
 	title \$milkywaystd examples
