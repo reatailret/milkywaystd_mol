@@ -1,4 +1,4 @@
-$milkywaystd_app_demo $mol_app_demo
+$mws_app_demo $mol_app_demo
 	Menu <= milkywaystd_app_demo_menu_factory null
 	menu_items /any
 		<= p1 *
@@ -19,13 +19,13 @@ $milkywaystd_app_demo $mol_app_demo
 			tags /
 				\form
 				
-$milkywaystd_app_demo_menu_tree $mol_app_demo_menu
+$mws_app_demo_menu_tree $mol_app_demo_menu
 	title \$milkywaystd examples
 	Body $mol_scroll
 		sub /
 			<= List $mol_list rows /
 				<= Filter $mol_search
 					query?val <=> filter?val \
-			<= menu $milkywaystd_ui_treemenu
+			<= menu $mws_ui_treemenu
 				items <= tree_menu_items /
 				filter <= filter

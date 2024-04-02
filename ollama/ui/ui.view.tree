@@ -1,4 +1,4 @@
-$milkywaystd_ollama_ui $mol_book2_catalog
+$mws_ollama_ui $mol_book2_catalog
 	system_message \
 	messages /
 	param \page

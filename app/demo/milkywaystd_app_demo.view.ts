@@ -1,9 +1,9 @@
 namespace $.$$ {
-	export class $milkywaystd_app_demo extends $.$milkywaystd_app_demo {
+	export class $mws_app_demo extends $.$mws_app_demo {
 		
 		@$mol_mem
 		milkywaystd_app_demo_menu_factory():any {
-			const menu = new $milkywaystd_app_demo_menu_tree();
+			const menu = new $mws_app_demo_menu_tree();
 			menu.tree_menu_items = this.tree_menu_items.bind(this)
 			return menu
 		}
@@ -21,7 +21,7 @@ namespace $.$$ {
 			}
 			while(stack.length){
 				// item to create
-				const menu_item:Partial<$milkywaystd_ui_treemenu_data_item> = {label:'',link:'',items:[], parent:null}
+				const menu_item:Partial<$mws_ui_treemenu_data_item> = {label:'',link:'',items:[], parent:null}
 				
 				// input item
 				const item = stack.shift()!
@@ -41,7 +41,7 @@ namespace $.$$ {
 							if(tags.includes(tag)){
 								menu_item.id = $mol_key(item.label+name);
 								console.log(item.label,tag,name)
-								const menu_item_child:$milkywaystd_ui_treemenu_data_item = {id:$mol_key(item.label+tag+name),label:title?title:name,link:{ 'demo' : name },items:[]}
+								const menu_item_child:$mws_ui_treemenu_data_item = {id:$mol_key(item.label+tag+name),label:title?title:name,link:{ 'demo' : name },items:[]}
 								menu_item.items!.push(menu_item_child)
 								break
 							}

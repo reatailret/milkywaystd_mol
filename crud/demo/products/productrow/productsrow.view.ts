@@ -1,5 +1,5 @@
 namespace $.$$ {
-	export class $milkywaystd_crud_demo_products_productrow extends $.$milkywaystd_crud_demo_products_productrow {
+	export class $mws_crud_demo_products_productrow extends $.$mws_crud_demo_products_productrow {
 		
 		@$mol_mem
 		row_price() {

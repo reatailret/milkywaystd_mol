@@ -1,5 +1,5 @@
 namespace $.$$ {
-	export class $milkywaystd_ionui_page extends $.$milkywaystd_ionui_page {
+	export class $mws_ionui_page extends $.$mws_ionui_page {
 		
 		@ $mol_mem
 		classes(next?:Array<string>){

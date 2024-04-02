@@ -1,5 +1,5 @@
 namespace $.$$ {
-	export class $milkywaystd_scroll_demo_testitemrenderer extends $.$milkywaystd_scroll_demo_testitemrenderer {
+	export class $mws_scroll_demo_testitemrenderer extends $.$mws_scroll_demo_testitemrenderer {
 		onData(obj:CdkVirtualForOfContext<any>){
 			
 			this.context(obj)

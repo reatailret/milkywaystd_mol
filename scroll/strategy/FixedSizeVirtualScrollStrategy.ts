@@ -1,14 +1,14 @@
 namespace $.$$ {
 
-export class $milkywaystd_scroll_strategy_FixedSizeVirtualScrollStrategy  implements $milkywaystd_scroll_interface_IVirtualScrollStrategy {
+export class $mws_scroll_strategy_FixedSizeVirtualScrollStrategy  implements $mws_scroll_interface_IVirtualScrollStrategy {
 
-	private readonly _scrolledIndexChange :$milkywaystd_classes_stream<number> = $milkywaystd_classes_stream();
+	private readonly _scrolledIndexChange :$mws_classes_stream<number> = $mws_classes_stream();
 
 	/** @docs-private Implemented as part of VirtualScrollStrategy. */
-	scrolledIndexChange:$milkywaystd_classes_stream<number> = this._scrolledIndexChange.unique();
+	scrolledIndexChange:$mws_classes_stream<number> = this._scrolledIndexChange.unique();
   
 	/** The attached viewport. */
-	private _viewport: $milkywaystd_scroll_VirtualScrollViewportController | null = null;
+	private _viewport: $mws_scroll_VirtualScrollViewportController | null = null;
   
 	/** The size of the items in the virtually scrolling list. */
 	private _itemSize: number;
@@ -34,7 +34,7 @@ export class $milkywaystd_scroll_strategy_FixedSizeVirtualScrollStrategy  implem
 	 * Attaches this scroll strategy to a viewport.
 	 * @param viewport The viewport to attach this strategy to.
 	 */
-	attach(viewport: $milkywaystd_scroll_VirtualScrollViewportController) {
+	attach(viewport: $mws_scroll_VirtualScrollViewportController) {
 	  this._viewport = viewport;
 	  this._updateTotalContentSize();
 	  this._updateRenderedRange();

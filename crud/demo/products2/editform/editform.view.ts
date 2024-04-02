@@ -1,11 +1,11 @@
 namespace $.$$
 {
-	export class $milkywaystd_crud_demo_products2_editform extends $.$milkywaystd_crud_demo_products2_editform
+	export class $mws_crud_demo_products2_editform extends $.$mws_crud_demo_products2_editform
 	{
 		@$mol_mem
 		srv()
 		{
-			const srv = $milkywaystd_crud_demo_products_service.getInstance()
+			const srv = $mws_crud_demo_products_service.getInstance()
 			return srv
 		}
 
@@ -182,18 +182,18 @@ namespace $.$$
 
 			switch( this.srv().trackEventChannel( this.editKey() ) )
 			{
-				case $milkywaystd_crud_events.ONE_REPLACE_ERROR:
-				case $milkywaystd_crud_events.ONE_UPDATE_ERROR:
-				case $milkywaystd_crud_events.CREATE_ERROR:
+				case $mws_crud_events.ONE_REPLACE_ERROR:
+				case $mws_crud_events.ONE_UPDATE_ERROR:
+				case $mws_crud_events.CREATE_ERROR:
 					//status = 'Ошибка'
 
 					break
-				case $milkywaystd_crud_events.ONE_FETCH_ERROR:
+				case $mws_crud_events.ONE_FETCH_ERROR:
 					break
 
-				case $milkywaystd_crud_events.ONE_UPDATE_END:
-				case $milkywaystd_crud_events.ONE_REPLACE_END:
-				case $milkywaystd_crud_events.CREATE_END:
+				case $mws_crud_events.ONE_UPDATE_END:
+				case $mws_crud_events.ONE_REPLACE_END:
+				case $mws_crud_events.CREATE_END:
 					status = "Сохранено"
 					break
 

@@ -1,12 +1,12 @@
 namespace $.$$
 {
 
-	export type $milkywaystd_ui_treemenu_data_item = { expanded?: boolean, id?: string, label: string, link: string | Record<string, string>, items?: Array<$milkywaystd_ui_treemenu_data_item>, parent?: $milkywaystd_ui_treemenu_data_item | undefined | null }
-	export class $milkywaystd_ui_treemenu extends $.$milkywaystd_ui_treemenu
+	export type $mws_ui_treemenu_data_item = { expanded?: boolean, id?: string, label: string, link: string | Record<string, string>, items?: Array<$mws_ui_treemenu_data_item>, parent?: $mws_ui_treemenu_data_item | undefined | null }
+	export class $mws_ui_treemenu extends $.$mws_ui_treemenu
 	{
 
 		@$mol_mem
-		items( val?: $milkywaystd_ui_treemenu_data_item[] ): readonly $milkywaystd_ui_treemenu_data_item[] 
+		items( val?: $mws_ui_treemenu_data_item[] ): readonly $mws_ui_treemenu_data_item[] 
 		{
 			return val ?? []
 		}
@@ -70,7 +70,7 @@ namespace $.$$
 		}
 		_idsCache = new Set<string>();
 		@$mol_mem_key
-		cache( id: string, value?: $milkywaystd_ui_treemenu_data_item )
+		cache( id: string, value?: $mws_ui_treemenu_data_item )
 		{
 			if( value !== undefined )
 			{
@@ -80,13 +80,13 @@ namespace $.$$
 				}
 				return value
 			}
-			return value ?? {} as $milkywaystd_ui_treemenu_data_item
+			return value ?? {} as $mws_ui_treemenu_data_item
 		}
 
-		fill( subs: $.$mol_view[], input: readonly $milkywaystd_ui_treemenu_data_item[] )
+		fill( subs: $.$mol_view[], input: readonly $mws_ui_treemenu_data_item[] )
 		{
 
-			let stack = [ ...input ] as $milkywaystd_ui_treemenu_data_item[]
+			let stack = [ ...input ] as $mws_ui_treemenu_data_item[]
 			let index = 0
 			while( stack.length )
 			{
@@ -113,10 +113,10 @@ namespace $.$$
 				{
 					for( let child of element.items )
 					{
-						( child as $milkywaystd_ui_treemenu_data_item ).parent = element
+						( child as $mws_ui_treemenu_data_item ).parent = element
 					}
 
-					stack.push( ...element.items as $milkywaystd_ui_treemenu_data_item[] )
+					stack.push( ...element.items as $mws_ui_treemenu_data_item[] )
 				}
 				++index
 			}

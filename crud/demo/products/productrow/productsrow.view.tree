@@ -1,4 +1,4 @@
-$milkywaystd_crud_demo_products_productrow $mol_row
+$mws_crud_demo_products_productrow $mol_row
 	minimal_height 100
 	minimal_width 200
 	data null

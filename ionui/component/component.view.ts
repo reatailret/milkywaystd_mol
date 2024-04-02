@@ -1,5 +1,5 @@
 namespace $ {
-	export class $milkywaystd_ionui_component extends $milkywaystd_viewcontainer {
+	export class $mws_ionui_component extends $mws_viewcontainer {
 		
 		@ $mol_mem
 		classes(next?:Array<string>) : any{

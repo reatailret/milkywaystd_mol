@@ -1,9 +1,9 @@
 namespace $.$$ {
-	export class $milkywaystd_scroll_demo extends $.$milkywaystd_scroll_demo {
+	export class $mws_scroll_demo extends $.$mws_scroll_demo {
 		
 		ar: any = [];
 		itemRendererFactory() {
-			return new $milkywaystd_scroll_demo_testitemrenderer()
+			return new $mws_scroll_demo_testitemrenderer()
 		}
 
 		auto() {

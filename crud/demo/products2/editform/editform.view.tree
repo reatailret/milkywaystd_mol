@@ -1,4 +1,4 @@
-$milkywaystd_crud_demo_products2_editform $mol_page
+$mws_crud_demo_products2_editform $mol_page
 	tools /
 		<= Button_tools $mol_button_minor
 			title \Закрыть

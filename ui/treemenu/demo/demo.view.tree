@@ -1,4 +1,4 @@
-$milkywaystd_ui_treemenu_demo $mol_example_large
+$mws_ui_treemenu_demo $mol_example_large
 	title \Tree menu
 	tree_menu_items /
 		<= p1 *
@@ -13,7 +13,7 @@ $milkywaystd_ui_treemenu_demo $mol_example_large
 					link *
 						a \1
 	sub /
-		<= menu $milkywaystd_ui_treemenu
+		<= menu $mws_ui_treemenu
 			items <= tree_menu_items
 	tags /
 		\menu

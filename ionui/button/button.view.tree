@@ -1,4 +1,4 @@
-$milkywaystd_ionui_button $milkywaystd_ionui_component
+$mws_ionui_button $mws_ionui_component
 	dom_name \ion-button
 	sub /
 		<= title

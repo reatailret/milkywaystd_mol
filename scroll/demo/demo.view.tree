@@ -1,7 +1,7 @@
-$milkywaystd_scroll_demo $mol_example_large
+$mws_scroll_demo $mol_example_large
 	title \milkywaystd_scroll - virtual scroll
 	sub /
-		<= viewPort $milkywaystd_scroll_VirtualScrollViewport
+		<= viewPort $mws_scroll_VirtualScrollViewport
 			itemRendererFactory <= itemRendererFactory null
 			itemHeight 50
 			minBufferPx 400

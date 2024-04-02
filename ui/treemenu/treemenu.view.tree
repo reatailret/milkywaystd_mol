@@ -1,4 +1,4 @@
-$milkywaystd_ui_treemenu $mol_list
+$mws_ui_treemenu $mol_list
 	Trigger* $mol_check_expand
 		checked?val <=> expanded*?val false
 		enabled <= itemexpandable* false

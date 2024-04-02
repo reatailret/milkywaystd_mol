@@ -8,7 +8,7 @@ $mol_form_draft_demo_person $mol_object2
 	friends? /string
 	hobbies? *
 
-$milkywaystd_form_validator_demo $mol_example_large
+$mws_form_validator_demo $mol_example_large
 	title \Article draft form demo
 	-
 	message_done \Done
@@ -17,17 +17,17 @@ $milkywaystd_form_validator_demo $mol_example_large
 	sub /
 		<= Form $mol_form_draft
 			-
-			validator <= validator $milkywaystd_form_validator
+			validator <= validator $mws_form_validator
 				bids* => bids*
 				model_value* <= value_str*
 				validation *
 					name *
 						rules /
-							<= required_name $milkywaystd_form_rules_required
+							<= required_name $mws_form_rules_required
 					email *
 						rules /
-							<= required_email $milkywaystd_form_rules_required
-							<= email_email $milkywaystd_form_rules_email
+							<= required_email $mws_form_rules_required
+							<= email_email $mws_form_rules_email
 								error_message \Введите верный email адрес
 			-
 			model <= model $mol_form_draft_demo_person

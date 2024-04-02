@@ -1,5 +1,5 @@
 namespace $.$$ {
-	export class $milkywaystd_ionui_routeroutlet extends $.$milkywaystd_ionui_routeroutlet {
+	export class $mws_ionui_routeroutlet extends $.$mws_ionui_routeroutlet {
 		auto() {
 			
 			(this.dom_node() as any).delegate = this.delegate();

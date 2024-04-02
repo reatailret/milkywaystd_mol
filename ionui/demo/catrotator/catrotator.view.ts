@@ -1,6 +1,6 @@
 
 namespace $.$$ {
-	export class $milkywaystd_ionui_demo_catrotator extends $.$milkywaystd_ionui_demo_catrotator {
+	export class $mws_ionui_demo_catrotator extends $.$mws_ionui_demo_catrotator {
 
 		public static cache = new Map();
 		@ $mol_mem
@@ -45,14 +45,14 @@ namespace $.$$ {
 		imgSrc():null|string{
 		
 			if(!this.src()) return null;
-			if($milkywaystd_ionui_demo_catrotator.cache.has(this.src())) return $milkywaystd_ionui_demo_catrotator.cache.get(this.src())
+			if($mws_ionui_demo_catrotator.cache.has(this.src())) return $mws_ionui_demo_catrotator.cache.get(this.src())
 
 			const buffer = $mol_fetch.buffer(this.src()!);
 			//var arrayBufferView = new Uint8Array( this.response );
 			const blob = new Blob( [ buffer ], { type: "image/jpeg" } );
 			const urlCreator = window.URL || window.webkitURL;
 			const imageUrl = urlCreator.createObjectURL( blob );
-			$milkywaystd_ionui_demo_catrotator.cache.set(this.src(), imageUrl)
+			$mws_ionui_demo_catrotator.cache.set(this.src(), imageUrl)
 			return imageUrl;
 		}
 		subsciber:any=null;
@@ -60,14 +60,14 @@ namespace $.$$ {
 		rotate(){
 			
 			//this.src(Math.random());
-			$milkywaystd_ionui_demo_pages_page4.alert()
+			$mws_ionui_demo_pages_page4.alert()
 			
 		}
 		
 		
 		dom_id(): string
 		{
-			return '$milkywaystd_ionui_demo_route_catrotator_' + this.idx()
+			return '$mws_ionui_demo_route_catrotator_' + this.idx()
 		}
 
 

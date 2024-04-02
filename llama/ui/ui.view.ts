@@ -1,5 +1,5 @@
 namespace $.$$ {
-    export class $milkywaystd_llama_ui extends $.$milkywaystd_llama_ui {
+    export class $mws_llama_ui extends $.$mws_llama_ui {
         auto() {
             console.log('CALL AUTO')
             if (!$mol_state_arg.dict()['page']) {

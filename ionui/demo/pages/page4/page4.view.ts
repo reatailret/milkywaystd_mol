@@ -1,5 +1,5 @@
 namespace $.$$ {
-	export class $milkywaystd_ionui_demo_pages_page4 extends $.$milkywaystd_ionui_demo_pages_page4 {
+	export class $mws_ionui_demo_pages_page4 extends $.$mws_ionui_demo_pages_page4 {
 		ar: any = [];
 		static alert(){
 			const alert= document.createElement('ion-alert')  as any;
@@ -32,7 +32,7 @@ namespace $.$$ {
 			this.pending(true);
 			setTimeout(() => {
 				
-				$milkywaystd_ionui_demo_catrotator.cache.clear()
+				$mws_ionui_demo_catrotator.cache.clear()
 				this.ar = [];
 				for (let index = 0; index < 10; index++) {
 					this.ar.push({ id: index });
@@ -75,7 +75,7 @@ namespace $.$$ {
 		}
 
 		itemRendererFactory() {
-			return new $milkywaystd_ionui_demo_catrotator();
+			return new $mws_ionui_demo_catrotator();
 		}
 		@$mol_mem
 		getSpinnerDisplay() {

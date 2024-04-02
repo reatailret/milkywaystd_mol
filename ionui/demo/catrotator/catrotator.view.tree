@@ -1,20 +1,20 @@
-$milkywaystd_ionui_demo_catrotator $milkywaystd_viewcontainer
+$mws_ionui_demo_catrotator $mws_viewcontainer
 	
 	sub /
-		<= IonCard $milkywaystd_ionui_card
+		<= IonCard $mws_ionui_card
 			sub /
-				<= IonImg $milkywaystd_ionui_img
+				<= IonImg $mws_ionui_img
 					attr *
 						src <= imgSrc null
-				<= IonCardHeader $milkywaystd_ionui_cardheader
+				<= IonCardHeader $mws_ionui_cardheader
 					sub /
-						<= IonCardSubitle $milkywaystd_ionui_cardsubtitle
+						<= IonCardSubitle $mws_ionui_cardsubtitle
 							sub /
 								<= txt \Awesome images
-				<= IonCardcontent $milkywaystd_ionui_cardcontent
+				<= IonCardcontent $mws_ionui_cardcontent
 					sub /
 						<= idx 0
-						<= btn $milkywaystd_ionui_button
+						<= btn $mws_ionui_button
 							sub /
 								<= txt2 \Vote
 							event *

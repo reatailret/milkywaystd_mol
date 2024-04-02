@@ -1,5 +1,5 @@
 namespace $.$$ {
-  export class $milkywaystd_crud_demo_products extends $.$milkywaystd_crud_demo_products {
+  export class $mws_crud_demo_products extends $.$mws_crud_demo_products {
     constructor() {
       super();
     }
@@ -25,7 +25,7 @@ namespace $.$$ {
 	}
 	form_factory(): any
 	{
-		return new $milkywaystd_crud_demo_products_editform()
+		return new $mws_crud_demo_products_editform()
 	}
    
   }

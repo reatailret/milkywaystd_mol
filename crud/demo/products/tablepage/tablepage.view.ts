@@ -1,12 +1,12 @@
 namespace $.$$
 {
-  export class $milkywaystd_crud_demo_products_tablepage extends $.$milkywaystd_crud_demo_products_tablepage
+  export class $mws_crud_demo_products_tablepage extends $.$mws_crud_demo_products_tablepage
   {
     @$mol_mem
     service()
     {
 
-      const srv = $milkywaystd_crud_demo_products_service.getInstance()
+      const srv = $mws_crud_demo_products_service.getInstance()
       const params = $mol_mem_cached( () => srv.params() )
       srv.params( { ...params, 'sort[0]': 'id:desc' } )
       return srv

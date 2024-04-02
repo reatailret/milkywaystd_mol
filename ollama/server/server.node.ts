@@ -1,6 +1,6 @@
 namespace $ {
 	
-	export class $milkywaystd_ollama_server extends $mol_server {
+	export class $mws_ollama_server extends $mol_server {
 		port() {
 			return 9081
 		}
@@ -57,5 +57,5 @@ namespace $ {
 			
 		}
 	}
-	$milkywaystd_ollama_server.make({}).socket()
+	$mws_ollama_server.make({}).socket()
 }

@@ -1,9 +1,9 @@
 namespace $.$$ {
 	/** A strategy that dictates which items should be rendered in the viewport. */
-	export interface $milkywaystd_scroll_interface_IVirtualScrollStrategy {
+	export interface $mws_scroll_interface_IVirtualScrollStrategy {
 		/** Emits when the index of the first element visible in the viewport changes. */
 
-		scrolledIndexChange: $milkywaystd_classes_stream<number> | null;
+		scrolledIndexChange: $mws_classes_stream<number> | null;
 
 		/**
 		 * Attaches this scroll strategy to a viewport.

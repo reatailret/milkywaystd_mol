@@ -2,12 +2,12 @@ namespace $
 {
 	type ValidationObject = {
 		[ key: string ]: {
-			rules: $milkywaystd_form_rules_rule[]
+			rules: $mws_form_rules_rule[]
 		}
 	}
-	export class $milkywaystd_form_validator extends $mol_object
+	export class $mws_form_validator extends $mol_object
 	{
-		public validators(): $milkywaystd_form_rules_rule[]
+		public validators(): $mws_form_rules_rule[]
 		{
 			return []
 		}

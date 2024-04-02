@@ -1,6 +1,6 @@
 namespace $
 {
-	export class $milkywaystd_form_rules_email extends $mol_object
+	export class $mws_form_rules_email extends $mol_object
 	{
 		public error_message()
 		{

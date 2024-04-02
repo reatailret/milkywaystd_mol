@@ -1,5 +1,5 @@
 namespace $.$$ {
-	export class $milkywaystd_ionui_route extends $.$milkywaystd_ionui_route {
+	export class $mws_ionui_route extends $.$mws_ionui_route {
 		component: $mol_view | typeof $mol_view | null = null;
 		url: string | null = null;
 		cmp: string | null = null;

@@ -1,4 +1,4 @@
-$milkywaystd_crud_demo_products_editform $mol_page
+$mws_crud_demo_products_editform $mol_page
 	
 	title <= formtitle \
 	tools /

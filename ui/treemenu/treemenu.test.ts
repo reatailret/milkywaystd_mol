@@ -18,8 +18,8 @@ namespace $.$$
 					label: "Item2 LINK",
 					link: { page: "link2" },
 				},
-			] as $milkywaystd_ui_treemenu_data_item[]
-			const treemenu = new $milkywaystd_ui_treemenu()
+			] as $mws_ui_treemenu_data_item[]
+			const treemenu = new $mws_ui_treemenu()
 
 			treemenu.items( menuitems )
 			treemenu.sub()
