@@ -8,11 +8,11 @@ namespace $.$$
 		{
 
 
-			const srv = new $milkywaystd_crud<testProduct>()
+			const srv = new $mws_crud<testProduct>()
 			
 			const context_mock = $mol_ambient( {
 				// ambient context override
-				$milkywaystd_fetch: Object.assign({},$milkywaystd_fetch,{
+				$mws_fetch: Object.assign({},$mws_fetch,{
 					json: ( request:RequestInfo, params: RequestInit ) =>
 					{
 						if( params.method === 'PATCH' || params.method === 'PUT' )

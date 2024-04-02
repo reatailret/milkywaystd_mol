@@ -1,7 +1,7 @@
 namespace $ {
 
 	const error_showed = new WeakMap< Error, $mol_view >()
-	export class $milkywaystd_viewcontainer extends $mol_view {
+	export class $mws_viewcontainer extends $mol_view {
 
 		loaderElement:any = null;
 		addLoaderElement(){

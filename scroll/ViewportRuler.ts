@@ -22,12 +22,12 @@ export interface ViewportScrollPosition {
  * @docs-private
  */
 
-export class $milkywaystd_scroll_ViewportRuler  {
+export class $mws_scroll_ViewportRuler  {
   /** Cached viewport dimensions. */
   private _viewportSize: {width: number; height: number} | null = null;
 
   /** Stream of viewport change events. */
-  private readonly _change = $milkywaystd_classes_stream<Event>();
+  private readonly _change = $mws_classes_stream<Event>();
 
   /** Event listener that will be used to handle the viewport change events. */
   private _changeListener = (event: Event) => {
@@ -147,7 +147,7 @@ export class $milkywaystd_scroll_ViewportRuler  {
    * This stream emits outside of the Angular zone.
    * @param throttleTime Time in milliseconds to throttle the stream.
    */
-  change(throttleTime: number = DEFAULT_RESIZE_TIME): $milkywaystd_classes_stream<Event> {
+  change(throttleTime: number = DEFAULT_RESIZE_TIME): $mws_classes_stream<Event> {
     return throttleTime > 0 ? this._change.auditTime(throttleTime) : this._change;
   }
 

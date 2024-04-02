@@ -43,19 +43,19 @@ namespace $.$$ {
 	 * container.
 	 */
 	type DataSource = any;
-	export class $milkywaystd_scroll_VirtualForOf extends $.$mol_view {
+	export class $mws_scroll_VirtualForOf extends $.$mol_view {
 		/** Emits when the rendered view of the data changes. */
-		readonly viewChange:any = $milkywaystd_classes_stream<ListRange>();
+		readonly viewChange:any = $mws_classes_stream<ListRange>();
 
 		/** Subject that emits when a new DataSource instance is given. */
 		private readonly _dataSourceChanges =
-			$milkywaystd_classes_stream<DataSource>();
+			$mws_classes_stream<DataSource>();
 
 		/** The DataSource to display. */
 
 		get cdkVirtualForOf():
 			| DataSource
-			| $milkywaystd_classes_stream<[]>
+			| $mws_classes_stream<[]>
 			| null
 			| undefined {
 			return this._cdkVirtualForOf;
@@ -63,7 +63,7 @@ namespace $.$$ {
 		set cdkVirtualForOf(
 			value:
 				| DataSource
-				| $milkywaystd_classes_stream<[]>
+				| $mws_classes_stream<[]>
 				| null
 				| undefined
 		) {
@@ -73,7 +73,7 @@ namespace $.$$ {
 
 		_cdkVirtualForOf:
 			| DataSource
-			| $milkywaystd_classes_stream<[]>
+			| $mws_classes_stream<[]>
 			| null
 			| undefined;
 
@@ -136,12 +136,12 @@ namespace $.$$ {
 		}
 
 		/** Emits whenever the data in the current DataSource changes. */
-		readonly dataStream: $milkywaystd_classes_stream<[]> =
+		readonly dataStream: $mws_classes_stream<[]> =
 			this._dataSourceChanges;
 
 		/** The differ used to calculate changes to the data. */
 		private _differ =
-			new $milkywaystd_classes_DefaultIterableDifferFactory().create();
+			new $mws_classes_DefaultIterableDifferFactory().create();
 
 		/** The most recent data emitted from the DataSource. */
 		private _data:any;
@@ -155,7 +155,7 @@ namespace $.$$ {
 		/** Whether the rendered data should be updated during the next ngDoCheck cycle. */
 		private _needsUpdate = false;
 
-		private readonly _destroyed = $milkywaystd_classes_stream();
+		private readonly _destroyed = $mws_classes_stream();
 
 		/** The view container to add items to. */
 		_viewContainerRef() {
@@ -166,11 +166,11 @@ namespace $.$$ {
 		
 		/** The strategy used to render items in the virtual scroll viewport. */
 		//_viewRepeater: _RecycleViewRepeaterStrategy<T, T, CdkVirtualForOfContext<T>>,
-		_viewRepeater = new $milkywaystd_scroll_RecycleViewRepeaterStrategy();//new $milkywaystd_scroll_DisposeViewRepeaterStrategy(); //
+		_viewRepeater = new $mws_scroll_RecycleViewRepeaterStrategy();//new $mws_scroll_DisposeViewRepeaterStrategy(); //
 		// //
 		/** The virtual scrolling viewport that these items are being rendered in. */
 		//_viewport: CdkVirtualScrollViewport,
-		_viewport: $milkywaystd_scroll_VirtualScrollViewportController | null =
+		_viewport: $mws_scroll_VirtualScrollViewportController | null =
 			null;
 
 		init() {

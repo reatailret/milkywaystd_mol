@@ -83,7 +83,7 @@ namespace $.$$ {
 	) => void;
 
 	/**
-	 * Describes a strategy for rendering items in a {@link $milkywaystd_scroll_VirtualForOf}.
+	 * Describes a strategy for rendering items in a {@link $mws_scroll_VirtualForOf}.
 	 *
 	 * @template T The type for the embedded view's implicit property.
 	 * @template R The type for the item in each IterableDiffer change record.
@@ -96,7 +96,7 @@ namespace $.$$ {
 	> {
 		applyChanges(
 			changes: IterableChanges<R>,
-			viewContainerRef: $milkywaystd_scroll_VirtualForOf,
+			viewContainerRef: $mws_scroll_VirtualForOf,
 			itemContextFactory: _ViewRepeaterItemContextFactory<T, R, C>,
 			itemValueResolver: _ViewRepeaterItemValueResolver<T, R>,
 			itemViewChanged?: _ViewRepeaterItemChanged<R, C>
@@ -107,7 +107,7 @@ namespace $.$$ {
 
 	/**
 	 * A repeater that caches views when they are removed from a
-	 * {@link $milkywaystd_scroll_VirtualForOf}. When new items are inserted into the container,
+	 * {@link $mws_scroll_VirtualForOf}. When new items are inserted into the container,
 	 * the repeater will reuse one of the cached views instead of creating a new
 	 * embedded view. Recycling cached views reduces the quantity of expensive DOM
 	 * inserts.
@@ -116,7 +116,7 @@ namespace $.$$ {
 	 * @template R The type for the item in each IterableDiffer change record.
 	 * @template C The type for the context passed to each embedded view.
 	 */
-	export class $milkywaystd_scroll_RecycleViewRepeaterStrategy<
+	export class $mws_scroll_RecycleViewRepeaterStrategy<
 		T,
 		R,
 		C extends _ViewRepeaterItemContext<T>
@@ -139,8 +139,8 @@ namespace $.$$ {
 
 		/** Apply changes to the DOM. */
 		applyChanges2(
-			changes: Array<$milkywaystd_scroll_Diff>,
-			viewContainerRef: $milkywaystd_scroll_VirtualForOf,
+			changes: Array<$mws_scroll_Diff>,
+			viewContainerRef: $mws_scroll_VirtualForOf,
 			itemContextFactory: _ViewRepeaterItemContextFactory<T, R, C>,
 			itemValueResolver: _ViewRepeaterItemValueResolver<T, R>,
 			itemViewChanged?: _ViewRepeaterItemChanged<R, C>
@@ -201,7 +201,7 @@ namespace $.$$ {
 		}
 		applyChanges(
 			changes: IterableChanges<R>,
-			viewContainerRef: $milkywaystd_scroll_VirtualForOf,
+			viewContainerRef: $mws_scroll_VirtualForOf,
 			itemContextFactory: _ViewRepeaterItemContextFactory<T, R, C>,
 			itemValueResolver: _ViewRepeaterItemValueResolver<T, R>,
 			itemViewChanged?: _ViewRepeaterItemChanged<R, C>,
@@ -269,7 +269,7 @@ namespace $.$$ {
 		private _insertView(
 			viewArgsFactory: () => _ViewRepeaterItemInsertArgs<C>,
 			currentIndex: number,
-			viewContainerRef: $milkywaystd_scroll_VirtualForOf,
+			viewContainerRef: $mws_scroll_VirtualForOf,
 			value: T
 		): any | undefined {
 			const cachedView = this._insertViewFromCache(
@@ -295,7 +295,7 @@ namespace $.$$ {
 		/** Detaches the view at the given index and inserts into the view cache. */
 		private _detachAndCacheView(
 			index: number,
-			viewContainerRef: $milkywaystd_scroll_VirtualForOf
+			viewContainerRef: $mws_scroll_VirtualForOf
 		) {
 			const detachedView = viewContainerRef.detach(
 				index
@@ -308,7 +308,7 @@ namespace $.$$ {
 		private _moveView(
 			adjustedPreviousIndex: number,
 			currentIndex: number,
-			viewContainerRef: $milkywaystd_scroll_VirtualForOf,
+			viewContainerRef: $mws_scroll_VirtualForOf,
 			value: T
 		): any {
 			const view = viewContainerRef.get(
@@ -326,7 +326,7 @@ namespace $.$$ {
 		 */
 		private _maybeCacheView(
 			view: any,
-			viewContainerRef: $milkywaystd_scroll_VirtualForOf
+			viewContainerRef: $mws_scroll_VirtualForOf
 		) {
 			if (this._viewCache.length < this.viewCacheSize) {
 				
@@ -351,7 +351,7 @@ namespace $.$$ {
 		/** Inserts a recycled view from the cache at the given index. */
 		private _insertViewFromCache(
 			index: number,
-			viewContainerRef: $milkywaystd_scroll_VirtualForOf
+			viewContainerRef: $mws_scroll_VirtualForOf
 		): any | null {
 			const cachedView = this._viewCache.pop();
 			if (cachedView) {
@@ -371,7 +371,7 @@ namespace $.$$ {
 	 * @template R The type for the item in each IterableDiffer change record.
 	 * @template C The type for the context passed to each embedded view.
 	 */
-	export class $milkywaystd_scroll_DisposeViewRepeaterStrategy<
+	export class $mws_scroll_DisposeViewRepeaterStrategy<
 		T,
 		R,
 		C extends _ViewRepeaterItemContext<T>

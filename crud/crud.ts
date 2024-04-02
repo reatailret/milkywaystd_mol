@@ -1,7 +1,7 @@
 namespace $
 {
-	type $milkywaystd_crud_id_type = string | number
-	export enum $milkywaystd_crud_events
+	type $mws_crud_id_type = string | number
+	export enum $mws_crud_events
 	{
 		FETCH_LIST_START,
 		FETCH_LIST_END,
@@ -27,7 +27,7 @@ namespace $
 		CREATE_END,
 		CREATE_ERROR,
 	}
-	export class $milkywaystd_crud<T> extends $.$mol_object2
+	export class $mws_crud<T> extends $.$mol_object2
 	{
 		_headers: Record<string, string> = {
 			"Content-Type": "application/json",
@@ -121,7 +121,7 @@ namespace $
 			return url
 		}
 		@$mol_mem_key
-		urlOne( id?: $milkywaystd_crud_id_type ): string
+		urlOne( id?: $mws_crud_id_type ): string
 		{
 			if( !id )
 			{
@@ -160,7 +160,7 @@ namespace $
 			return obj
 		}
 		_cachedObject = new Map();
-		getCachedObject( id: $milkywaystd_crud_id_type )
+		getCachedObject( id: $mws_crud_id_type )
 		{
 			return this._cachedObject.get( id )
 		}
@@ -275,16 +275,16 @@ namespace $
 
 				this.trackEvent(
 					"list",
-					$milkywaystd_crud_events.FETCH_LIST_START
+					$mws_crud_events.FETCH_LIST_START
 				)
 
-				var response = this.$.$milkywaystd_fetch.json( this.urlList(), {
+				var response = this.$.$mws_fetch.json( this.urlList(), {
 					method: "GET",
 					headers: { ...( this.headers() as HeadersInit ) },
 				} )
 				this.trackEvent(
 					"list",
-					$milkywaystd_crud_events.FETCH_LIST_END
+					$mws_crud_events.FETCH_LIST_END
 				)
 				this.isPending( false )
 			} catch( error )
@@ -293,7 +293,7 @@ namespace $
 
 				this.trackEvent(
 					"list",
-					$milkywaystd_crud_events.FETCH_LIST_ERROR,
+					$mws_crud_events.FETCH_LIST_ERROR,
 					error as ErrorResponse
 				)
 				this.isPending( false )
@@ -308,26 +308,26 @@ namespace $
 		}
 
 		@$mol_action
-		public fetchOne( id: $milkywaystd_crud_id_type )
+		public fetchOne( id: $mws_crud_id_type )
 		{
 			try
 			{
 				this.isPending( true )
-				this.trackEvent( id, $milkywaystd_crud_events.ONE_FETCH_START )
+				this.trackEvent( id, $mws_crud_events.ONE_FETCH_START )
 
-				var response = this.$.$milkywaystd_fetch.json( this.urlOne( id ), {
+				var response = this.$.$mws_fetch.json( this.urlOne( id ), {
 					method: "GET",
 					headers: { ...( this.headers() as HeadersInit ) },
 				} )
 				this.isPending( false )
-				this.trackEvent( id, $milkywaystd_crud_events.ONE_FETCH_END )
+				this.trackEvent( id, $mws_crud_events.ONE_FETCH_END )
 			} catch( error )
 			{
 				$mol_fail_catch( error )
 				this.isPending( false )
 				this.trackEvent(
 					id,
-					$milkywaystd_crud_events.ONE_FETCH_ERROR,
+					$mws_crud_events.ONE_FETCH_ERROR,
 					error as ErrorResponse
 				)
 
@@ -339,17 +339,17 @@ namespace $
 		}
 
 		@$mol_action
-		public create( item: Partial<T>, id?: $milkywaystd_crud_id_type )
+		public create( item: Partial<T>, id?: $mws_crud_id_type )
 		{
 			try
 			{
 				this.isPending( true )
 				if( id )
 				{
-					this.trackEvent( id, $milkywaystd_crud_events.CREATE_START )
+					this.trackEvent( id, $mws_crud_events.CREATE_START )
 				}
 
-				var response = this.$.$milkywaystd_fetch.json( this.url(), {
+				var response = this.$.$mws_fetch.json( this.url(), {
 					method: "POST",
 					body: JSON.stringify( this.packPostData( item ) ),
 					headers: this.headers() as HeadersInit,
@@ -357,7 +357,7 @@ namespace $
 				this.isPending( false )
 				if( id )
 				{
-					this.trackEvent( id, $milkywaystd_crud_events.CREATE_END )
+					this.trackEvent( id, $mws_crud_events.CREATE_END )
 				}
 			} catch( error )
 			{
@@ -367,7 +367,7 @@ namespace $
 				{
 					this.trackEvent(
 						id,
-						$milkywaystd_crud_events.CREATE_ERROR,
+						$mws_crud_events.CREATE_ERROR,
 						error as ErrorResponse
 					)
 				}
@@ -385,36 +385,36 @@ namespace $
 		}
 
 		@$mol_action
-		public updateOne( id: $milkywaystd_crud_id_type, item: Partial<T> )
+		public updateOne( id: $mws_crud_id_type, item: Partial<T> )
 		{
 			return this.editFn( id, item, "PATCH" )
 		}
 		@$mol_action
-		public replaceOne( id: $milkywaystd_crud_id_type, item: Partial<T> )
+		public replaceOne( id: $mws_crud_id_type, item: Partial<T> )
 		{
 			return this.editFn( id, item, "PUT" )
 		}
 		@$mol_action
-		public deleteOne( id: $milkywaystd_crud_id_type )
+		public deleteOne( id: $mws_crud_id_type )
 		{
 			try
 			{
 				this.isPending( true )
-				this.trackEvent( id, $milkywaystd_crud_events.ONE_DELETE_START )
+				this.trackEvent( id, $mws_crud_events.ONE_DELETE_START )
 
-				this.$.$milkywaystd_fetch.json( this.urlOne( id ), {
+				this.$.$mws_fetch.json( this.urlOne( id ), {
 					method: "DELETE",
 					headers: this.headers() as HeadersInit,
 				} )
 				this.isPending( false )
-				this.trackEvent( id, $milkywaystd_crud_events.ONE_DELETE_END )
+				this.trackEvent( id, $mws_crud_events.ONE_DELETE_END )
 			} catch( error )
 			{
 				$mol_fail_catch( error )
 				this.isPending( false )
 				this.trackEvent(
 					id,
-					$milkywaystd_crud_events.ONE_DELETE_ERROR,
+					$mws_crud_events.ONE_DELETE_ERROR,
 					error as ErrorResponse
 				)
 
@@ -427,7 +427,7 @@ namespace $
 		}
 		@$mol_action
 		private editFn(
-			id: $milkywaystd_crud_id_type,
+			id: $mws_crud_id_type,
 			item: Partial<T>,
 			method: "PATCH" | "PUT"
 		)
@@ -439,11 +439,11 @@ namespace $
 				this.trackEvent(
 					id,
 					method === "PATCH"
-						? $milkywaystd_crud_events.ONE_UPDATE_START
-						: $milkywaystd_crud_events.ONE_REPLACE_START
+						? $mws_crud_events.ONE_UPDATE_START
+						: $mws_crud_events.ONE_REPLACE_START
 				)
 
-				var response = this.$.$milkywaystd_fetch.json( this.urlOne( id ), {
+				var response = this.$.$mws_fetch.json( this.urlOne( id ), {
 					method: method,
 					body: JSON.stringify(
 						method === "PATCH"
@@ -456,8 +456,8 @@ namespace $
 				this.trackEvent(
 					id,
 					method === "PATCH"
-						? $milkywaystd_crud_events.ONE_UPDATE_END
-						: $milkywaystd_crud_events.ONE_REPLACE_END
+						? $mws_crud_events.ONE_UPDATE_END
+						: $mws_crud_events.ONE_REPLACE_END
 				)
 			} catch( error )
 			{
@@ -466,8 +466,8 @@ namespace $
 				this.trackEvent(
 					id,
 					method === "PATCH"
-						? $milkywaystd_crud_events.ONE_UPDATE_ERROR
-						: $milkywaystd_crud_events.ONE_REPLACE_ERROR,
+						? $mws_crud_events.ONE_UPDATE_ERROR
+						: $mws_crud_events.ONE_REPLACE_ERROR,
 					error as ErrorResponse
 				)
 
@@ -491,7 +491,7 @@ namespace $
 			}
 		}
 		@$mol_action
-		removeListItem( id: $milkywaystd_crud_id_type )
+		removeListItem( id: $mws_crud_id_type )
 		{
 			let list = [ ...this.list() ]
 			const exist = list.findIndex(
@@ -587,8 +587,8 @@ namespace $
 		}
 		@$mol_action
 		trackEvent(
-			id: $milkywaystd_crud_id_type,
-			status?: $milkywaystd_crud_events | "",
+			id: $mws_crud_id_type,
+			status?: $mws_crud_events | "",
 			error?: ErrorResponse
 		)
 		{
@@ -599,7 +599,7 @@ namespace $
 
 			switch( status )
 			{
-				case $milkywaystd_crud_events.CREATE_START:
+				case $mws_crud_events.CREATE_START:
 					$mol_wire_async( this ).creatingChannel(
 						`${ id }`,
 						$mol_promise() as any
@@ -609,12 +609,12 @@ namespace $
 						$mol_promise() as any
 					)
 					break
-				case $milkywaystd_crud_events.ONE_REPLACE_START:
-				case $milkywaystd_crud_events.ONE_UPDATE_START:
-				case $milkywaystd_crud_events.ONE_DELETE_START:
-				case $milkywaystd_crud_events.ONE_FETCH_START:
+				case $mws_crud_events.ONE_REPLACE_START:
+				case $mws_crud_events.ONE_UPDATE_START:
+				case $mws_crud_events.ONE_DELETE_START:
+				case $mws_crud_events.ONE_FETCH_START:
 					this.isOnePending( true )
-					if( $milkywaystd_crud_events.ONE_FETCH_START !== status )
+					if( $mws_crud_events.ONE_FETCH_START !== status )
 					{
 						$mol_wire_async( this ).byIdR(
 							`${ id }`,
@@ -623,36 +623,36 @@ namespace $
 					}
 
 					break
-				case $milkywaystd_crud_events.FETCH_LIST_START:
+				case $mws_crud_events.FETCH_LIST_START:
 					this.isListPending( true )
 					break
-				case $milkywaystd_crud_events.FETCH_LIST_END:
+				case $mws_crud_events.FETCH_LIST_END:
 					this.isListPending( false )
 					break
-				case $milkywaystd_crud_events.FETCH_LIST_ERROR:
+				case $mws_crud_events.FETCH_LIST_ERROR:
 					this.listPendingChanel( false )
 					break
-				case $milkywaystd_crud_events.CREATE_END:
-				case $milkywaystd_crud_events.ONE_REPLACE_END:
-				case $milkywaystd_crud_events.ONE_UPDATE_END:
-				case $milkywaystd_crud_events.ONE_DELETE_END:
-				case $milkywaystd_crud_events.ONE_FETCH_END:
-					if( $milkywaystd_crud_events.ONE_FETCH_END !== status )
+				case $mws_crud_events.CREATE_END:
+				case $mws_crud_events.ONE_REPLACE_END:
+				case $mws_crud_events.ONE_UPDATE_END:
+				case $mws_crud_events.ONE_DELETE_END:
+				case $mws_crud_events.ONE_FETCH_END:
+					if( $mws_crud_events.ONE_FETCH_END !== status )
 						this.isOnePending( false )
 
 					break
 
-				case $milkywaystd_crud_events.CREATE_ERROR:
-				case $milkywaystd_crud_events.ONE_REPLACE_ERROR:
-				case $milkywaystd_crud_events.ONE_UPDATE_ERROR:
-				case $milkywaystd_crud_events.ONE_DELETE_ERROR:
-				case $milkywaystd_crud_events.ONE_FETCH_ERROR:
+				case $mws_crud_events.CREATE_ERROR:
+				case $mws_crud_events.ONE_REPLACE_ERROR:
+				case $mws_crud_events.ONE_UPDATE_ERROR:
+				case $mws_crud_events.ONE_DELETE_ERROR:
+				case $mws_crud_events.ONE_FETCH_ERROR:
 					this.isOnePending( false )
-					if( $milkywaystd_crud_events.ONE_FETCH_ERROR !== status )
+					if( $mws_crud_events.ONE_FETCH_ERROR !== status )
 					{
 						//
 
-						if( $milkywaystd_crud_events.CREATE_ERROR === status )
+						if( $mws_crud_events.CREATE_ERROR === status )
 						{
 							try
 							{
@@ -673,7 +673,7 @@ namespace $
 		}
 
 		@$mol_mem_key
-		trackEventChannel( id: string, status?: $milkywaystd_crud_events | "" )
+		trackEventChannel( id: string, status?: $mws_crud_events | "" )
 		{
 			return status ?? ""
 		}

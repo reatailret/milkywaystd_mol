@@ -14,7 +14,7 @@ namespace $.$$ {
 		(): T;
 	}
 
-	export class $milkywaystd_classes_StreamClass<T> {
+	export class $mws_classes_StreamClass<T> {
 		private listeners: StreamListener<T>[] = [];
 		private dependents: StreamDependent<T>[] = [];
 		private started: boolean = false;
@@ -38,7 +38,7 @@ namespace $.$$ {
 			stream$.changed = false;
 			stream$.listeners = [];
 			stream$.dependents = [];
-			Object.setPrototypeOf(stream$, $milkywaystd_classes_StreamClass.prototype);
+			Object.setPrototypeOf(stream$, $mws_classes_StreamClass.prototype);
 			return stream$;
 		}
 
@@ -265,12 +265,12 @@ namespace $.$$ {
 	}
 
 	// dirty workaround as typescript does not support callable class for now
-	type Stream<T> = $milkywaystd_classes_StreamClass<T> & StreamCallable<T>;
-	export type $milkywaystd_classes_stream<T> = $milkywaystd_classes_StreamClass<T> &
+	type Stream<T> = $mws_classes_StreamClass<T> & StreamCallable<T>;
+	export type $mws_classes_stream<T> = $mws_classes_StreamClass<T> &
 		StreamCallable<T>;
-	const Stream = Object.assign($milkywaystd_classes_StreamClass.create, $milkywaystd_classes_StreamClass);
-	export const $milkywaystd_classes_stream = Object.assign(
-		$milkywaystd_classes_StreamClass.create, $milkywaystd_classes_StreamClass
+	const Stream = Object.assign($mws_classes_StreamClass.create, $mws_classes_StreamClass);
+	export const $mws_classes_stream = Object.assign(
+		$mws_classes_StreamClass.create, $mws_classes_StreamClass
 	);
 }
 // console.log('=========== stream tests ============')

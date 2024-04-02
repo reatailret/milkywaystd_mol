@@ -1,7 +1,7 @@
 namespace $
 {
 	
-	export class $milkywaystd_view extends $mol_view {
+	export class $mws_view extends $mol_view {
 
 		protected mol_dom_render_children_after(){
 

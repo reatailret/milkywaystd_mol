@@ -12,7 +12,7 @@ namespace $
 			return []
 		}
 		@$mol_mem_key
-		public model_value( next?: any )
+		public model_value( field:string, next?: any )
 		{
 			return next ?? null
 		}
@@ -32,10 +32,7 @@ namespace $
 
 			for( const validator of v[ field ].rules )
 			{
-				if( !validator.validate( o ) )
-				{
-					return validator.error_message()
-				}
+				return validator.validate( o )
 			}
 
 			return null
@@ -50,12 +47,13 @@ namespace $
 				return []
 
 
-			const result = []
+			const result:string[] = []
 
 			for( const validator of v[ field ].rules )
 			{
-
-				result.push( validator.validate( o ) )
+				const message = validator.validate( o );
+				if(message)
+				result.push(  )
 			}
 			return result
 		}

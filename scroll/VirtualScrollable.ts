@@ -1,8 +1,8 @@
 namespace $.$$ {
-	export abstract class $milkywaystd_scroll_VirtualScrollable extends $milkywaystd_scroll_Scrollable {
+	export abstract class $mws_scroll_VirtualScrollable extends $mws_scroll_Scrollable {
 		constructor(
 			elementRef: Element,
-			scrollDispatcher: $milkywaystd_scroll_ScrollDispatcher,
+			scrollDispatcher: $mws_scroll_ScrollDispatcher,
 			dir?: any,
 		  ) {
 			super(elementRef, scrollDispatcher, dir);

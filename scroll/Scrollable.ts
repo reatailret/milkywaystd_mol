@@ -17,22 +17,22 @@ namespace $.$$ {
 	 * start, and end properties.
 	 */
 	export type ExtendedScrollToOptions = _XAxis & _YAxis & ScrollOptions;
-	export class $milkywaystd_scroll_Scrollable {
-		protected readonly _destroyed: $milkywaystd_classes_stream<boolean> =
-			$milkywaystd_classes_stream(true);
+	export class $mws_scroll_Scrollable {
+		protected readonly _destroyed: $mws_classes_stream<boolean> =
+			$mws_classes_stream(true);
 
 		// taleUntil this._destroyed
-		protected _elementScrolled: $milkywaystd_classes_stream<Event> | null = null;
+		protected _elementScrolled: $mws_classes_stream<Event> | null = null;
 
 		_elementRef: Element;
 		destructor() {
 			//this._elementRef.removeEventListener('scroll',this.scrolled);
 		}
 
-		scrollDispatcher: $milkywaystd_scroll_ScrollDispatcher;
+		scrollDispatcher: $mws_scroll_ScrollDispatcher;
 		constructor(
 			elementRef: Element,
-			scrollDispatcher: $milkywaystd_scroll_ScrollDispatcher,
+			scrollDispatcher: $mws_scroll_ScrollDispatcher,
 			dirr?: any
 		) {
 			this._elementRef = elementRef;
@@ -50,7 +50,7 @@ namespace $.$$ {
 
 		Init() {
 			
-			this._elementScrolled = $milkywaystd_classes_StreamClass.fromEvent(
+			this._elementScrolled = $mws_classes_StreamClass.fromEvent(
 				this._elementRef as HTMLElement,
 				"scroll"
 			);
@@ -58,7 +58,7 @@ namespace $.$$ {
 		}
 		/** Returns observable that emits when a scroll event is fired on the host element. */
 
-		elementScrolled(): $milkywaystd_classes_stream<Event>|null {
+		elementScrolled(): $mws_classes_stream<Event>|null {
 			return this._elementScrolled;
 		}
 

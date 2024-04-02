@@ -1,29 +1,29 @@
 namespace $.$$ {
-	export class $milkywaystd_scroll_VirtualScrollViewport extends $.$milkywaystd_scroll_VirtualScrollViewport {
+	export class $mws_scroll_VirtualScrollViewport extends $.$mws_scroll_VirtualScrollViewport {
 		
-		protected forOf:null|$milkywaystd_scroll_VirtualForOf = null;
-		public forOfCtl:null|$milkywaystd_scroll_VirtualScrollViewportController = null;
+		protected forOf:null|$mws_scroll_VirtualForOf = null;
+		public forOfCtl:null|$mws_scroll_VirtualScrollViewportController = null;
 		
 		getForOf(){
 
 			if(!this.forOf){
 
-				this.forOfCtl = new $milkywaystd_scroll_VirtualScrollViewportController(
+				this.forOfCtl = new $mws_scroll_VirtualScrollViewportController(
 					this.dom_node(),
-					new $milkywaystd_scroll_strategy_FixedSizeVirtualScrollStrategy(
+					new $mws_scroll_strategy_FixedSizeVirtualScrollStrategy(
 						this.itemHeight(),
 						this.minBufferPx(),
 						this.maxBufferPx()
 					),
 					null,
 					
-					new $milkywaystd_scroll_ScrollDispatcher(window.document),
-					new $milkywaystd_scroll_ViewportRuler(window.document),
+					new $mws_scroll_ScrollDispatcher(window.document),
+					new $mws_scroll_ViewportRuler(window.document),
 				);
 
 				this.forOfCtl.Init();
 			
-				this.forOf = new $milkywaystd_scroll_VirtualForOf();
+				this.forOf = new $mws_scroll_VirtualForOf();
 				this.forOf.cdkVirtualForTemplate = this.itemRendererFactory
 
 				this.forOfCtl._contentWrapper = this.forOf.dom_node();

@@ -1,5 +1,5 @@
 namespace $.$$ {
-	export class $milkywaystd_scroll_ScrollDispatcher {
+	export class $mws_scroll_ScrollDispatcher {
 		/** Used to reference correct document/window */
 		protected _document: Document;
 
@@ -11,10 +11,10 @@ namespace $.$$ {
 		}
 	  
 		/** Subject for notifying that a registered scrollable reference element has been scrolled. */
-		private readonly _scrolled:$milkywaystd_classes_stream<$milkywaystd_scroll_Scrollable | void> = $milkywaystd_classes_stream();
+		private readonly _scrolled:$mws_classes_stream<$mws_scroll_Scrollable | void> = $mws_classes_stream();
 	  
 		/** Keeps track of the global `scroll` and `resize` subscriptions. */
-		_globalSubscription:$milkywaystd_classes_stream<any> | null = null;
+		_globalSubscription:$mws_classes_stream<any> | null = null;
 	  
 		/** Keeps track of the amount of subscriptions to `scrolled`. Used for cleaning up afterwards. */
 		private _scrolledCount = 0;
@@ -23,14 +23,14 @@ namespace $.$$ {
 		 * Map of all the scrollable references that are registered with the service and their
 		 * scroll event subscriptions.
 		 */
-		scrollContainers: Map<$milkywaystd_scroll_Scrollable, $milkywaystd_classes_stream<any>> = new Map();
+		scrollContainers: Map<$mws_scroll_Scrollable, $mws_classes_stream<any>> = new Map();
 	  
 		/**
 		 * Registers a scrollable instance with the service and listens for its scrolled events. When the
 		 * scrollable is scrolled, the service emits the event to its scrolled observable.
 		 * @param scrollable Scrollable instance to be registered.
 		 */
-		register(scrollable: $milkywaystd_scroll_Scrollable): void {
+		register(scrollable: $mws_scroll_Scrollable): void {
 		  if (!this.scrollContainers.has(scrollable)) {
 			this.scrollContainers.set(
 			  scrollable,
@@ -43,7 +43,7 @@ namespace $.$$ {
 		 * De-registers a Scrollable reference and unsubscribes from its scroll event observable.
 		 * @param scrollable Scrollable instance to be deregistered.
 		 */
-		deregister(scrollable: $milkywaystd_scroll_Scrollable): void {
+		deregister(scrollable: $mws_scroll_Scrollable): void {
 		  const scrollableReference = this.scrollContainers.get(scrollable);
 	  
 		  if (scrollableReference) {
@@ -63,7 +63,7 @@ namespace $.$$ {
 		 * to run the callback using `NgZone.run`.
 		 */
 		
-		scrolled(auditTimeInMs: number = 20): $milkywaystd_classes_stream<$milkywaystd_scroll_Scrollable | void> {
+		scrolled(auditTimeInMs: number = 20): $mws_classes_stream<$mws_scroll_Scrollable | void> {
 		/*  if (!this._platform.isBrowser) {
 			return observableOf<void>();
 		  }
@@ -109,7 +109,7 @@ namespace $.$$ {
 		ancestorScrolled(
 		  elementOrElementRef: any,
 		  auditTimeInMs?: number,
-		): $milkywaystd_classes_stream<$milkywaystd_scroll_Scrollable | void> {
+		): $mws_classes_stream<$mws_scroll_Scrollable | void> {
 		  const ancestors = this.getAncestorScrollContainers(elementOrElementRef);
 	  
 		  return this.scrolled(auditTimeInMs).filter(target => {
@@ -118,10 +118,10 @@ namespace $.$$ {
 		}
 	  
 		/** Returns all registered Scrollables that contain the provided element. */
-		getAncestorScrollContainers(elementOrElementRef: any): $milkywaystd_scroll_Scrollable[] {
-		  const scrollingContainers: $milkywaystd_scroll_Scrollable[] = [];
+		getAncestorScrollContainers(elementOrElementRef: any): $mws_scroll_Scrollable[] {
+		  const scrollingContainers: $mws_scroll_Scrollable[] = [];
 	  
-		  this.scrollContainers.forEach((_subscription: any, scrollable: $milkywaystd_scroll_Scrollable) => {
+		  this.scrollContainers.forEach((_subscription: any, scrollable: $mws_scroll_Scrollable) => {
 			if (this._scrollableContainsElement(scrollable, elementOrElementRef)) {
 			  scrollingContainers.push(scrollable);
 			}
@@ -137,7 +137,7 @@ namespace $.$$ {
 	  
 		/** Returns true if the element is contained within the provided Scrollable. */
 		private _scrollableContainsElement(
-		  scrollable: $milkywaystd_scroll_Scrollable,
+		  scrollable: $mws_scroll_Scrollable,
 		  elementOrElementRef: Element,
 		): boolean {
 		  let element: Element | null = elementOrElementRef;
@@ -156,7 +156,7 @@ namespace $.$$ {
 	  
 		/** Sets up the global scroll listeners. */
 		private _addGlobalListener() {
-		  this._globalSubscription = $milkywaystd_classes_stream.fromEvent(window.document as any, 'scroll').subscribe(() => this._scrolled());
+		  this._globalSubscription = $mws_classes_stream.fromEvent(window.document as any, 'scroll').subscribe(() => this._scrolled());
 		}
 	  
 		/** Cleans up the global scroll listener. */

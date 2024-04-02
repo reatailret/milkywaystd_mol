@@ -1,0 +1,39 @@
+$milkywaystd_ollama_ui $mol_book2_catalog
+	system_message \
+	messages /
+	param \page
+	spreads *
+		chat <= Chat
+		models <= Model
+	Messages $mol_list
+		rows <= message_list /
+			<= Item*0 $mol_view
+				sub /
+					<= ItemText* $mol_text
+						text <= message_text*
+		Empty <= list_empty $mol_paragraph
+			title \No messages
+	Chat $mol_page 
+		body /
+			<= Messages
+			<= Login $mol_form
+				form_fields /
+					<= Message_field $mol_form_field
+						name \Message
+						control <= Massage_control $mol_textarea
+							value? <=> messagecontroltext? \
+					<= SMessage_field $mol_form_field
+						name \System message
+						control <= SMassage_control $mol_textarea
+							value? <=> system_message? \
+				buttons /
+					<= Message_submit $mol_button_major
+						title <= message_submit_label @ \Submit
+						event_click? <=> event_submit? null
+					<= Reset_submit $mol_button_major
+						title <= reset_submit_label @ \Clear history
+						event_click? <=> reset_submit? null
+		style *
+			flex-grow \10
+	Model $mol_page
+		title \Models

@@ -3,15 +3,15 @@ namespace $.$$ {
 		return r1.start == r2.start && r1.end == r2.end;
 	  }
 	export type ListRange = {start: number; end: number};
-	export class $milkywaystd_scroll_VirtualScrollViewportController extends $milkywaystd_scroll_VirtualScrollable {
+	export class $mws_scroll_VirtualScrollViewportController extends $mws_scroll_VirtualScrollable {
 		
 		//private _platform = inject(Platform);
 
 		/** Emits when the viewport is detached from a CdkVirtualForOf. */
-		private readonly _detachedSubject = $milkywaystd_classes_stream();
+		private readonly _detachedSubject = $mws_classes_stream();
 	  
 		/** Emits when the rendered range changes. */
-		private readonly _renderedRangeSubject:$milkywaystd_classes_stream<ListRange> = $milkywaystd_classes_stream();
+		private readonly _renderedRangeSubject:$mws_classes_stream<ListRange> = $mws_classes_stream();
 	  
 		/** The direction the viewport scrolls. */
 		
@@ -44,13 +44,13 @@ namespace $.$$ {
 		// performance.
 		/** Emits when the index of the first element visible in the viewport changes. */
 		
-		readonly scrolledIndexChange: $milkywaystd_classes_stream<number> = $milkywaystd_classes_stream();
+		readonly scrolledIndexChange: $mws_classes_stream<number> = $mws_classes_stream();
 	  
 		/** The element that wraps the rendered content. */
 		_contentWrapper:any = null;
 	  
 		/** A stream that emits whenever the rendered range changes. */
-		readonly renderedRangeStream: $milkywaystd_classes_stream<ListRange> = this._renderedRangeSubject;
+		readonly renderedRangeStream: $mws_classes_stream<ListRange> = this._renderedRangeSubject;
 	  
 		/**
 		 * The total size of all content (in pixels), including content that is not currently rendered.
@@ -89,7 +89,7 @@ namespace $.$$ {
 		private _viewportSize = 0;
 	  
 		/** the currently attached CdkVirtualScrollRepeater. */
-		private _forOf: $milkywaystd_scroll_VirtualForOf | null = null;
+		private _forOf: $mws_scroll_VirtualForOf | null = null;
 	  
 		/** The last rendered content offset that was set. */
 		private _renderedContentOffset = 0;
@@ -109,20 +109,20 @@ namespace $.$$ {
 		/** Subscription to changes in the viewport size. */
 		private _viewportChanges = null;
 
-		_scrollStrategy:$milkywaystd_scroll_interface_IVirtualScrollStrategy
-		scrollable:$milkywaystd_scroll_VirtualScrollable
+		_scrollStrategy:$mws_scroll_interface_IVirtualScrollStrategy
+		scrollable:$mws_scroll_VirtualScrollable
 
-		subscripion:$milkywaystd_classes_stream<Event>|any
+		subscripion:$mws_classes_stream<Event>|any
 	  
 		constructor(
 		  elementRef: Element,
 		  
 		  
-		  scrollStrategy: $milkywaystd_scroll_interface_IVirtualScrollStrategy,
+		  scrollStrategy: $mws_scroll_interface_IVirtualScrollStrategy,
 		  dir: any,
-		  scrollDispatcher: $milkywaystd_scroll_ScrollDispatcher,
-		  viewportRuler: $milkywaystd_scroll_ViewportRuler,
-		  scrollable?: $milkywaystd_scroll_VirtualScrollable,
+		  scrollDispatcher: $mws_scroll_ScrollDispatcher,
+		  viewportRuler: $mws_scroll_ViewportRuler,
+		  scrollable?: $mws_scroll_VirtualScrollable,
 		) {
 		  super(elementRef, scrollDispatcher,dir);
 	  
@@ -185,9 +185,9 @@ namespace $.$$ {
 		}
 	  
 		/** Attaches a `CdkVirtualScrollRepeater` to this viewport. */
-		attach(forOf: $milkywaystd_scroll_VirtualForOf) {
+		attach(forOf: $mws_scroll_VirtualForOf) {
 		  if (this._forOf ) {
-			throw Error('$milkywaystd_scroll_VirtualForOf is already attached.');
+			throw Error('$mws_scroll_VirtualForOf is already attached.');
 		  }
 	  
 		  // Subscribe to the data stream of the CdkVirtualForOf to keep track of when the data length
@@ -348,7 +348,7 @@ namespace $.$$ {
 		  from?: 'top' | 'left' | 'right' | 'bottom' | 'start' | 'end',
 		): number {
 		  // This is to break the call cycle
-		  let measureScrollOffset: InstanceType<typeof $milkywaystd_scroll_Scrollable>['measureScrollOffset'];
+		  let measureScrollOffset: InstanceType<typeof $mws_scroll_Scrollable>['measureScrollOffset'];
 		  if (this.scrollable == this) {
 			measureScrollOffset = (_from: NonNullable<typeof from>) => super.measureScrollOffset(_from);
 		  } else {

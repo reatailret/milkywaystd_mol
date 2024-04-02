@@ -8,7 +8,7 @@ namespace $
 		}
 		public validate( value: any ): null | string
 		{
-				console.log('validate required')
+				
 				return value?null:this.error_message()
 			
 			

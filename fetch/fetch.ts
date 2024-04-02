@@ -8,7 +8,7 @@ namespace $
 		}
 		response: $mol_fetch_response | null = null;
 	}
-	export class $milkywaystd_fetch extends $mol_fetch
+	export class $mws_fetch extends $mol_fetch
 	{
 		@$mol_action
 		static override success( input: RequestInfo, init?: RequestInit )
@@ -26,10 +26,10 @@ namespace $
 		@$mol_action
 		static response( input: RequestInfo, init?: RequestInit )
 		{
-			return new $milkywaystd_fetch_response( $mol_wire_sync( this ).request( input, init ) )
+			return new $mws_fetch_response( $mol_wire_sync( this ).request( input, init ) )
 		}
 	}
-	export class $milkywaystd_fetch_response extends $mol_fetch_response
+	export class $mws_fetch_response extends $mol_fetch_response
 	{
 
 

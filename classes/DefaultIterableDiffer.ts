@@ -14,7 +14,7 @@ namespace $.$$ {
 
 
 
-export class $milkywaystd_classes_DefaultIterableDifferFactory implements IterableDifferFactory {
+export class $mws_classes_DefaultIterableDifferFactory implements IterableDifferFactory {
   constructor() {}
   supports(obj: Object|null|undefined): boolean {
     return isListLikeIterable(obj);
@@ -892,7 +892,7 @@ export interface IterableDifferFactory {
 }
 
 export function defaultIterableDiffersFactory() {
-  return new IterableDiffers([new $milkywaystd_classes_DefaultIterableDifferFactory()]);
+  return new IterableDiffers([new $mws_classes_DefaultIterableDifferFactory()]);
 }
 
 /**

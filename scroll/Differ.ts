@@ -1,6 +1,6 @@
 namespace $.$$ {
-	export class $milkywaystd_scroll_Differ {
-		private _diff: Array<$milkywaystd_scroll_Diff> = [];
+	export class $mws_scroll_Differ {
+		private _diff: Array<$mws_scroll_Diff> = [];
 		
 
 		private _map = new Map();
@@ -8,7 +8,7 @@ namespace $.$$ {
 		public create(init: Array<any>) {
 			
 		}
-		public diff(items: Array<any>): Array<$milkywaystd_scroll_Diff> {
+		public diff(items: Array<any>): Array<$mws_scroll_Diff> {
 			this._diff = [];
 			const s = new Set();
 			for (let index = 0; index < items.length; index++) {
@@ -47,7 +47,7 @@ namespace $.$$ {
 			return this._diff;
 		}
 	}
-	export type $milkywaystd_scroll_Diff = {
+	export type $mws_scroll_Diff = {
 		currentIndex: number | null;
 		previousIndex: number | null;
 		item: any;

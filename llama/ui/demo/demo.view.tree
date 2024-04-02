@@ -1,0 +1,3 @@
+$milkywaystd_llama_ui_demo $mol_view
+	sub /
+		<= ui $milkywaystd_llama_ui
