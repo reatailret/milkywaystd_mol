@@ -1,0 +1,11 @@
+$mws_error_retry $mol_view
+	error? null $mws_error_value
+	retry_handler null
+	sub /
+		<= r1 $mol_row
+			sub /
+				<= message \
+		<= r2 $mol_row
+			sub <= buttons /
+				<= rb1 $mol_button_major
+					title \Повторить

@@ -6,9 +6,9 @@ namespace $
 		{
 			return ''
 		}
-		public validate( value: any ): null | string
+		public validate( value: any ): string
 		{
-			return null
+			return ''
 		}
 	}
 }

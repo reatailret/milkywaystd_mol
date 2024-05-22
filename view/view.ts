@@ -1,36 +1,61 @@
 namespace $
 {
-	
+	const error_showed = new WeakMap< Error, $mol_view >()
 	export class $mws_view extends $mol_view {
 
-		protected mol_dom_render_children_after(){
-
-		}
+		public throwViewErrors = false
 		@ $mol_mem
-		render() {
-
-			const node = this.dom_node_actual()
-
-			const sub = this.sub_visible()
-			if( !sub ) return
+		dom_tree( next? : Element ) : Element {
+			const node = this.dom_node( next )
 			
-			const nodes = sub.map( child => {
-				if( child == null ) return null
-				return ( child instanceof $mol_view )
-					? child.dom_node()
-					: child instanceof $mol_dom_context.Node
-					? child
-					: String( child )
-			})
-			
-			$mol_dom_render_children( node , nodes )
-			
-			for( const el of sub ) if( el && typeof el === 'object' && 'dom_tree' in el ) el['dom_tree']()
+			render: try {
 
-			$mol_dom_render_fields( node , this.field() )
+				$mol_dom_render_attributes( node , { mol_view_error : null } )
 
-			this.mol_dom_render_children_after()
+				try {
+				
+					this.render()
+					
+				} finally {
+					
+					for( let plugin of this.plugins() ) {
+						if( plugin instanceof $mol_plugin ) {
+							plugin.dom_tree()
+						}
+					}
+					
+				}
+				
+			} catch( error: any ) {
+				
+				$mol_fail_log( error )
+				const mol_view_error = $mol_promise_like(error) ? 'Promise' : error.name || error.constructor.name
+				$mol_dom_render_attributes( node , { mol_view_error } )
+				
+				if( $mol_promise_like( error ) ) break render
+
+				if(this.throwViewErrors){
+					throw error
+				}
+
+				if( ( error_showed.get( error ) ?? this ) !== this ) break render
+				
+				try {
+					const message = error.message || error
+					;( node as HTMLElement ).innerText = message.replace( /^|$/mg, '\xA0\xA0' )
+				} catch {}
+				
+				error_showed.set( error, this )
+				
+			}
 			
+			try {
+				this.auto()
+			} catch( error ) {
+				$mol_fail_log( error )
+			}
+				
+			return node
 		}
 	}
 }

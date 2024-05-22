@@ -1,5 +1,5 @@
 $mws_app_demo $mol_app_demo
-	Menu <= milkywaystd_app_demo_menu_factory null
+	Menu <= mws_app_demo_menu_factory null
 	menu_items /any
 		<= p1 *
 			label \Misc

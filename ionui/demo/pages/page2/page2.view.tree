@@ -8,7 +8,10 @@ $mws_ionui_demo_pages_page2 $mws_ionui_component
 							attr *
 								slot \start
 							sub /
-								<= IonMenuButton $mws_ionui_menubutton
+								<= IonMenuButton22 $mws_ionui_menubutton
+									attr *
+										autohide \false
+								<= IonMenuButton2 $mws_ionui_button
 						<= IonTitle $mws_ionui_title
 							sub /
 								<= Text \Main
@@ -17,6 +20,11 @@ $IC2 $mws_ionui_content
 	classes /
 		\ion-padding
 	sub /
-		<= titleel $mws_ionui_title
+		<= dbtn $mws_ionui_datetime_button
+			attr *
+				datetime \dt1
+		<= mdl $mws_ionui_modal
 			sub /
-				<= text1 \Hello $mol!
+				<= dt $mws_ionui_datetime
+					attr *
+						id \dt1

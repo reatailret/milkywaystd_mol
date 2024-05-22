@@ -1,7 +1,7 @@
-[milkywaystd_ui_treemenu_content] {
+[mws_ui_treemenu_content] {
 	padding-left: 1.5rem;
 }
-[milkywaystd_ui_treemenu_container]{
+[mws_ui_treemenu_container]{
 	
 		will-change: contents;
 		display: flex;

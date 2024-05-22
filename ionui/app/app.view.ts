@@ -2,7 +2,7 @@ namespace $.$$ {
 	export class $mws_ionui_app extends $.$mws_ionui_app {
 		constructor() {
 			super();
-			window.document.querySelector("[id='$mol_style_attach']")?.remove();
+			window.document.querySelectorAll("[id^='$mol_style_attach']").forEach(el=>el.remove());
 		}
 	}
 }

@@ -1,5 +1,5 @@
 $mws_scroll_demo $mol_example_large
-	title \milkywaystd_scroll - virtual scroll
+	title \mws_scroll - virtual scroll
 	sub /
 		<= viewPort $mws_scroll_VirtualScrollViewport
 			itemRendererFactory <= itemRendererFactory null

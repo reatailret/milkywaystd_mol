@@ -2,7 +2,7 @@ namespace $
 {
 	type ValidationObject = {
 		[ key: string ]: {
-			rules: $mws_form_rules_rule[]
+			rules: readonly $mws_form_rules_rule[]
 		}
 	}
 	export class $mws_form_validator extends $mol_object
@@ -22,23 +22,23 @@ namespace $
 			return next ?? {}
 		}
 		@$mol_mem_key
-		public bid( field: string ): null | string
+		public bid( field: string ): string
 		{
 			const o = this.model_value( field )
 			const v = this.validation()
 
 			if( !v[ field ] || !v[ field ].rules.length )
-				return null
+				return ''
 
 			for( const validator of v[ field ].rules )
 			{
 				return validator.validate( o )
 			}
 
-			return null
+			return ''
 		}
 		@$mol_mem_key
-		public bids( field: string ): (string|null)[]
+		public bids( field: string ): (string)[]
 		{
 			const o = this.model_value( field )
 			const v = this.validation()
@@ -53,7 +53,7 @@ namespace $
 			{
 				const message = validator.validate( o );
 				if(message)
-				result.push(  )
+				result.push(message)
 			}
 			return result
 		}

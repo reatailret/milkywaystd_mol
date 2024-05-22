@@ -1,5 +1,5 @@
 $mws_crud_demo $mol_example_large
-	title \milkywaystd_crud lib, backend Strapi
+	title \mws_crud lib, backend Strapi
 	sub /
 		<= View $mol_book2_catalog
 			menu_title \

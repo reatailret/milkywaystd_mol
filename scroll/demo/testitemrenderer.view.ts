@@ -35,7 +35,7 @@ namespace $.$$ {
 		@$mol_mem
 		dom_id(): string
 		{
-			return 'milkywaystd_scroll_testitemrenderer_' + this.title()
+			return 'mws_scroll_testitemrenderer_' + this.title()
 		}
 
 	}
