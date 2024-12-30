@@ -1,6 +1,2 @@
+include \/mws/app/snake/demo
 
-include \/milkywaystd/crud/demo
-include \/milkywaystd/scroll/demo
-include \/milkywaystd/form/validator/demo
-include \/milkywaystd/ui/treemenu/demo
-include \/milkywaystd/ionui/demo/iframe

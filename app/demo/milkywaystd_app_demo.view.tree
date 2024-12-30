@@ -18,9 +18,13 @@ $mws_app_demo $mol_app_demo
 			label \Form validator
 			tags /
 				\form
+		<= p5 *
+			label \CRUS test
+			tags /
+				\crus
 				
 $mws_app_demo_menu_tree $mol_app_demo_menu
-	title \$milkywaystd examples
+	title \mws examples
 	Body $mol_scroll
 		sub /
 			<= List $mol_list rows /
@@ -29,3 +33,4 @@ $mws_app_demo_menu_tree $mol_app_demo_menu
 			<= menu $mws_ui_treemenu
 				items <= tree_menu_items /
 				filter <= filter
+			<= Lighter $mol_lights_toggle

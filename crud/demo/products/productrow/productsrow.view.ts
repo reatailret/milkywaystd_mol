@@ -46,7 +46,7 @@ namespace $.$$ {
 				this.deleteCallback(this.editId)
 				
 			}
-			
+			return ''
 		}
 		editId:any
 	}

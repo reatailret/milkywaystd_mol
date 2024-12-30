@@ -1,0 +1,30 @@
+$mws_app_snake_demo $mol_page
+	title \Smolizario
+	attr *
+		^
+		tabindex 0
+	scroll_top? <= body_scroll_top? 0
+	body /
+		<= Game $mol_view
+			style *
+				display \flex
+				flex-direction \column
+				align-items \center
+				justify-content \center
+			sub /
+				<= Controls $mol_row sub /
+					<= connect $mol_button_major
+						title \New Game
+						click?val <=> start_game?val null
+					<= game_loop
+				<= Controls2 $mol_row sub /
+					<= Canvas $mol_view
+						dom_name \canvas
+						field *
+							width \1600
+							height \1600
+	tools /
+		<= Ratinglist $mol_list
+			rows /
+	tags /
+		\crus

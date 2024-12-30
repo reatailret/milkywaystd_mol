@@ -1,0 +1,13 @@
+FROM node:20-alpine
+
+# Установка PM2 глобально
+RUN npm install -g pm2
+
+# Создание рабочей директории
+WORKDIR /app
+
+# Копирование исходного кода
+COPY . .
+
+# Запуск приложения через PM2
+CMD ["pm2-runtime", "./-/node.js"]

@@ -2,9 +2,9 @@ $mws_crud_demo_products_productrow $mol_row
 	minimal_height 100
 	minimal_width 200
 	data null
-	editCallback?val null
-	deleteCallback?val null
-	ondelete?val null
+	editCallback?val any
+	deleteCallback?val any
+	ondelete?val any
 	sub /
 		<= Id_labeler $mol_labeler
 			title \ID

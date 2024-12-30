@@ -28,7 +28,7 @@ namespace $.$$
       return this.service().byIdR( `${ id }` )
     }
     @$mol_mem
-    per_page( value?: number ): any
+    per_page( value?: number|string ): any
     {
       let p = parseInt( $mol_state_arg.value( "examples_products_per_page" ) as string )
       if( value !== undefined )
@@ -68,14 +68,14 @@ namespace $.$$
     }
 
     @$mol_mem
-    attr(): {}
+    attr()
     {
       const classes: Array<string> = []
       if( $mol_state_arg.value( 'examples_products_viewpage' ) === 'edit' || $mol_state_arg.value( 'examples_products_viewpage' ) === 'edit2' )
       {
         classes.push( 'editmode' )
       }
-      return { class: classes.join( ' ' ) }
+      return { ...super.attr(), class: classes.join( ' ' ) }!
     }
 
     @$mol_mem
