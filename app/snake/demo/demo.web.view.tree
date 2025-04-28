@@ -15,7 +15,7 @@ $mws_app_snake_demo $mol_page
 				<= Controls $mol_row sub /
 					<= connect $mol_button_major
 						title \New Game
-						click?val <=> start_game?val null
+						click? <= start_game? null
 					<= game_loop
 				<= Controls2 $mol_row sub /
 					<= Canvas $mol_view
@@ -23,6 +23,21 @@ $mws_app_snake_demo $mol_page
 						field *
 							width \1600
 							height \1600
+				<= Controls3 $mol_row sub /
+					<= Left $mol_button_major
+						sub / <= Left_icon $mol_icon_arrow_left_bold
+						click? <=> left? null
+					<= Vertical $mol_list rows /
+						<= Top $mol_button_major
+							sub / <= Top_icon $mol_icon_arrow_up_bold
+							click? <=> up? null
+						<= Down $mol_button_major
+							sub / <= Down_icon $mol_icon_arrow_down_bold
+							click? <=> down? null
+					<= Right $mol_button_major
+						sub / <= Right_icon $mol_icon_arrow_right_bold
+						click? <=> right? null
+				
 	tools /
 		<= Ratinglist $mol_list
 			rows /

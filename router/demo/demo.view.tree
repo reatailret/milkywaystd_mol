@@ -1,0 +1,42 @@
+$mws_router_demo $mol_page
+	Router $mws_router
+		-
+		routes /
+			<= r1 $mws_router_route
+				param \
+				component <= c1 $mws_router_demo_block1
+			<= r2 $mws_router_route
+				param \b2
+				component <= c2 $mws_router_demo_block2
+			<= r3 $mws_router_route
+				param \b3
+				component <= c3 $mws_router_demo_block3
+			<= r4 $mws_router_route
+				param \b4
+				component <= c4 $mws_router_demo_block4
+		sub => outlet
+		param \page
+	body_content <= outlet
+
+$mws_router_demo_block1 $mol_view
+	sub /
+		<= b1 $mol_link
+			title \Page1
+			arg *
+				page \b2
+
+
+$mws_router_demo_block2 $mol_view
+	sub /
+		<= b2 $mol_link
+			title \Page2
+			arg *
+				page \
+
+$mws_router_demo_block3 $mol_view
+	sub /
+		<= b3 \Block3
+
+$mws_router_demo_block4 $mol_view
+	sub /
+		<= b4 \Block4

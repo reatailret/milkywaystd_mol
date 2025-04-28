@@ -1,0 +1,6 @@
+$mws_router $mol_object
+	param \page
+	routes /$mws_router_route
+	sub /
+
+

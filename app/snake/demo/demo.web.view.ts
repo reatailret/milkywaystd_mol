@@ -4,18 +4,49 @@ namespace $.$$
 	export class $mws_app_snake_demo extends $.$mws_app_snake_demo
 	{
 
+		
+		
+		
+		crusdomain = 'https://snake.milkyway-studio.ru/crus/'
+		
+		
 		auto()
 		{
-			//$hyoo_crus_yard.masters = [ 'http://localhost:9090' ]
-			//$hyoo_crus_yard.masters = [ 'http://crus.hyoo.ru:9090' ]
+			
+			$hyoo_crus_yard.masters = [ this.crusdomain ]
 			try
 			{
 				this.renderg()
+				
 			} catch( error )
 			{
 
 			}
 
+		}
+
+		@$mol_action
+		random_move()
+		{
+			try
+			{
+				let move = 'up'
+				const rand = Math.random()
+				if( rand < 0.25 ) move = 'left'
+				else if( rand < 0.5 ) move = 'right'
+				else if( rand < 0.75 ) move = 'down'
+				$mol_wire_async( this ).send_command( {
+					d: move,
+					id: this.snake_id(),
+					time: 0,
+					params: {},
+					resolved: false
+				} )
+			} catch( error )
+			{
+				if( !$mol_promise_like( error ) )
+					$mol_fail_log( error )
+			}
 		}
 
 		@$mol_mem
@@ -46,21 +77,16 @@ namespace $.$$
 			return next ?? 'Press Start to begin'
 		}
 
-		@$mol_mem
-		snake_id()
-		{
-			this.snake_id_static = this.$.$hyoo_crus_glob.home().ref().description!
-			return this.snake_id_static
-		}
+
 		snake_id_static = ''
 		snake_id_: string = ''
 
 		@$mol_action
-		send_command( command: $mws_app_snake_command )
+		send_command_( command: $mws_app_snake_command )
 		{
-			
+
 			command.id = this.snake_id_static
-			command.time = 0
+			command.time = Date.now()
 			const node = $mws_app_snake_server_commands.command_node()?.Commands( null )
 			if( !node )
 			{
@@ -68,9 +94,110 @@ namespace $.$$
 				return
 			}
 			console.log( command )
-			node.add( command )
+			node.splice( [ command ], 0, 0 )
 		}
 
+		@$mol_action
+		send_command__( command: $mws_app_snake_command )
+		{
+
+			command.id = this.snake_id()
+			command.time = Date.now()
+			const node = $mws_app_snake_server_commands.command_node()?.SingleCommand( null )
+			if( !node )
+			{
+				console.log( 'no command node' )
+				return
+			}
+			console.log( command )
+			node.val( command )
+		}
+
+		@$mol_mem
+		snake_id()
+		{
+			this.snake_id_static = this.$.$hyoo_crus_glob.home().ref().description!
+			return this.snake_id_static
+		}
+		@$mol_action
+		send_command( command: $mws_app_snake_command )
+		{
+
+			const command_ = { ...this.make_command( command ), pathname: 'api' }
+			this.$.$hyoo_crus_glob.yard().masters()[0].send_json( command_ )
+			
+
+		}
+		@$mol_action
+		left()
+		{
+			this.send_command( {
+				id: '',
+				d: 'left',
+				params: {
+
+				},
+				resolved: false,
+				time: 0
+			} )
+		}
+		@$mol_action
+		right()
+		{
+			this.send_command( {
+				id: '',
+				d: 'right',
+				params: {
+
+				},
+				resolved: false,
+				time: 0
+			} )
+
+		}
+		@$mol_action
+		down()
+		{
+			this.send_command( {
+				id: '',
+				d: 'down',
+				params: {
+
+				},
+				resolved: false,
+				time: 0
+			} )
+		}
+		@$mol_action
+		up()
+		{
+			this.send_command( {
+				id: '',
+				d: 'up',
+				params: {
+
+				},
+				resolved: false,
+				time: 0
+			} )
+		}
+		@$mol_mem
+		make_command( command?:  $mws_app_snake_command )
+		{
+			return command ? {
+				...command,
+				id: this.snake_id(),
+				time: Date.now()
+			} : {
+				d: 'connect',
+				params: {
+
+				},
+				resolved: false,
+				id: this.snake_id(),
+				time: Date.now()
+			}
+		}
 		@$mol_action
 		start_game()
 		{
@@ -78,10 +205,10 @@ namespace $.$$
 			this.send_command( {
 				d: 'connect',
 				params: {
-					id: this.snake_id()
+
 				},
 				resolved: false,
-				id: this.snake_id()!,
+				id: '',
 				time: 0
 			} )
 
@@ -92,11 +219,12 @@ namespace $.$$
 
 		state_obj = {
 			coords: [],
-			food: []
+
 		} as {
 			coords: Array<$mws_app_snake_server_coord_type>,
-			food: Array<{ x: number, y: number }>
+
 		}
+		foods: Array<{ x: number, y: number }> = []
 		@$mol_mem
 		game_loop()
 		{
@@ -105,15 +233,16 @@ namespace $.$$
 
 			let obj = this.$.$mws_app_snake_server_coords.coord_node().Coordlist()?.val() as {
 				coords: Array<$mws_app_snake_server_coord_type>,
-				food: Array<{ x: number, y: number }>
+
 			}
 
 			this.state_obj = obj
+			this.foods = this.$.$mws_app_snake_server_coords.coord_node().Foods()?.val() as Array<{ x: number, y: number }> ?? []
 			this.snake_id()
 			return this.state_obj?.coords?.length
 
 		}
-		
+
 		coords_list_static = []
 		renderg()
 		{
@@ -123,11 +252,11 @@ namespace $.$$
 
 			const animate = () =>
 			{
-				$mol_wire_fiber.sync()
+				//$mol_wire_fiber.sync()
 				if( ++this.count < 5 )
 				{
-					requestAnimationFrame( animate )
-					return
+					//requestAnimationFrame( animate )
+					//return
 				}
 
 				this.count = 0
@@ -138,7 +267,7 @@ namespace $.$$
 
 				// Рисуем еду
 				ctx.fillStyle = 'red'
-				for( const food of( state?.food || [] ) )
+				for( const food of( this.foods ) )
 				{
 					ctx.fillRect( food.x, food.y, this.grid - 1, this.grid - 1 )
 				}
@@ -149,27 +278,29 @@ namespace $.$$
 					const snake = state.coords[ peer ]
 					// Своя змейка зеленая, чужие синие
 					ctx.fillStyle = snake.id === this.snake_id_static ? 'green' : 'blue'
-					if(snake.id === this.snake_id_static) {
+					if( snake.id === this.snake_id_static )
+					{
 						// Get snake head position
 						this.game_running = true
 						this.connected = true
-						const head = snake.cells[0]
-						if(head && snake.alive) {
+						const head = snake.cells[ 0 ]
+						if( head && snake.alive )
+						{
 							// Get game container
 							const gameContainer = this.Body().dom_node()
-							
+
 							// Calculate center position
-							const centerX = head.x - (gameContainer.clientWidth / 2)
-							const centerY = head.y - (gameContainer.clientHeight / 2)
-							
+							const centerX = head.x - ( gameContainer.clientWidth / 2 )
+							const centerY = head.y - ( gameContainer.clientHeight / 2 )
+
 							// Smooth scroll to snake
-							gameContainer.scrollTo({
+							gameContainer.scrollTo( {
 								left: centerX,
 								top: centerY,
 								behavior: 'smooth'
-							})
+							} )
 						}
-						
+
 					}
 					if( !snake.alive )
 					{
@@ -216,11 +347,11 @@ namespace $.$$
 		@$mol_action
 		move( e: Event )
 		{
-			
+
 			e.preventDefault()
 			if( !this.game_running || !this.connected ) return
 
-			
+
 
 			const ke = e as KeyboardEvent
 
@@ -236,7 +367,7 @@ namespace $.$$
 				coomand = 'up'
 			}
 
-				
+
 			// Right arrow
 			else if( ke.code === 'ArrowRight' )
 			{
@@ -247,15 +378,15 @@ namespace $.$$
 			{
 				coomand = 'down'
 			}
-		
-					
-			
+
+
+
 			// Down arrow
 			else if( ke.code === 'ArrowDown' )
 			{
 				coomand = 'down'
 			}
-			
+
 			this.send_command( {
 				id: '',
 				d: coomand,

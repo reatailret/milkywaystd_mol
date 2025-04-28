@@ -1,0 +1,3 @@
+$mws_router_route $mol_object
+	param \
+	component null $mol_view
