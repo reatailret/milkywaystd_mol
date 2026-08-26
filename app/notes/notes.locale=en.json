@@ -1,0 +1,11 @@
+{
+	"$mws_app_notes_title": "Notes",
+	"$mws_app_notes_Add_label": "Create Note",
+	"$mws_app_notes_Empty_text": "No notes. Create your first one!",
+	"$mws_app_notes_card_Title_field_hint": "Title",
+	"$mws_app_notes_card_Content_field_hint": "Note text",
+	"$mws_app_notes_card_Created_text": "Created: ",
+	"$mws_app_notes_card_Updated_text": "Updated: ",
+	"$mws_app_notes_card_Delete_label": "Delete"
+}
+

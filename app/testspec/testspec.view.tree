@@ -1,0 +1,15 @@
+$mws_app_testspec $mol_book2
+	plugins /
+		<= Theme $mol_theme_auto
+	pages /
+		<= Spec $mol_page
+			title \$mol & MAM Specification
+			tools /
+				<= Lights $mol_lights_toggle
+				<= Source $mol_link
+					uri \https://github.com/yourusername/mam
+					title \GitHub
+			body /
+				<= Content $mol_text
+					text <= spec_content \
+

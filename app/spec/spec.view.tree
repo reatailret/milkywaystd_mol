@@ -1,0 +1,60 @@
+- из этого шаблона генерируется файл в -view.tree/spec.view.tree.js
+- черточка - комментарий, пустые строки нельзя использовать, 
+- отступы (табы) важны - они определяют вложенность компонентов или обращаются к свойствам компонента
+-
+- $mol_view базовый компонент для всех компонентов
+$mws_app_spec $mol_view
+	plugins /
+		<= Theme $mol_theme_auto
+	- sub - массив компонентов или строк отображаемых в компоненте, слэш - массив
+	sub /
+		<= NameBlock $mol_view
+			sub /
+				- обратный слэш - строка
+				<= Name \default name
+		<= FormBlock $mol_view
+			sub /
+				<= FirstName $mol_string
+					hint \First Name
+					value? <=> firstNameValue? \empty
+				<= LastName $mol_string
+					hint \Last Name
+					value? <=> lastNameValue? \empty
+		<= ButtonBlock $mol_view
+			sub /
+				<= Button $mol_button_major
+					title \Save
+					click? <=> save? null
+	
+	- пример переопределения свойства attr компонента $mws_app_spec. - это аттрибуты DOM-элемента
+	attr *
+		^
+		some_attr \some value
+	- ниже примеры использования свойств компонентов,
+	- объект
+	dictionary *
+		- ^ разворачивается в {...super.dictionary()}
+		^
+		units /
+			null
+			false
+			true
+		numbs /number
+			+5
+			+Infinity
+			-Infinity
+			NaN
+		- многострочные строки
+		text \
+			\hello
+			\word
+	body /$mol_view
+		<= Selector $hyoo_mol_example_selector
+			- пример использования локализованной строки
+			empty @ \Multilingual string
+			- двусторонняя связь
+			value? <=> selector_value? \bidi bind
+			- пример замены свойства компонента на свойство другого компонента
+			options <= dictionary
+			- пример замены свойства компонента на свойство другого компонента
+			focused => selector_focused

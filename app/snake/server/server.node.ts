@@ -1,6 +1,6 @@
 namespace $
 {
-	export class $mws_app_snake_server_node extends $hyoo_crus_app_node
+	export class $mws_app_snake_server_node extends $giper_baza_app_node
 	{
 		_auto()
 		{

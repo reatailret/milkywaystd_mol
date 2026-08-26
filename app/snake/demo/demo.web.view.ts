@@ -13,7 +13,7 @@ namespace $.$$
 		auto()
 		{
 			
-			$hyoo_crus_yard.masters = [ this.crusdomain ]
+			$giper_baza_yard.masters = [ this.crusdomain ]
 			try
 			{
 				this.renderg()
@@ -116,7 +116,7 @@ namespace $.$$
 		@$mol_mem
 		snake_id()
 		{
-			this.snake_id_static = this.$.$hyoo_crus_glob.home().ref().description!
+			this.snake_id_static = this.$.$giper_baza_glob.home().link().toString()!
 			return this.snake_id_static
 		}
 		@$mol_action
@@ -124,7 +124,7 @@ namespace $.$$
 		{
 
 			const command_ = { ...this.make_command( command ), pathname: 'api' }
-			this.$.$hyoo_crus_glob.yard().masters()[0].send_json( command_ )
+			this.$.$giper_baza_glob.yard().masters()[0].send_json( command_ )
 			
 
 		}

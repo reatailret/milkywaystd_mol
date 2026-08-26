@@ -1,0 +1,26 @@
+$mws_data_book $mol_book2
+	table_row_arg* *
+	plugins /
+		<= Theme $mol_theme_auto
+	Datasource $mws_data_source<any>
+	Renderer $mws_data_renderer_table
+		title \List
+		Datasource <= Datasource
+	-
+	List_page $mol_page
+		title \List
+		tools /
+			<= Add_btn $mol_link
+				title \+ Add
+				arg <= add_btn_arg *
+		body /
+			<= Renderer
+	-
+	Edit_page $mws_data_form
+		entity <= edit_entity null
+		close? <=> edit_close? null
+		on_saved? <=> edit_on_saved? null
+		fields_config <= fields_config /
+	-
+	entity_name \entity
+

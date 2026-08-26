@@ -1,0 +1,25 @@
+$mws_data_renderer $mol_view
+	Datasource $mws_data_source<any>
+	repo $mws_data_repo_memory<any>
+	Header $mol_view
+	Footer $mol_view
+		sub /
+			<= Pagination $mol_bar
+				sub /
+					<= Page_prev $mol_button_minor
+						title \в—Ђ
+						enabled <= page_prev_enabled true
+						click? <=> page_prev? null
+					<= Page_info $mol_view
+						sub /
+							<= Page_text $mol_paragraph
+								title <= page_text \
+					<= Page_next $mol_button_minor
+						title \в–¶
+						enabled <= page_next_enabled true
+						click? <=> page_next? null
+	Body $mol_view
+	sub /
+		<= Header
+		<= Body
+		<= Footer

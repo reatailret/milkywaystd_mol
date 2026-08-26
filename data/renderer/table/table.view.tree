@@ -1,0 +1,36 @@
+$mws_data_renderer_table $mws_data_renderer
+	Body $mol_view
+		sub /
+			<= Table
+	Table $mol_view
+		sub /
+			<= TableHeader
+			<= TableBody
+			<= TableFooter
+	TableHeader $mol_view
+		sub <= header_cells /
+	TableBody $mol_list
+		item_width_min* 200
+		item_height_min* 96
+		rows <= data_rows /
+	TableFooter $mol_view
+		sub <= footer_cells /
+	Header_cell* $mol_view
+		attr * mol_theme \$mol_theme_accent
+		sub /
+			<= Header_cell_content* $mol_view
+				sub /
+					<= Header_cell_label* $mol_paragraph
+						title <= header_cell_title* \
+					<= Header_sort_btn* $mol_button_minor
+						title <= header_sort_icon* \
+						click <= header_sort_toggle* null
+	Rowrenderer? null
+
+$mws_data_renderer_table_row $mol_row
+	Datasource? null $mws_data_source<any>
+	data? null
+	sub <= cells /
+		<= Cell*0 $mol_view
+			sub <= cell_content* /
+				<= cell_text* \

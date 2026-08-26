@@ -1,0 +1,11 @@
+{
+	"$mws_app_notes_title": "Заметки",
+	"$mws_app_notes_Add_label": "Создать заметку",
+	"$mws_app_notes_Empty_text": "Нет заметок. Создайте первую!",
+	"$mws_app_notes_card_Title_field_hint": "Заголовок",
+	"$mws_app_notes_card_Content_field_hint": "Текст заметки",
+	"$mws_app_notes_card_Created_text": "Создано: ",
+	"$mws_app_notes_card_Updated_text": "Обновлено: ",
+	"$mws_app_notes_card_Delete_label": "Удалить"
+}
+

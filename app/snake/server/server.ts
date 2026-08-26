@@ -2,10 +2,10 @@ namespace $
 {
 
 
-	export class $mws_app_snake_server_coords extends $hyoo_crus_dict.with( {
-		Coordlist: $hyoo_crus_atom_json,
-		Rating:$hyoo_crus_list_json,
-		Foods:$hyoo_crus_atom_jsan
+	export class $mws_app_snake_server_coords extends $giper_baza_dict.with( {
+		Coordlist: $giper_baza_atom_dict,
+		Rating:$giper_baza_list_json,
+		Foods:$giper_baza_atom_jsan
 
 	} ) {
 
@@ -29,7 +29,7 @@ namespace $
 		{
 			const land_ref = '8SXgaZ3H_AvVLI4ci'
 
-			const node = $hyoo_crus_glob.Node( $hyoo_crus_ref( land_ref ), this.$.$mws_app_snake_server_coords )
+			const node = $giper_baza_glob.Node( new $giper_baza_link( land_ref ), this.$.$mws_app_snake_server_coords )
 
 
 			return node
@@ -252,17 +252,17 @@ namespace $
 	}
 	export type $mws_app_snake_server_coord_type = ReturnType<typeof $mws_app_snake_server_coords.get_default_coord>
 
-	export class $mws_app_snake_server_commands extends $hyoo_crus_entity.with( {
+	export class $mws_app_snake_server_commands extends $giper_baza_entity.with( {
 
-		Commands: $hyoo_crus_list_json,
-		SingleCommand: $hyoo_crus_atom_json
+		Commands: $giper_baza_list_json,
+		SingleCommand: $giper_baza_atom_dict
 	} ) {
 		static commands_state: Record<string, Array<$mws_app_snake_command>> = {}
 		@$mol_mem
 		static command_node()
 		{
 			const land_ref = 'bt3tPjHP_5okV40qZ'
-			const node = $hyoo_crus_glob.Node( $hyoo_crus_ref( land_ref ),
+			const node = $giper_baza_glob.Node( new $giper_baza_link( land_ref ),
 				this.$.$mws_app_snake_server_commands )
 
 

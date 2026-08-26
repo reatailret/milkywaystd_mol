@@ -1,0 +1,8 @@
+namespace $.$$
+{
+	$mol_test( {
+
+		
+
+	} )
+}

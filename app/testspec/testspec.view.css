@@ -1,0 +1,88 @@
+[mws_app_testspec] {
+	flex: 1;
+}
+
+[mws_app_testspec_content] {
+	max-width: 1200px;
+	margin: 0 auto;
+	padding: var(--mol_gap_block);
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+	line-height: 1.6;
+}
+
+[mws_app_testspec_content] h1 {
+	border-bottom: 2px solid var(--mol_theme_line);
+	padding-bottom: 0.5rem;
+	margin-top: 2rem;
+}
+
+[mws_app_testspec_content] h2 {
+	border-bottom: 1px solid var(--mol_theme_line);
+	padding-bottom: 0.3rem;
+	margin-top: 1.5rem;
+}
+
+[mws_app_testspec_content] code {
+	background: var(--mol_theme_card);
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+	font-size: 0.9em;
+}
+
+[mws_app_testspec_content] pre {
+	background: var(--mol_theme_card);
+	padding: 1rem;
+	border-radius: 5px;
+	overflow-x: auto;
+	border: 1px solid var(--mol_theme_line);
+}
+
+[mws_app_testspec_content] pre code {
+	background: transparent;
+	padding: 0;
+}
+
+[mws_app_testspec_content] blockquote {
+	border-left: 4px solid var(--mol_theme_control);
+	padding-left: 1rem;
+	margin-left: 0;
+	color: var(--mol_theme_shade);
+}
+
+[mws_app_testspec_content] a {
+	color: var(--mol_theme_control);
+	text-decoration: none;
+}
+
+[mws_app_testspec_content] a:hover {
+	text-decoration: underline;
+}
+
+[mws_app_testspec_content] table {
+	border-collapse: collapse;
+	width: 100%;
+	margin: 1rem 0;
+}
+
+[mws_app_testspec_content] th,
+[mws_app_testspec_content] td {
+	border: 1px solid var(--mol_theme_line);
+	padding: 0.5rem;
+	text-align: left;
+}
+
+[mws_app_testspec_content] th {
+	background: var(--mol_theme_card);
+	font-weight: bold;
+}
+
+[mws_app_testspec_content] ul,
+[mws_app_testspec_content] ol {
+	margin: 0.5rem 0;
+	padding-left: 2rem;
+}
+
+[mws_app_testspec_content] li {
+	margin: 0.25rem 0;
+}

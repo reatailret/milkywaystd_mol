@@ -1,0 +1,75 @@
+$mws_data_demo_memory $mws_data_book
+	Datasource $mws_data_demo_memory_source
+		client_side_processing true
+		columns /
+			<= name_column *
+				id \name
+				title \Product Name
+				field \name
+				sortable true
+			<= price_column *
+				id \price
+				title \Price
+				field \price
+			<= stock_column *
+				id \stock
+				title \Stock
+				field \stock
+			<= category_column *
+				id \category
+				title \Category
+				field \category
+			<= actions_column *
+				id \actions
+				title \Actions
+				field \actions
+				renderer? <=> actions_renderer? null
+	fields_config /
+		<= name_field *
+			id \name
+			name \Product Name
+			field \name
+			type \string
+			hint \Enter product name
+			required true
+			rules /
+				<= required_rule $mws_form_rules_required
+		<= price_field *
+			id \price
+			name \Price
+			field \price
+			type \number
+			hint \Enter price
+			required true
+			rules /
+				<= required_rule $mws_form_rules_required
+		<= stock_field *
+			id \stock
+			name \Stock
+			field \stock
+			type \number
+			hint \Enter stock quantity
+			required true
+			rules /
+				<= required_rule $mws_form_rules_required
+		<= category_field *
+			id \category
+			name \Category
+			field \category
+			type \string
+			hint \Enter category
+			required true
+			rules /
+				<= required_rule $mws_form_rules_required
+	Edit_btn* $mol_link
+		title \Edit
+		arg *
+	Delete_btn* $mol_button_minor
+		title \Delete
+		arg *
+	Actions* $mol_view
+		sub /
+			<= subsub* $mol_view
+				sub /
+					<= Edit_btn*
+					<= Delete_btn*

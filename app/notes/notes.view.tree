@@ -1,0 +1,40 @@
+$mws_app_notes $mol_page
+	plugins /
+		<= Theme $mol_theme_auto
+	title @ \Заметки
+	tools /
+		<= Search_field $mol_search
+			query?val <=> search_query?val \
+	body /
+		<= Add_button $mol_button_major
+			click?event <=> note_add?event null
+			sub /
+				<= Add_icon $mol_icon_plus
+				<= Add_label @ \Создать заметку
+		<= Notes_list $mol_list
+			rows <= note_rows /
+				<= Note_row* $mol_row
+					sub <= row_content* /
+						<= Note_title_field* $mol_string
+							hint @ \Заголовок
+							value? <=> note_title*?
+						<= Note_text_field* $mol_textarea
+							hint @ \Текст заметки
+							value? <=> note_text*?
+						<= Note_footer* $mol_row
+							sub /
+								<= Note_created_label* $mol_dimmer
+									haystack /
+										<= Note_created_text* @ \Создано: 
+										<= Note_created_date* \
+								<= Note_updated_label* $mol_dimmer
+									haystack /
+										<= Note_updated_text* @ \Обновлено: 
+										<= Note_updated_date* \
+								<= Note_delete_button* $mol_button_minor
+									click?event <=> note_delete*?event null
+									sub /
+										<= Note_delete_icon* $mol_icon_delete
+										<= Note_delete_label* @ \Удалить
+			Empty <= Empty_message $mol_paragraph
+				title @ \Нет заметок. Создайте первую!

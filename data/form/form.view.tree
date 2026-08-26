@@ -1,0 +1,47 @@
+$mws_data_form $mol_page
+	fields_config /
+	entity null
+	on_saved? null
+	title <= form_title \Edit
+	tools /
+		<= Close_btn $mol_button_minor
+			title \вњ•
+			hint \Close
+			click? <=> close? null
+	body /
+		<= Error_container $mws_error_retry_container
+			error? <=> fetch_error? null
+			body <= Form $mol_form
+				submit_allowed <= submit_allowed true
+				submit? <=> submit? null
+				form_fields <= form_fields /
+				buttons /
+					<= Save_btn $mol_button_major
+						title \Save
+						click? <=> submit? null
+						enabled <= submit_allowed
+					<= Cancel_btn $mol_button_minor
+						title \Cancel
+						click? <=> cancel? null
+					<= Status $mol_status
+						message <= status_message? \
+	Validator $mws_form_validator
+		bids* => validator_bids*
+		model_value* <= field_validator_value*
+		validation <= validation *
+	Field* $mol_form_field
+		name <= field_name* \
+		bids <= field_bids* /
+		control <= field_control* null
+	String_field* $mol_string
+		value? <=> field_value*? \
+		hint <= field_hint* \
+	Number_field* $mol_number
+		value? <=> field_number_value*? 0
+		hint <= field_hint* \
+	Text_field* $mol_textarea
+		value? <=> field_value*? \
+		hint <= field_hint* \
+	Check_field* $mol_check
+		checked? <=> field_checked*? false
+		title <= field_hint* \

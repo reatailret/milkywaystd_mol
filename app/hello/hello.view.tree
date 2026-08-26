@@ -1,0 +1,8 @@
+$mws_app_hello $mol_page
+	plugins /
+		<= Theme $mol_theme_auto
+	title \Hello
+	body /
+		<= status $giper_baza_status
+		<= area $mol_textarea
+			value? <=> text? \

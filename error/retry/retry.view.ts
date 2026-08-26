@@ -16,7 +16,7 @@ namespace $.$$
 			const btns = super.buttons()
 			if( !btns.length ) return btns
 			const retry = ( this.error()?.value.cause as any )?.retry
-			btns[ 0 ].click = ( ( this.error()?.value instanceof $mol_error_mix ) && retry ) ? retry : this.retry_handler
+			btns[ 0 ].click = retry  ? retry : this.retry_handler
 			return btns
 		}
 	}

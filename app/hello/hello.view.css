@@ -1,0 +1,14 @@
+[mws_app_hello_button] {
+	background: crimson;
+	color: white;
+}
+
+[mws_app_hello_button]:hover {
+	background: darkred;
+}
+
+[mws_app_hello_count] {
+	font-size: 3rem;
+	text-align: center;
+	padding: 1rem;
+}
