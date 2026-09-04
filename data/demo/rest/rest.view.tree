@@ -23,7 +23,7 @@ $mws_data_demo_rest $mws_data_book
 				id \actions
 				title \Actions
 				field \actions
-				renderer? <=> actions_renderer? null
+				renderer? <=> Actions?
 	fields_config /
 		<= title_field *
 			id \title
@@ -66,10 +66,11 @@ $mws_data_demo_rest $mws_data_book
 		arg *
 	Delete_btn* $mol_button_minor
 		title \Delete
-		arg *
-	Actions* $mol_view
+	Actions* $mws_data_renderer_cell
 		sub /
 			<= subsub* $mol_view
 				sub /
 					<= Edit_btn*
 					<= Delete_btn*
+		bind_cell_render_logic*? <=> bind_cell_render_logic*? null
+

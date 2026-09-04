@@ -7,7 +7,7 @@ $mws_data_renderer $mol_view
 			<= Pagination $mol_bar
 				sub /
 					<= Page_prev $mol_button_minor
-						title \в—Ђ
+						title \Prev
 						enabled <= page_prev_enabled true
 						click? <=> page_prev? null
 					<= Page_info $mol_view
@@ -15,7 +15,7 @@ $mws_data_renderer $mol_view
 							<= Page_text $mol_paragraph
 								title <= page_text \
 					<= Page_next $mol_button_minor
-						title \в–¶
+						title \Next
 						enabled <= page_next_enabled true
 						click? <=> page_next? null
 	Body $mol_view
@@ -23,3 +23,4 @@ $mws_data_renderer $mol_view
 		<= Header
 		<= Body
 		<= Footer
+

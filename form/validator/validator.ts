@@ -32,7 +32,7 @@ namespace $
 
 			for( const validator of v[ field ].rules )
 			{
-				return validator.validate( o )
+				return validator.validate( o ) ?? ''
 			}
 
 			return ''

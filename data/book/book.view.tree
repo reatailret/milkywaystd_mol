@@ -1,4 +1,5 @@
 $mws_data_book $mol_book2
+	title \Book
 	table_row_arg* *
 	plugins /
 		<= Theme $mol_theme_auto
@@ -8,7 +9,7 @@ $mws_data_book $mol_book2
 		Datasource <= Datasource
 	-
 	List_page $mol_page
-		title \List
+		title <= title
 		tools /
 			<= Add_btn $mol_link
 				title \+ Add

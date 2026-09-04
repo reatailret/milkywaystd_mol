@@ -14,7 +14,11 @@ namespace $ {
 		
 		repo(next?: $mws_data_repo<T>): $mws_data_repo<T>
 	}
-
+	/**
+	 * Поля одного элемента списка (`list()`).
+	 */
+	export type $mws_data_source_item<T extends Record<string, any> = Record<string, any>> =
+		ReturnType<$mws_data_source<T>['list']>[number]
 	/**
 	 * Конфигурация колонки таблицы
 	 */
@@ -25,7 +29,7 @@ namespace $ {
 		width?: number
 		sortable?: boolean
 		filterable?: boolean
-		render?: (item: T) => any
+		renderer?: (id?: string) => $mws_data_renderer_cell
 	}
 
 	/**

@@ -88,7 +88,7 @@ namespace $.$$ {
 			this.Datasource().page_next()
 		}
 
-		override Rowrenderer(item) {
+		override Rowrenderer(item: $mws_data_renderer_row) {
 			const row = $mws_data_renderer_table_row.make({})
 				row.data(item)
 				row.Datasource(this.Datasource())
@@ -101,7 +101,10 @@ namespace $.$$ {
 		override cells(): readonly any[] {
 			return this.Datasource()?.columns().map((col) =>{ 
 				if(col.renderer){
-					return col.renderer(this.data())
+					
+					const cell = col.renderer(this.data()?.[`${this.Datasource()?.repo().id_key()}`])
+					cell.bind_cell_render_logic(col, this.data()!)
+					return cell
 				}
 				return this.Cell(col.id)
 			}) ?? []
@@ -109,8 +112,9 @@ namespace $.$$ {
 		@$mol_mem_key
 		override cell_text(col_id: string): any {
 			if(!this.data()) return ''
-			return this.data()[col_id]??''
+			return this.data()?.[col_id]??''
 		}
+
 	}
 }
 

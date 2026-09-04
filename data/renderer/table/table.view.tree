@@ -25,11 +25,10 @@ $mws_data_renderer_table $mws_data_renderer
 					<= Header_sort_btn* $mol_button_minor
 						title <= header_sort_icon* \
 						click <= header_sort_toggle* null
-	Rowrenderer? null
+	Rowrenderer? null $mws_data_renderer_row
 
-$mws_data_renderer_table_row $mol_row
+$mws_data_renderer_table_row $mws_data_renderer_row
 	Datasource? null $mws_data_source<any>
-	data? null
 	sub <= cells /
 		<= Cell*0 $mol_view
 			sub <= cell_content* /

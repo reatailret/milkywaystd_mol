@@ -17,10 +17,11 @@ namespace $.$$
 	export class $mws_data_form extends $.$mws_data_form
 	{
 		@$mol_mem
-		reset(next?: number ): number
+		reset( next?: number ): number
 		{
 			return next ?? Date.now()
 		}
+
 		@$mol_mem
 		fetch_error(): $mws_error_value | null
 		{
@@ -53,6 +54,7 @@ namespace $.$$
 
 			}
 		}
+
 		@$mol_mem
 		entity_model(): $mws_data_entity<any> | null
 		{
@@ -70,17 +72,20 @@ namespace $.$$
 			return next ?? []
 		}
 
+		field_config( id: string )
+		{
+			return this.fields_config().find( config => config.id === id )
+		}
+
 		@$mol_mem
 		override form_fields(): readonly any[]
 		{
-			const configs = this.fields_config()
-			return configs.map( ( config, idx ) => this.Field( idx ) )
+			return this.fields_config().map( config => this.Field( config.id ) )
 		}
 
-		override field_name( idx: number ): string
+		override field_name( id: string ): string
 		{
-			const config = this.fields_config()[ idx ]
-			return config?.name ?? ''
+			return this.field_config( id )?.name ?? ''
 		}
 
 		/**
@@ -89,10 +94,9 @@ namespace $.$$
 		@$mol_mem
 		validation()
 		{
-			const configs = this.fields_config()
 			const result: Record<string, { rules: readonly $mws_form_rules_rule[] }> = {}
 
-			for( const config of configs )
+			for( const config of this.fields_config() )
 			{
 				if( config.rules )
 				{
@@ -104,188 +108,87 @@ namespace $.$$
 		}
 
 		/**
-		 * Значение поля для валидатора
-		 * Связано напрямую с entity, чтобы изменения сразу отражались
+		 * Значение поля для валидатора — черновик формы, а не entity
 		 */
 		@$mol_mem_key
 		field_validator_value( field: string, next?: any ): any
 		{
-			if( next !== undefined )
-			{
-				// Если значение устанавливается, записываем в entity
-				const configs = this.fields_config()
-				const config = configs.find( c => c.id === field )
-				if( !config ) return next
-
-				const entity = this.entity_model()
-				if( !entity ) return next
-
-				entity.field( config.field, next )
-				return next
-			}
-
-			// Читаем значение напрямую из entity
-			const configs = this.fields_config()
-			const config = configs.find( c => c.id === field )
-			if( !config ) return null
-
-			const entity = this.entity_model()
-			if( !entity ) return null
-
-			return entity.field( config.field )
+			return this.value( field, next )
 		}
 
 		/**
 		 * Список ошибок валидации для поля
 		 */
-		override field_bids( idx: number ): readonly string[]
+		override field_bids( id: string ): readonly string[]
 		{
-			const config = this.fields_config()[ idx ]
-			if( !config ) return []
-
-			return this.validator_bids( config.id )
+			return this.validator_bids( id )
 		}
 
-		override field_hint( idx: number ): string
+		override field_hint( id: string ): string
 		{
-			const config = this.fields_config()[ idx ]
-			return config?.hint ?? ''
+			return this.field_config( id )?.hint ?? ''
 		}
 
-		override field_control( idx: number ): any
+		override field_control( id: string ): any
 		{
-			const config = this.fields_config()[ idx ]
+			const config = this.field_config( id )
 			if( !config ) return null
 
 			switch( config.type )
 			{
 				case 'string':
-					return this.String_field( idx )
+					return this.String_field( id )
 				case 'number':
-					return this.Number_field( idx )
+					return this.Number_field( id )
 				case 'text':
-					return this.Text_field( idx )
+					return this.Text_field( id )
 				case 'check':
-					return this.Check_field( idx )
+					return this.Check_field( id )
 				default:
-					return this.String_field( idx )
+					return this.String_field( id )
 			}
 		}
 
-		@$mol_mem_key
-		override field_value( idx: number, next?: string ): string
-		{
-
-			const entity = this.entity_model()
-			if( !entity ) return ''
-
-			const config = this.fields_config()[ idx ]
-			if( !config ) return ''
-
-			if( next !== undefined )
-			{
-				entity.field( config.field, next )
-				return next
-			}
-
-			const value = entity.field( config.field )
-			return value !== undefined ? String( value ) : ''
-		}
-
-		@$mol_mem_key
-		override field_number_value( idx: number, next?: number ): number
+		model_pick( field: string, next?: $mol_form_draft_state_value | null )
 		{
 			const entity = this.entity_model()
-			if( !entity ) return 0
+			if( !entity ) return next ?? null
 
-			const config = this.fields_config()[ idx ]
-			if( !config ) return 0
+			const config = this.field_config( field )
+			if( !config ) return next ?? null
 
-			if( next !== undefined )
-			{
-				entity.field( config.field, next )
-				return next
-			}
-
-			const value = entity.field( config.field )
-			return typeof value === 'number' ? value : 0
-		}
-
-		@$mol_mem_key
-		override field_checked( idx: number, next?: boolean ): boolean
-		{
-			const entity = this.entity_model()
-			if( !entity ) return false
-
-			const config = this.fields_config()[ idx ]
-			if( !config ) return false
-
-			if( next !== undefined )
-			{
-				entity.field( config.field, next )
-				return next
-			}
-
-			const value = entity.field( config.field )
-			return Boolean( value )
+			return next === undefined
+				? entity.field( config.field )
+				: entity.field( config.field, next )
 		}
 
 		@$mol_mem
-		override submit_allowed(): boolean
+		override form_buttons()
 		{
-			const entity = this.entity_model()
-			if( !entity ) return false
-
-			// Проверяем валидацию всех полей
-			const configs = this.fields_config()
-			for( const config of configs )
-			{
-				const errors = this.validator_bids( config.id )
-				if( errors.length > 0 )
-				{
-					return false
-				}
-			}
-
-
-			return true
+			const form = this.Form()
+			return [
+				this.Save_btn(),
+				... form.changed() ? [ form.Reset() ] : [],
+				this.Cancel_btn(),
+				... form.result() ? [ form.Result() ] : [],
+			]
 		}
 
-		override submit()
+		override done()
 		{
 			const entity = this.entity_model()
 			if( !entity ) return
 
-			try
-			{
-				entity.save()
-				
-				this.status_message( 'Saved successfully' )
-				
-				this.on_saved( entity.id() )
-				new this.$.$mol_after_timeout( 1000, () => this.status_message( '' ) )
-			} catch( error )
-			{
-				if( $mol_promise_like( error ) ) $mol_fail_hidden( error )
-				this.status_message( 'Error: ' + String( error ) )
-			}
+			entity.save()
+			this.on_saved( entity.id() )
+			new this.$.$mol_after_timeout( 1000, () => this.Form().result( '' ) )
 		}
 
 		override cancel()
 		{
-			const entity = this.entity_model()
-			if( !entity ) return
-
-			entity.abort()
+			this.Form().reset()
+			this.entity_model()?.abort()
 			this.close()
-		}
-
-		@$mol_mem
-		override status_message( next?: string ): string
-		{
-
-			return next ?? ''
 		}
 	}
 }
-

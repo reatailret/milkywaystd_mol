@@ -5,43 +5,49 @@ $mws_data_form $mol_page
 	title <= form_title \Edit
 	tools /
 		<= Close_btn $mol_button_minor
-			title \вњ•
+			title \Close
 			hint \Close
 			click? <=> close? null
 	body /
 		<= Error_container $mws_error_retry_container
 			error? <=> fetch_error? null
-			body <= Form $mol_form
-				submit_allowed <= submit_allowed true
-				submit? <=> submit? null
+			body <= Form $mol_form_draft
+				model <= entity
+				model_pick*? <=> model_pick*? null
+				done? <=> done? null
+				message_done \Saved successfully
+				submit? => submit?
+				submit_allowed => submit_allowed
+				value*? => value*?
+				value_str*? => value_str*?
+				value_number*? => value_number*?
+				value_bool*? => value_bool*?
 				form_fields <= form_fields /
-				buttons /
+				buttons <= form_buttons /
 					<= Save_btn $mol_button_major
 						title \Save
-						click? <=> submit? null
+						click? <=> submit?
 						enabled <= submit_allowed
 					<= Cancel_btn $mol_button_minor
 						title \Cancel
 						click? <=> cancel? null
-					<= Status $mol_status
-						message <= status_message? \
 	Validator $mws_form_validator
 		bids* => validator_bids*
-		model_value* <= field_validator_value*
+		model_value* <= field_validator_value* null
 		validation <= validation *
 	Field* $mol_form_field
 		name <= field_name* \
 		bids <= field_bids* /
 		control <= field_control* null
 	String_field* $mol_string
-		value? <=> field_value*? \
+		value? <=> value_str*?
 		hint <= field_hint* \
 	Number_field* $mol_number
-		value? <=> field_number_value*? 0
+		value? <=> value_number*?
 		hint <= field_hint* \
 	Text_field* $mol_textarea
-		value? <=> field_value*? \
+		value? <=> value_str*?
 		hint <= field_hint* \
 	Check_field* $mol_check
-		checked? <=> field_checked*? false
+		checked? <=> value_bool*?
 		title <= field_hint* \
