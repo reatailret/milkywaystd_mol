@@ -25,6 +25,16 @@ namespace $ {
 
 		const context_mock = $mol_ambient( {
 			$mol_fetch: Object.assign( {}, $mol_fetch, {
+				success: ( request: RequestInfo, init?: RequestInit ) => {
+					const method = ( init?.method ?? 'GET' ).toUpperCase()
+					if( method === 'DELETE' ) {
+						return {
+							status: (): 'success' => 'success',
+							code: (): number => 204,
+						}
+					}
+					return $mol_fetch.success( request, init )
+				},
 				json: ( request: RequestInfo, init: RequestInit ) => {
 					const url = String( request )
 					const method = init?.method ?? 'GET'
@@ -150,6 +160,33 @@ namespace $ {
 			repo.list()
 
 			$mol_assert_equal( false, repo.list_pending() )
+		},
+
+		'page items unpack by default'() {
+			const items: readonly testProduct[] = [
+				{ id: 1, title: 'A', price: 1 },
+				{ id: 2, title: 'B', price: 2 },
+			]
+			const repo = new $mws_data_repo_rest<testProduct>()
+			repo.$ = $mol_ambient( {
+				$mol_fetch: Object.assign( {}, $mol_fetch, {
+					json: () => ( {
+						items,
+						total: 2,
+						limit: 10,
+						offset: 0,
+					} ),
+				} ),
+			} )
+			repo.uri( 'http://localhost:8080' )
+			repo.resource( 'collections' )
+
+			$mol_assert_equal( items, repo.list() )
+			$mol_assert_equal( {
+				total: 2,
+				offset: 0,
+				limit: 10,
+			}, repo.list_meta() )
 		},
 
 	} )

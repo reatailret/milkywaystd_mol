@@ -1,20 +1,16 @@
 $mws_data_renderer_table $mws_data_renderer
 	Body $mol_view
 		sub /
-			<= Table
-	Table $mol_view
-		sub /
-			<= TableHeader
-			<= TableBody
-			<= TableFooter
-	TableHeader $mol_view
-		sub <= header_cells /
-	TableBody $mol_list
-		item_width_min* 200
-		item_height_min* 96
-		rows <= data_rows /
-	TableFooter $mol_view
-		sub <= footer_cells /
+			<= Table $mol_grid
+				records <= records *
+				col_ids <= col_ids /
+				cell_content* <= cell_content* /
+				col_head_content* <= col_head_content*
+				Cell* <= Cell* $mol_view
+				row_height 40
+	column_config_rows /
+	col_head_content* /
+		<= Header_cell*
 	Header_cell* $mol_view
 		attr * mol_theme \$mol_theme_accent
 		sub /
@@ -25,11 +21,29 @@ $mws_data_renderer_table $mws_data_renderer
 					<= Header_sort_btn* $mol_button_minor
 						title <= header_sort_icon* \
 						click <= header_sort_toggle* null
-	Rowrenderer? null $mws_data_renderer_row
-
-$mws_data_renderer_table_row $mws_data_renderer_row
-	Datasource? null $mws_data_source<any>
-	sub <= cells /
-		<= Cell*0 $mol_view
-			sub <= cell_content* /
-				<= cell_text* \
+			<= Header_filter* $mol_search
+				hint \Filter
+				query? <=> header_filter_query*? \
+				style *
+					display <= header_filter_display* \none
+	Column_row* $mol_row
+		sub /
+			<= Column_up* $mol_button_minor
+				hint \Up
+				enabled <= column_move_up_enabled* true
+				click? <=> column_move_up*? null
+				sub /
+					<= Column_up_icon* $mol_icon_chevron_up
+			<= Column_down* $mol_button_minor
+				hint \Down
+				enabled <= column_move_down_enabled* true
+				click? <=> column_move_down*? null
+				sub /
+					<= Column_down_icon* $mol_icon_chevron_down
+			<= Column_label* $mol_paragraph
+				title <= header_cell_title* \
+			<= Column_visible* $mol_switch
+				value? <=> column_visible_value*? \on
+				options *
+					on \On
+					off \Off

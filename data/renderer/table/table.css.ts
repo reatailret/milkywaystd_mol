@@ -3,26 +3,52 @@ namespace $.$$ {
 	$mol_style_define( $mws_data_renderer_table, {
 		
 		height: '100%',
-		Table:{
-			display: 'table',
-		},
-		TableHeader:{
-			display: 'table-row',
-		},
-		TableBody:{
-			display: 'table-row-group',
-		},
-		TableFooter:{
-			display: 'table-row',
-		},
-		Header_cell:{
-			display: 'table-cell',
+		minWidth: 0,
+		maxWidth: '100%',
+		
+		Body: {
+			minWidth: 0,
+			maxWidth: '100%',
+			overflow: 'hidden',
 		},
 		
-	} )
-
-	$mol_style_define( $mws_data_renderer_table_row, {
-		display: 'table-row',
+		Table: {
+			flex: {
+				grow: 1,
+				shrink: 1,
+			},
+			minWidth: 0,
+			maxWidth: '100%',
+			overflow: 'auto',
+			overscrollBehaviorX: 'contain',
+			webkitOverflowScrolling: 'touch',
+		},
+		
+		Header_cell: {
+			flex: {
+				direction: 'column',
+			},
+		},
+		
+		Header_cell_content: {
+			display: 'flex',
+			alignItems: 'center',
+		},
+		
+		Header_filter: {
+			minWidth: '6rem',
+		},
+		
+		Column_row: {
+			alignItems: 'center',
+			padding: $mol_gap.text,
+		},
+		
+		Column_label: {
+			flex: {
+				grow: 1,
+			},
+		},
 		
 	} )
 	

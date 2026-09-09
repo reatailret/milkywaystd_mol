@@ -1,27 +1,49 @@
 $mws_data_book $mol_book2
 	title \Book
+	show_column_config true
 	table_row_arg* *
 	plugins /
 		<= Theme $mol_theme_auto
 	Datasource $mws_data_source<any>
+		entity_name <= entity_name \entity
 	Renderer $mws_data_renderer_table
 		title \List
 		Datasource <= Datasource
 	-
 	List_page $mol_page
 		title <= title
-		tools /
-			<= Add_btn $mol_link
+		tools <= list_tools /
+			<= Columns_enable $yuf_link
+				hint \Columns
+				sub / <= Columns_enable_icon $mol_icon_view_column
+				arg <= columns_arg *
+			<= Filter_enable $yuf_link
+				sub / <= Filter_enable_icon $mol_icon_filter
+				arg <= filter_arg *
+			<= Add_btn $yuf_link
 				title \+ Add
 				arg <= add_btn_arg *
 		body /
 			<= Renderer
 	-
+	Filter_page $mws_data_form_search
+		form_fields <= filter_form_fields /
+		filter_value_inner*? => filter_value*? null
+		Datasource <= Datasource
+		close? <=> filter_close? null
+	filter_form_fields /
+	Columns_page $mol_page
+		title \Columns
+		tools /
+			<= Columns_close $mol_button_minor
+				title \Close
+				hint \Close
+				click? <=> columns_close? null
+		body /
+			<= Columns_list $mol_list
+				rows <= column_config_rows /
 	Edit_page $mws_data_form
 		entity <= edit_entity null
 		close? <=> edit_close? null
 		on_saved? <=> edit_on_saved? null
 		fields_config <= fields_config /
-	-
-	entity_name \entity
-

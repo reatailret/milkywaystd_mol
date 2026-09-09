@@ -73,3 +73,9 @@ $mws_data_demo_memory $mws_data_book
 					<= Edit_btn*
 					<= Delete_btn*
 		bind_cell_render_logic*? <=> bind_cell_render_logic*? null
+	filter_form_fields /
+		<= Title_field $mol_form_field
+			name \Title
+			Content <= Title_control $mol_string
+				hint \Title
+				value? <=> filter_value*title?

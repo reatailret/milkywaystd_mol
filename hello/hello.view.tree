@@ -1,0 +1,12 @@
+$mws_hello $mol_view
+	title \Hello
+	sub /
+		<= View $mol_book2
+			pages /
+				<= First $mws_data_demo_rest
+					title \REST
+					entity_name \entity1
+				<= Second $mws_data_demo_memory
+					title \Memory
+					entity_name \entity2
+

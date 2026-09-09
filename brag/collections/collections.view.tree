@@ -1,0 +1,59 @@
+$mws_brag_collections $mws_data_book
+	title \Collections
+	entity_name \collection
+	Datasource $mws_brag_collections_source
+		columns /
+			<= name_column *
+				id \name
+				title \Name
+				field \name
+				sortable true
+				filterable true
+			<= description_column *
+				id \description
+				title \Description
+				field \description
+				filterable true
+			<= document_count_column *
+				id \document_count
+				title \Documents
+				field \document_count
+				sortable true
+			<= created_at_column *
+				id \created_at
+				title \Created
+				field \created_at
+				sortable true
+			<= actions_column *
+				id \actions
+				title \Actions
+				field \actions
+				renderer? <=> Actions?
+	fields_config /
+		<= name_field *
+			id \name
+			name \Name
+			field \name
+			type \string
+			hint \Collection name
+			required true
+			rules /
+				<= required_rule $mws_form_rules_required
+		<= description_field *
+			id \description
+			name \Description
+			field \description
+			type \text
+			hint \Optional description
+	Edit_btn* $mol_link
+		title \Edit
+		arg *
+	Delete_btn* $mol_button_minor
+		title \Delete
+	Actions* $mws_data_renderer_cell
+		sub /
+			<= subsub* $mol_view
+				sub /
+					<= Edit_btn*
+					<= Delete_btn*
+		bind_cell_render_logic*? <=> bind_cell_render_logic*? null

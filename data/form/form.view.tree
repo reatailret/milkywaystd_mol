@@ -51,3 +51,25 @@ $mws_data_form $mol_page
 	Check_field* $mol_check
 		checked? <=> value_bool*?
 		title <= field_hint* \
+
+$mws_data_form_search $mol_page
+	Datasource null $mws_data_source<any>
+	filter_value_inner*? null
+	autofilter true
+	tools /
+		<= Close_btn $mol_button_minor
+			title \Close
+			hint \Close
+			click? <=> close? null
+	body /
+		<= Error_container $mws_error_retry_container
+			error? <=> fetch_error? null
+			body <= Form $mol_form
+				form_fields <= form_fields /
+				buttons <= form_buttons /
+					<= Save_btn $mol_button_major
+						title \Search
+						click? <=> apply_filters? null
+					<= Cancel_btn $mol_button_minor
+						title \Clear
+						click? <=> clear_filters? null

@@ -1,15 +1,28 @@
 [mws_data_renderer_table_table] {
 	width: 100%;
+	max-width: 100%;
+	min-width: 0;
 	border-spacing: 0;
 	border-collapse: separate;
 	background: var(--mol_theme_card);
 	border: 1px solid var(--mol_theme_line);
 	border-radius: 12px;
-	overflow: clip;
+	overflow: auto;
+	overscroll-behavior-x: contain;
+	-webkit-overflow-scrolling: touch;
 	box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
 }
 
-[mws_data_renderer_table_tableheader]>* {
+[mws_data_renderer_table_table]::-webkit-scrollbar {
+	height: 8px;
+}
+
+[mws_data_renderer_table_table]::-webkit-scrollbar-thumb {
+	background: var(--mol_theme_line);
+	border-radius: 4px;
+}
+
+[mws_data_renderer_table_table] [mol_grid_head] > * {
 	background: var(--mol_theme_back);
 	border-bottom: 1px solid var(--mol_theme_line);
 	box-shadow: 0 1px 0 var(--mol_theme_line);
@@ -20,15 +33,12 @@
 	letter-spacing: 0.02em;
 }
 
-[mws_data_renderer_table_row]>* {
+[mws_data_renderer_table_table] [mol_grid_table] > [mol_grid_row] > * {
 	border-top: 1px solid var(--mol_theme_line);
 	background: var(--mol_theme_card);
-	display: table-cell;
 	padding: 12px 14px;
 	vertical-align: middle;
 }
-
-
 
 [mws_data_renderer_table_header_cell_label] {
 	display: block;
@@ -46,26 +56,16 @@
 	opacity: 1;
 }
 
-
-
 @supports (background: color-mix(in srgb, white, black)) {
-	[mws_data_renderer_table_tablebody]>[mws_data_renderer_table_row]:nth-child(even)>* {
+	[mws_data_renderer_table_table] [mol_grid_table] > [mol_grid_row]:nth-child(even) > * {
 		background: color-mix(in srgb, var(--mol_theme_card) 92%, var(--mol_theme_hover));
 	}
 
-	[mws_data_renderer_table_tablebody]>[mws_data_renderer_table_row]:hover>* {
+	[mws_data_renderer_table_table] [mol_grid_table] > [mol_grid_row]:hover > * {
 		background: color-mix(in srgb, var(--mol_theme_card) 80%, var(--mol_theme_hover));
 	}
 }
 
-[mws_data_renderer_table_tablebody]>[mws_data_renderer_table_row]:hover>* {
+[mws_data_renderer_table_table] [mol_grid_table] > [mol_grid_row]:hover > * {
 	background: var(--mol_theme_hover);
-}
-
-
-
-[mws_data_renderer_table_tablefooter] [mws_data_renderer_table_row] > * {
-	border-top: 1px solid var(--mol_theme_line);
-	color: var(--mol_theme_shade);
-	background: var(--mol_theme_field);
 }

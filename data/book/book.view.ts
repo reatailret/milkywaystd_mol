@@ -3,9 +3,15 @@ namespace $.$$
 	export class $mws_data_book extends $.$mws_data_book
 	{
 
-		/**
-		 * Переопределяем pages для отображения формы редактирования
-		 */
+		@$mol_mem
+		override list_tools() {
+			return [
+				... this.show_column_config() ? [ this.Columns_enable() ] : [],
+				this.Filter_enable(),
+				this.Add_btn(),
+			]
+		}
+		
 		@$mol_mem
 		add_btn_arg(): Record<string, string>
 		{
@@ -13,22 +19,48 @@ namespace $.$$
 				[ this.entity_name() + '_edit' ]: 'new'
 			}
 		}
+		@$mol_mem
+		filter_arg(): Record<string, string>
+		{
+			return {
+				[ this.entity_name() + '_filter' ]: 'true'
+			}
+		}
+		@$mol_mem
+		override columns_arg(): Record<string, string>
+		{
+			return {
+				[ this.entity_name() + '_columns' ]: 'true'
+			}
+		}
 
+		/**
+		 * Переопределяем pages для отображения формы редактирования
+		 */
 		@$mol_mem
 		override pages()
 		{
 			const base = [ this.List_page() ]
 			const edit_id = this.edit_id()
-
-			if( edit_id )
+			const pages = []
+			
+			if( this.show_column_config() && this.$.$mol_state_arg.value( this.entity_name() + '_columns' ) )
+				{
+					pages.push( this.Columns_page() )
+				}
+			if( this.$.$mol_state_arg.value( this.entity_name() + '_filter' ) )
 			{
-				return [ ...base, this.Edit_page() ]
+				pages.push( this.Filter_page() )
 			}
-
-			return base
+			
+			if( edit_id )
+				{
+					pages.push( this.Edit_page() )
+				}
+			return [ ...base, ...pages ]
 		}
 		
-
+		
 		/**
 		 * ID редактируемого элемента из URL параметра (пусто = форма закрыта, 'new' = создание нового)
 		 */
@@ -71,7 +103,17 @@ namespace $.$$
 		{
 			this.edit_id( '' )
 		}
-
+		override filter_close() {
+			this.$.$mol_state_arg.value( this.entity_name() + '_filter', null )
+		}
+		override columns_close() {
+			this.$.$mol_state_arg.value( this.entity_name() + '_columns', null )
+		}
+		
+		@$mol_mem
+		override column_config_rows() {
+			return this.Renderer().column_config_rows()
+		}
 		@$mol_action
 		public delete(id:string){
 			if(!this.$.$mol_wire_sync(this.$.$mol_dom_context).confirm('Удалить запись?'))
@@ -118,6 +160,8 @@ namespace $.$$
 		}
 		
 	}
+
+	
 
 	
 }

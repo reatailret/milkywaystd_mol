@@ -191,4 +191,39 @@ namespace $.$$
 			this.close()
 		}
 	}
+
+	export class $mws_data_form_search extends $.$mws_data_form_search
+	{
+		auto(){
+			this.temp_filters(this.Datasource()?.filters())
+		}
+		@$mol_mem
+		temp_filters(next?: Record<string, string>): Record<string, string>
+		{
+			return next ?? {}
+		}
+		@$mol_mem_key
+		filter_value_inner(id:string, next?: string): string
+		{
+			if(next === undefined) {
+				return this.temp_filters()[id] ?? ''
+			}
+			const mut = this.$.$mol_mutable(this.temp_filters())
+			mut[id](old=>next)
+			this.temp_filters(mut())
+			console.log(this.temp_filters())
+			return this.temp_filters()[id]
+			
+		}
+		@$mol_action
+		apply_filters() {
+			this.Datasource()?.filters(this.temp_filters())
+		}
+		@$mol_action
+		clear_filters() {
+			this.temp_filters({})
+			this.Datasource()?.filters({})
+		}
+
+	}
 }

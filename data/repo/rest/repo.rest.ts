@@ -85,9 +85,11 @@ namespace $ {
 		}
 
 		/**
-		 * Разбор ответа списка
+		 * Разбор ответа списка.
+		 * По умолчанию FastAPI-style `{ items, total, limit, offset }`.
 		 */
 		list_unpack(data: any): readonly T[] {
+			if( data && Array.isArray( data.items ) ) return data.items
 			return data as readonly T[]
 		}
 
@@ -95,6 +97,13 @@ namespace $ {
 		 * Разбор метаданных списка
 		 */
 		meta_unpack(data: any): $mws_data_repo_meta {
+			if( data && typeof data === 'object' ) {
+				return {
+					total: data.total,
+					offset: data.offset,
+					limit: data.limit,
+				}
+			}
 			return data as $mws_data_repo_meta
 		}
 
@@ -182,7 +191,7 @@ namespace $ {
 
 		@$mol_action
 		override remove_fn(id: string | number) {
-			this.$.$mol_fetch.json( this.url_one(id), {
+			this.$.$mol_fetch.success( this.url_one(id), {
 				method: 'DELETE',
 				headers: this.headers() as HeadersInit,
 			} )

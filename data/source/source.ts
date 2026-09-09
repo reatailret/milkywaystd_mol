@@ -51,19 +51,28 @@ namespace $ {
 	 */
 	export class $mws_data_source<T extends Record<string, any>> extends $mol_object {
 
+		@$mol_mem
+		entity_name(next?: string): string {
+			return next ?? 'entity'
+		}
+		@$mol_mem
+		use_arg_filter(next?: boolean): boolean {
+			return next ?? true
+		}
+		@$mol_mem
+		use_arg_sort(next?: boolean): boolean {
+			return next ?? true
+		}
+		@$mol_mem
+		use_arg_pagination(next?: boolean): boolean {
+			return next ?? true
+		}
 		
 		@$mol_mem
 		immediate(next?: boolean): boolean {
 			return next ?? false
 		}
 		
-		@$mol_action
-		apply_if_immediate() {
-			if (this.immediate()) {
-				this.apply_params()
-			}
-		}
-
 		@$mol_mem
 		repo(next?: $mws_data_repo<T>): $mws_data_repo<T> {
 			return next ?? null!
@@ -78,28 +87,97 @@ namespace $ {
 		columns(next?: readonly $mws_data_column_config<T>[]): readonly $mws_data_column_config<T>[] {
 			return next ?? []
 		}
-
+		@$mol_mem_key
+		filter_value(id:string, next?: string): string {
+			if(next === undefined) {
+				return this.filters()[id] ?? ''
+			}
+			const mut = this.$.$mol_mutable(this.filters())
+			mut[id](next=>next)
+			this.filters(mut())
+			return next
+		}
 		@$mol_mem
 		filters(next?: Record<string, any>): Record<string, any> {
 			if(next !== undefined) {
-				this.apply_if_immediate()
+				if(this.use_arg_filter()) {
+					const old = this.$.$mol_wire_probe(()=>this.filters() )
+					if(old){
+						for(const key in old) {
+							this.$.$mol_state_arg.value( this.entity_name() + '_filter_' + key, null )
+						}
+					}
+					for(const key in next) {
+						this.$.$mol_state_arg.value( this.entity_name() + '_filter_' + key, next[key] )
+					}
+				}
+				
 			}
+			else {
+				if(this.use_arg_filter()) {
+					const filters: Record<string, any> = {}
+					const dict = this.$.$mol_state_arg.dict()
+					for(const key in dict) {
+						if(key.startsWith(this.entity_name() + '_filter_')) {
+							filters[key.substring((this.entity_name() + '_filter_').length)] = dict[key]
+						}
+					}
+					return filters
+				}
+			}
+			
 			return next ?? {}
 		}
 
 		@$mol_mem
 		sort(next?: { field: string, order: 'asc' | 'desc' } | null): { field: string, order: 'asc' | 'desc' } | null {
 			if(next !== undefined) {
-				this.apply_if_immediate()
+				if(this.use_arg_sort()) {
+					const old = this.$.$mol_wire_probe(()=>this.sort() )
+					if(old){
+						this.$.$mol_state_arg.value( this.entity_name() + '_sort', null )
+					}
+					this.$.$mol_state_arg.value( this.entity_name() + '_sort_field', next?.field ?? null )
+					this.$.$mol_state_arg.value( this.entity_name() + '_sort_order', next?.order ?? null )
+				}
+				
 			}
+			else {
+				if(this.use_arg_sort()) {
+					const sort: { field: string, order: 'asc' | 'desc' } = { field: '', order: 'asc' }
+					const dict = this.$.$mol_state_arg.dict()
+					for(const key in dict) {
+						if(key.startsWith(this.entity_name() + '_sort_')) {
+							sort.field = dict[this.entity_name() + '_sort_field'] ?? ''
+							sort.order = dict[this.entity_name() + '_sort_order'] as 'asc' | 'desc' ?? 'asc'
+						}
+					}
+					return sort
+				}
+			}
+			
 			return next ?? null
 		}
 
 		@$mol_mem
 		offset(next?: number): number {
 			if(next !== undefined) {
-				this.apply_if_immediate()
+				if(this.use_arg_pagination()) {
+					const old = this.$.$mol_wire_probe(()=>this.offset() )
+					if(old){
+						this.$.$mol_state_arg.value( this.entity_name() + '_offset', null )
+					}
+					this.$.$mol_state_arg.value( this.entity_name() + '_offset', next.toString() )
+				}
+				
 			}
+			else {
+				if(this.use_arg_pagination()) {
+					const offset = this.$.$mol_state_arg.value( this.entity_name() + '_offset' )
+					return offset ? parseInt(offset) : 0
+				}
+			}
+			
 			return next ?? 0
 		}
 
@@ -107,8 +185,22 @@ namespace $ {
 		limit(next?: number): number {
 
 			if(next !== undefined) {
-				this.apply_if_immediate()
+				if(this.use_arg_pagination()) {
+					const old = this.$.$mol_wire_probe(()=>this.limit() )
+					if(old){
+						this.$.$mol_state_arg.value( this.entity_name() + '_limit', null )
+					}
+					this.$.$mol_state_arg.value( this.entity_name() + '_limit', next.toString() )
+				}
+				
 			}
+			else {
+				if(this.use_arg_pagination()) {
+					const limit = this.$.$mol_state_arg.value( this.entity_name() + '_limit' )
+					return limit ? parseInt(limit) : 10
+				}
+			}
+			
 			return next ?? 10
 		}
 
