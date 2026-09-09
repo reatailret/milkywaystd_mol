@@ -59,8 +59,8 @@ namespace $ {
 			return this.one_unpack( response )
 		}
 
-		override entity_factory(): $mws_data_entity<$mws_data_demo_rest_product> {
-			return new $mws_data_demo_rest_entity()
+		override entity_class() {
+			return $mws_data_demo_rest_entity
 		}
 	}
 

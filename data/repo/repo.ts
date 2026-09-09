@@ -157,15 +157,11 @@ namespace $ {
 		 */
 		@$mol_mem
 		list(): readonly T[] {
-			const keys = this.dataKeys()
-			return Object.keys(this.dataKeys())
-				.map( id => keys[ id ] )
-				.filter( item => item !== undefined )
+			return [ ...this.dataKeys().values() ]
 		}
 		@$mol_mem
-		dataKeys(next?: Record<string, T>): Record<string, T>
+		dataKeys(next?: $mol_wire_dict<string, T>): $mol_wire_dict<string, T>
 		{
-			console.log('dataKeys', next)
 			$mol_wire_solid()
 			this.list_version()
 			this.filters()
@@ -176,22 +172,17 @@ namespace $ {
 				return next
 			}
 			const data = this.list_fn()
-			const obj : Record<string, any> = {}
-			for( const iterator of data )
-			{
-				obj[ `${ (iterator as any)[ this.id_key() ] }` ] = iterator
-			}
-			return obj
+			return new $mol_wire_dict(
+				data.map( item => [ String( this.item_id( item ) ), item ] as [ string, T ] )
+			)
 		}
 		@$mol_action
 		update(id: string | number, data: Partial<T>): T {
 			const item = this.update_fn(id, data)
-			const obj = this.dataKeys()
-			if(obj[`${id}`]) {
-				const mut = $mol_mutable(obj)
-				mut[`${id}`](next => ({...next, ...item}))
-				this.dataKeys(mut() as Record<string, T>)
-			}
+			const dict = this.dataKeys()
+			const key = String( id )
+			const current = dict.get( key )
+			if( current ) dict.set( key, { ...current, ...item } )
 			return this.item(id, item)
 		}
 		@$mol_action
@@ -221,10 +212,7 @@ namespace $ {
 		@$mol_action
 		remove(id: string | number) {
 			const result = this.remove_fn(id)
-			const obj = { ...this.dataKeys() }
-			delete obj[`${id}`]
-			this.dataKeys(obj)
-			console.log('remove', obj)
+			this.dataKeys().delete( String( id ) )
 			return result
 		}
 		@$mol_action
@@ -244,9 +232,10 @@ namespace $ {
 
 		@$mol_mem_key
 		entity(id?: string | number) {
-			const entity = this.entity_factory()
-			entity.repo(this)
-			entity.id(id)
+			if( id === undefined || id === '' ) return this.new_entity()
+			const Class = this.entity_class() as typeof $mws_data_entity
+			const entity = Class.for( String( id ) ) as $mws_data_entity<T>
+			if( !$mol_wire_probe( ()=> entity.repo() ) ) entity.repo( this )
 			return entity
 		}
 
@@ -255,9 +244,13 @@ namespace $ {
 			entity.repo(this)
 			return entity
 		}
+
+		entity_class(): new () => $mws_data_entity<T> {
+			return $mws_data_entity
+		}
 		
 		entity_factory(): $mws_data_entity<T> {
-			return null!
+			return new ( this.entity_class() )()
 		}
 	}
 }

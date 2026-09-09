@@ -138,7 +138,7 @@ namespace $.$$
 				entity = this.repo().new_entity()
 			} else
 			{
-				const exists = this.repo().dataKeys()[id_str]
+				const exists = this.repo().dataKeys().get( id_str )
 				if(exists) {
 					// use from list cache
 					this.repo().item(id_str,exists)

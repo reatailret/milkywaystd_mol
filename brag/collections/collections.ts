@@ -35,8 +35,8 @@ namespace $ {
 			return packed
 		}
 
-		override entity_factory(): $mws_data_entity<$mws_brag_collections_row> {
-			return new $mws_brag_collections_entity()
+		override entity_class() {
+			return $mws_brag_collections_entity
 		}
 	}
 

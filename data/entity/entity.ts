@@ -6,6 +6,20 @@ namespace $ {
 	export class $mws_data_entity<T extends Record<string, any>> extends $mol_object {
 		
 		/**
+		 * Глобальный реестр экземпляров: хост = класс, ключ = id.
+		 * Канал живёт, пока есть потребители; без них atom reaping вызывает destructor().
+		 */
+		@$mol_mem_key
+		static for< Entity extends $mws_data_entity<any> >(
+			this: new () => Entity,
+			id: string | number,
+		): Entity {
+			const entity = new this()
+			entity.id( id )
+			return entity
+		}
+		
+		/**
 		 * Репозиторий данных
 		 */
 		@$mol_mem
