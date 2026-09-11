@@ -18,6 +18,15 @@ namespace $ {
 			entity.id( id )
 			return entity
 		}
+
+		/**
+		 * Общие данные записи (класс + id) для всех репо этого entity.
+		 * undefined — ещё не загружали, null — удалили.
+		 */
+		@$mol_mem_key
+		static item( id: string | number, next?: any ) {
+			return next
+		}
 		
 		/**
 		 * Репозиторий данных

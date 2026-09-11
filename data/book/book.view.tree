@@ -1,14 +1,16 @@
 $mws_data_book $mol_book2
+	entity_name \entity
 	title \Book
 	show_column_config true
 	table_row_arg* *
 	plugins /
 		<= Theme $mol_theme_auto
 	Datasource $mws_data_source<any>
-		entity_name <= entity_name \entity
+		entity_name <= entity_name
 	Renderer $mws_data_renderer_table
 		title \List
 		Datasource <= Datasource
+		col_ids <= col_ids /
 	-
 	List_page $mol_page
 		title <= title
@@ -31,6 +33,8 @@ $mws_data_book $mol_book2
 		filter_value_inner*? => filter_value*? null
 		Datasource <= Datasource
 		close? <=> filter_close? null
+		apply_filters? => filter_apply? null
+		clear_filters? => filter_clear? null
 	filter_form_fields /
 	Columns_page $mol_page
 		title \Columns
@@ -42,6 +46,27 @@ $mws_data_book $mol_book2
 		body /
 			<= Columns_list $mol_list
 				rows <= column_config_rows /
+	Column_row* $mol_row
+		sub /
+			<= Column_up* $mol_button_minor
+				hint \Up
+				enabled <= column_move_up_enabled* true
+				click? <=> column_move_up*? null
+				sub /
+					<= Column_up_icon* $mol_icon_chevron_up
+			<= Column_down* $mol_button_minor
+				hint \Down
+				enabled <= column_move_down_enabled* true
+				click? <=> column_move_down*? null
+				sub /
+					<= Column_down_icon* $mol_icon_chevron_down
+			<= Column_label* $mol_paragraph
+				title <= column_title* \
+			<= Column_visible* $mol_switch
+				value? <=> column_visible_value*? \on
+				options *
+					on \On
+					off \Off
 	Edit_page $mws_data_form
 		entity <= edit_entity null
 		close? <=> edit_close? null

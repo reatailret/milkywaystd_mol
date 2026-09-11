@@ -28,8 +28,8 @@ namespace $ {
 			r1.$ = $
 			r2.$ = $
 
-			const e1 = r1.entity( '1' )
-			const e2 = r2.entity( '1' )
+			const e1 = r1.entity({ id: '1', cached: true })
+			const e2 = r2.entity({ id: '1', cached: true })
 
 			$mol_assert_equal( e1, e2 )
 			$mol_assert_equal( e1.repo(), r1 )
@@ -65,6 +65,69 @@ namespace $ {
 			app.showing( false )
 			$mol_wire_fiber.sync()
 			$mol_assert_ok( destroyed )
+		},
+
+		'update in one repo updates other list and entity'( $ ) {
+			class User extends $mws_data_entity<{ id: string, name: string }> {}
+			class Repo extends $mws_data_repo_memory<{ id: string, name: string }> {
+				override entity_class() {
+					return User
+				}
+			}
+
+			const r1 = new Repo
+			const r2 = new Repo
+			r1.$ = $
+			r2.$ = $
+			r1.memory( [ { id: '1', name: 'a' } ] )
+			r2.memory( [ { id: '1', name: 'a' } ] )
+
+			$mol_assert_equal( r1.list()[0].name, 'a' )
+			$mol_assert_equal( r2.list()[0].name, 'a' )
+
+			const entity = r1.entity( '1' )
+			$mol_assert_equal( entity.data()?.name, 'a' )
+			$mol_assert_unique( r2.entity( '1' ), entity )
+
+			r2.update( '1', { name: 'b' } )
+
+			$mol_assert_equal( r1.list()[0].name, 'b' )
+			$mol_assert_equal( r2.list()[0].name, 'b' )
+			$mol_assert_equal( entity.data()?.name, 'b' )
+			$mol_assert_equal( r1.list()[0], r2.list()[0] )
+		},
+
+		'entity cached false is unique but shares data'( $ ) {
+			class User extends $mws_data_entity<{ id: string, name: string }> {}
+			class Repo extends $mws_data_repo_memory<{ id: string, name: string }> {
+				override entity_class() {
+					return User
+				}
+			}
+
+			const r1 = new Repo
+			const r2 = new Repo
+			r1.$ = $
+			r2.$ = $
+			r1.memory( [ { id: '1', name: 'a' } ] )
+			r2.memory( [ { id: '1', name: 'a' } ] )
+			r1.list()
+			r2.list()
+
+			const e1 = r1.entity( '1' )
+			const e2 = r2.entity( '1' )
+			$mol_assert_unique( e1, e2 )
+			$mol_assert_equal( e1.data()?.name, 'a' )
+			$mol_assert_equal( e2.data()?.name, 'a' )
+
+			e1.draft({ name: 'local' })
+			$mol_assert_equal( e1.draft()?.name, 'local' )
+			$mol_assert_equal( e2.draft(), null )
+
+			r2.update( '1', { name: 'b' } )
+			$mol_assert_equal( e1.data()?.name, 'b' )
+			$mol_assert_equal( e2.data()?.name, 'b' )
+			$mol_assert_equal( e1.draft()?.name, 'local' )
 		},
 
 	})

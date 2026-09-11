@@ -56,6 +56,10 @@ namespace $ {
 			return next ?? 'entity'
 		}
 		@$mol_mem
+		storage_key(): string {
+			return this.entity_name() + '_' + this.constructor.name	
+		}
+		@$mol_mem
 		use_arg_filter(next?: boolean): boolean {
 			return next ?? true
 		}
@@ -104,11 +108,11 @@ namespace $ {
 					const old = this.$.$mol_wire_probe(()=>this.filters() )
 					if(old){
 						for(const key in old) {
-							this.$.$mol_state_arg.value( this.entity_name() + '_filter_' + key, null )
+							this.$.$mol_state_arg.value( this.storage_key() + '_filter_' + key, null )
 						}
 					}
 					for(const key in next) {
-						this.$.$mol_state_arg.value( this.entity_name() + '_filter_' + key, next[key] )
+						this.$.$mol_state_arg.value( this.storage_key() + '_filter_' + key, next[key] )
 					}
 				}
 				
@@ -118,8 +122,8 @@ namespace $ {
 					const filters: Record<string, any> = {}
 					const dict = this.$.$mol_state_arg.dict()
 					for(const key in dict) {
-						if(key.startsWith(this.entity_name() + '_filter_')) {
-							filters[key.substring((this.entity_name() + '_filter_').length)] = dict[key]
+						if(key.startsWith(this.storage_key() + '_filter_')) {
+							filters[key.substring((this.storage_key() + '_filter_').length)] = dict[key]
 						}
 					}
 					return filters
@@ -135,10 +139,10 @@ namespace $ {
 				if(this.use_arg_sort()) {
 					const old = this.$.$mol_wire_probe(()=>this.sort() )
 					if(old){
-						this.$.$mol_state_arg.value( this.entity_name() + '_sort', null )
+						this.$.$mol_state_arg.value( this.storage_key() + '_sort', null )
 					}
-					this.$.$mol_state_arg.value( this.entity_name() + '_sort_field', next?.field ?? null )
-					this.$.$mol_state_arg.value( this.entity_name() + '_sort_order', next?.order ?? null )
+					this.$.$mol_state_arg.value( this.storage_key() + '_sort_field', next?.field ?? null )
+					this.$.$mol_state_arg.value( this.storage_key() + '_sort_order', next?.order ?? null )
 				}
 				
 			}
@@ -147,9 +151,9 @@ namespace $ {
 					const sort: { field: string, order: 'asc' | 'desc' } = { field: '', order: 'asc' }
 					const dict = this.$.$mol_state_arg.dict()
 					for(const key in dict) {
-						if(key.startsWith(this.entity_name() + '_sort_')) {
-							sort.field = dict[this.entity_name() + '_sort_field'] ?? ''
-							sort.order = dict[this.entity_name() + '_sort_order'] as 'asc' | 'desc' ?? 'asc'
+						if(key.startsWith(this.storage_key() + '_sort_')) {
+							sort.field = dict[this.storage_key() + '_sort_field'] ?? ''
+							sort.order = dict[this.storage_key() + '_sort_order'] as 'asc' | 'desc' ?? 'asc'
 						}
 					}
 					return sort
@@ -165,15 +169,15 @@ namespace $ {
 				if(this.use_arg_pagination()) {
 					const old = this.$.$mol_wire_probe(()=>this.offset() )
 					if(old){
-						this.$.$mol_state_arg.value( this.entity_name() + '_offset', null )
+						this.$.$mol_state_arg.value( this.storage_key() + '_offset', null )
 					}
-					this.$.$mol_state_arg.value( this.entity_name() + '_offset', next.toString() )
+					this.$.$mol_state_arg.value( this.storage_key() + '_offset', next.toString() )
 				}
 				
 			}
 			else {
 				if(this.use_arg_pagination()) {
-					const offset = this.$.$mol_state_arg.value( this.entity_name() + '_offset' )
+					const offset = this.$.$mol_state_arg.value( this.storage_key() + '_offset' )
 					return offset ? parseInt(offset) : 0
 				}
 			}
@@ -188,15 +192,15 @@ namespace $ {
 				if(this.use_arg_pagination()) {
 					const old = this.$.$mol_wire_probe(()=>this.limit() )
 					if(old){
-						this.$.$mol_state_arg.value( this.entity_name() + '_limit', null )
+						this.$.$mol_state_arg.value( this.storage_key() + '_limit', null )
 					}
-					this.$.$mol_state_arg.value( this.entity_name() + '_limit', next.toString() )
+					this.$.$mol_state_arg.value( this.storage_key() + '_limit', next.toString() )
 				}
 				
 			}
 			else {
 				if(this.use_arg_pagination()) {
-					const limit = this.$.$mol_state_arg.value( this.entity_name() + '_limit' )
+					const limit = this.$.$mol_state_arg.value( this.storage_key() + '_limit' )
 					return limit ? parseInt(limit) : 10
 				}
 			}

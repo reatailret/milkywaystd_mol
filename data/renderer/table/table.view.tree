@@ -8,7 +8,6 @@ $mws_data_renderer_table $mws_data_renderer
 				col_head_content* <= col_head_content*
 				Cell* <= Cell* $mol_view
 				row_height 40
-	column_config_rows /
 	col_head_content* /
 		<= Header_cell*
 	Header_cell* $mol_view
@@ -26,24 +25,3 @@ $mws_data_renderer_table $mws_data_renderer
 				query? <=> header_filter_query*? \
 				style *
 					display <= header_filter_display* \none
-	Column_row* $mol_row
-		sub /
-			<= Column_up* $mol_button_minor
-				hint \Up
-				enabled <= column_move_up_enabled* true
-				click? <=> column_move_up*? null
-				sub /
-					<= Column_up_icon* $mol_icon_chevron_up
-			<= Column_down* $mol_button_minor
-				hint \Down
-				enabled <= column_move_down_enabled* true
-				click? <=> column_move_down*? null
-				sub /
-					<= Column_down_icon* $mol_icon_chevron_down
-			<= Column_label* $mol_paragraph
-				title <= header_cell_title* \
-			<= Column_visible* $mol_switch
-				value? <=> column_visible_value*? \on
-				options *
-					on \On
-					off \Off

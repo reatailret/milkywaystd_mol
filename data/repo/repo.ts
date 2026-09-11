@@ -80,6 +80,7 @@ namespace $ {
 		@$mol_action
 		item_reload(id: string | number) {
 			this.item_version(id, this.item_version(id) + 1)
+			this.item(id, this.one_fn(id))
 		}
 
 		
@@ -109,18 +110,28 @@ namespace $ {
 		}
 
 		/**
-		 * Получить элемент по ID (сначала из списка, иначе one)
+		 * Получить элемент по ID (общий кэш класса, иначе one)
 		 */
 		@$mol_mem_key
-		item(id: string | number, next?: T): T {
+		item(id: string | number, next?: T | null): T | null {
 			this.item_version(id)
 
-			if(next !== undefined) {
-				return next
-			}
-			
+			const Class = this.entity_class() as typeof $mws_data_entity
+			const key = String( id )
 
-			return this.one_fn(id)
+			if( next !== undefined ) return Class.item( key, next ) as T | null
+
+			const shared = Class.item( key )
+			if( shared === null ) return null
+			if( shared !== undefined ) return shared as T
+
+			return Class.item( key, this.one_fn( id ) ) as T
+		}
+
+		@$mol_action
+		item_put(id: string | number, data: T | null) {
+			const Class = this.entity_class() as typeof $mws_data_entity
+			return Class.item( String( id ), data ) as T | null
 		}
 
 		/**
@@ -157,7 +168,9 @@ namespace $ {
 		 */
 		@$mol_mem
 		list(): readonly T[] {
-			return [ ...this.dataKeys().values() ]
+			return [ ...this.dataKeys().keys() ]
+				.map( id => this.item( id ) )
+				.filter( ( item ): item is T => item != null )
 		}
 		@$mol_mem
 		dataKeys(next?: $mol_wire_dict<string, T>): $mol_wire_dict<string, T>
@@ -172,18 +185,24 @@ namespace $ {
 				return next
 			}
 			const data = this.list_fn()
-			return new $mol_wire_dict(
-				data.map( item => [ String( this.item_id( item ) ), item ] as [ string, T ] )
-			)
+			const dict = new $mol_wire_dict<string, T>()
+			for( const item of data ) {
+				const id = String( this.item_id( item ) )
+				this.item_put( id, item )
+				dict.set( id, item )
+			}
+			return dict
 		}
 		@$mol_action
 		update(id: string | number, data: Partial<T>): T {
 			const item = this.update_fn(id, data)
-			const dict = this.dataKeys()
 			const key = String( id )
-			const current = dict.get( key )
-			if( current ) dict.set( key, { ...current, ...item } )
-			return this.item(id, item)
+			const current = $mol_wire_probe( ()=> this.item( id ) )
+			const merged = { ...current, ...item } as T
+			this.item( id, merged )
+			const dict = this.dataKeys()
+			if( dict.has( key ) ) dict.set( key, merged )
+			return merged
 		}
 		@$mol_action
 		update_fn(id: string | number, data: Partial<T>): T {
@@ -195,7 +214,10 @@ namespace $ {
 		@$mol_action
 		create(data: Partial<T>): T {
 			const item = this.create_fn(data)
-			return this.item(this.item_id(item), item)
+			const id = this.item_id( item )
+			this.item( id, item )
+			this.dataKeys().set( String( id ), item )
+			return item
 		}
 		@$mol_action
 		create_fn(data: Partial<T>): T {
@@ -212,7 +234,9 @@ namespace $ {
 		@$mol_action
 		remove(id: string | number) {
 			const result = this.remove_fn(id)
-			this.dataKeys().delete( String( id ) )
+			const key = String( id )
+			this.dataKeys().delete( key )
+			this.item( id, null )
 			return result
 		}
 		@$mol_action
@@ -230,12 +254,30 @@ namespace $ {
 			return next ?? { offset: 0, limit: 10 }
 		}
 
+		/**
+		 * Фабрика entity.
+		 * entity(id) — новый экземпляр (свой draft).
+		 * entity({ id, cached: true }) — синглтон Class.for(id) на все репо.
+		 * Данные общие через Class.item в обоих случаях.
+		 */
 		@$mol_mem_key
-		entity(id?: string | number) {
-			if( id === undefined || id === '' ) return this.new_entity()
-			const Class = this.entity_class() as typeof $mws_data_entity
-			const entity = Class.for( String( id ) ) as $mws_data_entity<T>
-			if( !$mol_wire_probe( ()=> entity.repo() ) ) entity.repo( this )
+		entity(id?: string | number | { id?: string | number, cached?: boolean }) {
+			let cached = false
+			let real_id = id as string | number | undefined
+			if( id !== null && typeof id === 'object' ) {
+				cached = id.cached === true
+				real_id = id.id
+			}
+			if( real_id === undefined || real_id === '' ) return this.new_entity()
+			if( cached ) {
+				const Class = this.entity_class() as typeof $mws_data_entity
+				const entity = Class.for( String( real_id ) ) as $mws_data_entity<T>
+				if( !$mol_wire_probe( ()=> entity.repo() ) ) entity.repo( this )
+				return entity
+			}
+			const entity = this.entity_factory()
+			entity.repo( this )
+			entity.id( real_id )
 			return entity
 		}
 
