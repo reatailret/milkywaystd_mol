@@ -7,6 +7,8 @@ $mws_data_form $mol_page
 		<= Close_btn $mol_button_minor
 			title \Close
 			hint \Close
+			sub /
+				<= Close_btn_icon $mol_icon_close
 			click? <=> close? null
 	body /
 		<= Error_container $mws_error_retry_container

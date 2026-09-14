@@ -1,9 +1,4 @@
-$mws_data_demo_rest $mol_page
-	title \Demo REST
-	body /
-		<= a $mws_data_demo_rest_b1
-		<= b $mws_data_demo_rest_b2
-$mws_data_demo_rest_b1 $mws_data_book
+$mws_data_demo_rest $mws_data_book
 	Datasource $mws_data_demo_rest_source
 		columns /
 			<= title_column *
@@ -66,88 +61,36 @@ $mws_data_demo_rest_b1 $mws_data_book
 			required true
 			rules /
 				<= required_rule $mws_form_rules_required
-	Edit_btn* $mol_link
+	Edit_btn* $yuf_link
 		title \Edit
 		arg *
 	Delete_btn* $mol_button_minor
 		title \Delete
+	View_btn* $yuf_link
+		title \View
+		arg <= details_arg*
 	Actions* $mws_data_renderer_cell
 		sub /
 			<= subsub* $mol_view
 				sub /
+					<= View_btn*
 					<= Edit_btn*
 					<= Delete_btn*
 		bind_cell_render_logic*? <=> bind_cell_render_logic*? null
-$mws_data_demo_rest_b2 $mws_data_book
-	entity_name \book2
-	Datasource $mws_data_demo_rest_source
-		columns /
-			<= title_column *
-				id \title
-				title \Product Title
-				field \title
-				sortable true
-			<= price_column *
-				id \price
-				title \Price
-				field \price
-				sortable true
-			<= stock_column *
-				id \stock
-				title \Stock
-				field \stock
-			<= actions_column *
-				id \actions
-				title \Actions
-				field \actions
-				renderer? <=> Actions?
-	fields_config /
-		<= title_field *
-			id \title
-			name \Product Title
-			field \title
-			type \string
-			hint \Enter product title
-			required true
-			rules /
-				<= required_rule $mws_form_rules_required
-		<= price_field *
-			id \price
-			name \Price
-			field \price
-			type \number
-			hint \Enter price
-			required true
-			rules /
-				<= required_rule $mws_form_rules_required
-		<= stock_field *
-			id \stock
-			name \Stock
-			field \stock
-			type \number
-			hint \Enter stock quantity
-			required true
-			rules /
-				<= required_rule $mws_form_rules_required
-		<= category_field *
-			id \category
-			name \Category
-			field \category
-			type \string
-			hint \Enter category
-			required true
-			rules /
-				<= required_rule $mws_form_rules_required
-	Edit_btn* $mol_link
-		title \Edit
-		arg *
-	Delete_btn* $mol_button_minor
-		title \Delete
-	Actions* $mws_data_renderer_cell
-		sub /
-			<= subsub* $mol_view
-				sub /
-					<= Edit_btn*
-					<= Delete_btn*
-		bind_cell_render_logic*? <=> bind_cell_render_logic*? null
-
+	Details_body /
+		<= Title $mol_labeler
+			title <= title_label @ \Title
+			content /
+				<= details_entity_field*title
+		<= Price $mol_labeler
+			title <= price_label @ \Price
+			content /
+				<= details_entity_field*price
+		<= Stock $mol_labeler
+			title <= stock_label @ \Stock
+			content /
+				<= details_entity_field*stock
+		<= Category $mol_labeler
+			title <= category_label @ \Category
+			content /
+				<= details_entity_field*category

@@ -3,8 +3,12 @@ $mws_data_book $mol_book2
 	title \Book
 	show_column_config true
 	table_row_arg* *
+	details_arg* *
 	plugins /
 		<= Theme $mol_theme_auto
+	edit_entity null
+	details_entity null
+	details_entity_field? null
 	Datasource $mws_data_source<any>
 		entity_name <= entity_name
 	Renderer $mws_data_renderer_table
@@ -42,6 +46,8 @@ $mws_data_book $mol_book2
 			<= Columns_close $mol_button_minor
 				title \Close
 				hint \Close
+				sub /
+					<= Columns_close_icon $mol_icon_close
 				click? <=> columns_close? null
 		body /
 			<= Columns_list $mol_list
@@ -68,7 +74,17 @@ $mws_data_book $mol_book2
 					on \On
 					off \Off
 	Edit_page $mws_data_form
-		entity <= edit_entity null
+		entity <= edit_entity
 		close? <=> edit_close? null
 		on_saved? <=> edit_on_saved? null
 		fields_config <= fields_config /
+	Details_page $mol_page
+		title \Details
+		tools /
+			<= Details_close $mol_button_minor
+				title \Close
+				hint \Close
+				click? <=> details_close? null
+				sub /
+					<= Details_close_icon $mol_icon_close
+		body <= Details_body /

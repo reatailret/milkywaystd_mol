@@ -97,6 +97,42 @@ namespace $ {
 			$mol_assert_equal( r1.list()[0], r2.list()[0] )
 		},
 
+		'remove entity drops other list and data'( $ ) {
+			class User extends $mws_data_entity<{ id: string, name: string }> {}
+			class Repo extends $mws_data_repo_memory<{ id: string, name: string }> {
+				override entity_class() {
+					return User
+				}
+			}
+
+			const r1 = new Repo
+			const r2 = new Repo
+			r1.$ = $
+			r2.$ = $
+			r1.memory( [ { id: '1', name: 'a' }, { id: '2', name: 'b' } ] )
+			r2.memory( [ { id: '1', name: 'a' }, { id: '2', name: 'b' } ] )
+
+			$mol_assert_equal( r1.list().length, 2 )
+			$mol_assert_equal( r2.list().length, 2 )
+
+			const entity = r1.entity( '1' )
+			const other = r2.entity( '1' )
+			$mol_assert_equal( entity.data()?.name, 'a' )
+			$mol_assert_unique( other, entity )
+
+			entity.remove()
+
+			$mol_assert_equal( r1.list().length, 1 )
+			$mol_assert_equal( r2.list().length, 1 )
+			$mol_assert_equal( r1.list()[0].name, 'b' )
+			$mol_assert_equal( r2.list()[0].name, 'b' )
+			$mol_assert_equal( entity.data(), null )
+			$mol_assert_equal( other.data(), null )
+			$mol_assert_equal( User.item( '1' ), null )
+			$mol_assert_equal( r1.item( '1' ), null )
+			$mol_assert_equal( r2.item( '1' ), null )
+		},
+
 		'entity cached false is unique but shares data'( $ ) {
 			class User extends $mws_data_entity<{ id: string, name: string }> {}
 			class Repo extends $mws_data_repo_memory<{ id: string, name: string }> {

@@ -45,6 +45,7 @@ namespace $.$$
 		{
 			const base = [ this.List_page() ]
 			const edit_id = this.edit_id()
+			const details_id = this.details_id()
 			const pages = []
 			
 			if( this.show_column_config() && this.$.$mol_state_arg.value( this.entity_name() + '_columns' ) )
@@ -60,6 +61,10 @@ namespace $.$$
 				{
 					pages.push( this.Edit_page() )
 				}
+			if( details_id )
+				{
+					pages.push( this.Details_page() )
+				}
 			return [ ...base, ...pages ]
 		}
 		
@@ -74,8 +79,18 @@ namespace $.$$
 			return this.$.$mol_state_arg.value( this.edit_key(), next ) ?? ''
 		}
 		@$mol_mem
+		details_id( next?: string ): string
+		{
+			return this.$.$mol_state_arg.value( this.details_key(), next ) ?? ''
+		}
+		@$mol_mem
 		edit_key(): string {
 			return this.entity_name() + '_edit'
+		}
+
+		@$mol_mem
+		details_key(): string {
+			return this.entity_name() + '_details'
 		}
 
 		@$mol_action
@@ -97,14 +112,21 @@ namespace $.$$
 		 * Возвращает arg для строки таблицы (для $mol_link)
 		 */
 		@$mol_mem_key
-		public table_row_arg( id: string ): Record<string, string>
+		public override table_row_arg( id: string ): Record<string, string>
 		{
 			return { [this.edit_key()]: id }
 		}
-
+		@$mol_mem_key
+		public override details_arg( id: string ): Record<string, string>
+		{
+			return { [this.details_key()]: id }
+		}
 		override edit_close()
 		{
 			this.edit_id( '' )
+		}
+		override details_close() {
+			this.details_id( '' )
 		}
 		override filter_close() {
 			this.$.$mol_state_arg.value( this.entity_name() + '_filter', null )
@@ -258,6 +280,9 @@ namespace $.$$
 				return false;
 			}
 		    this.Datasource().repo().remove(id)
+			if( this.edit_id() == id ) this.edit_id( '' )
+			if( this.details_id() == id ) this.details_id( '' )
+			
 			this.$.$mol_dom_context.alert('Удалено '+id)
 
 		}
@@ -289,6 +314,28 @@ namespace $.$$
 			
 
 			return entity
+		}
+
+		@$mol_mem
+		override details_entity()
+		{
+			const id_str = this.details_id()
+			if( !id_str ) return null
+
+			let entity = null
+
+			
+			entity = this.repo().entity(id_str)
+				
+
+			return entity
+		}
+		@$mol_mem_key
+		details_entity_field( field: string )
+		{
+			const entity = this.details_entity()
+			if( !entity ) return null
+			return entity.field( field )
 		}
 		
 	}
