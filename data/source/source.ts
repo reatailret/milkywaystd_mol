@@ -25,12 +25,18 @@ namespace $ {
 	export type $mws_data_column_config<T = any> = {
 		id: string
 		title: string
-		field?: keyof T
+		field: keyof T
 		width?: number
 		sortable?: boolean
 		filterable?: boolean
 		renderer?: (id?: string) => $mws_data_renderer_cell
+		form_renderer?: (id?: string) => any
+		render_in_form?: boolean
+		type: 'string' | 'number' | 'text' | 'check',
+		rules?: readonly $mws_form_rules_rule[],
+		hint?: string
 	}
+
 
 	/**
 	 * Базовые параметры для списка
@@ -52,12 +58,12 @@ namespace $ {
 	export class $mws_data_source<T extends Record<string, any>> extends $mol_object {
 
 		@$mol_mem
-		entity_name(next?: string): string {
-			return next ?? 'entity'
+		param_base(next?: string): string {
+			return next ?? ''
 		}
 		@$mol_mem
 		storage_key(): string {
-			return this.entity_name() + '_' + this.constructor.name	
+			return this.param_base()? this.param_base() : this.constructor.name	
 		}
 		@$mol_mem
 		use_arg_filter(next?: boolean): boolean {
@@ -67,10 +73,7 @@ namespace $ {
 		use_arg_sort(next?: boolean): boolean {
 			return next ?? true
 		}
-		@$mol_mem
-		use_arg_pagination(next?: boolean): boolean {
-			return next ?? true
-		}
+		
 		
 		@$mol_mem
 		immediate(next?: boolean): boolean {
@@ -165,45 +168,14 @@ namespace $ {
 
 		@$mol_mem
 		offset(next?: number): number {
-			if(next !== undefined) {
-				if(this.use_arg_pagination()) {
-					const old = this.$.$mol_wire_probe(()=>this.offset() )
-					if(old){
-						this.$.$mol_state_arg.value( this.storage_key() + '_offset', null )
-					}
-					this.$.$mol_state_arg.value( this.storage_key() + '_offset', next.toString() )
-				}
-				
-			}
-			else {
-				if(this.use_arg_pagination()) {
-					const offset = this.$.$mol_state_arg.value( this.storage_key() + '_offset' )
-					return offset ? parseInt(offset) : 0
-				}
-			}
 			
+			console.log('offset', next)
 			return next ?? 0
 		}
 
 		@$mol_mem
 		limit(next?: number): number {
 
-			if(next !== undefined) {
-				if(this.use_arg_pagination()) {
-					const old = this.$.$mol_wire_probe(()=>this.limit() )
-					if(old){
-						this.$.$mol_state_arg.value( this.storage_key() + '_limit', null )
-					}
-					this.$.$mol_state_arg.value( this.storage_key() + '_limit', next.toString() )
-				}
-				
-			}
-			else {
-				if(this.use_arg_pagination()) {
-					const limit = this.$.$mol_state_arg.value( this.storage_key() + '_limit' )
-					return limit ? parseInt(limit) : 10
-				}
-			}
 			
 			return next ?? 10
 		}
@@ -314,14 +286,13 @@ namespace $ {
 			}
 		}
 
-		@$mol_action
-		page_go(page: number) {
-			this.offset(page * this.limit())
-		}
-
 		@$mol_mem
-		page(): number {
-			return Math.floor(this.offset() / this.limit())
+		page(next?: number): number {
+			if(next !== undefined) {
+				if(next < 1) next = 1
+				this.offset((next - 1) * this.limit())
+			}
+			return Math.floor(this.offset() / this.limit()) + 1
 		}
 
 		@$mol_mem
@@ -331,12 +302,12 @@ namespace $ {
 
 		@$mol_action
 		page_next() {
-			if (this.page() < this.page_count() - 1) this.page_go(this.page() + 1)
+			if (this.page() < this.page_count()) this.page(this.page() + 1)
 		}
 
 		@$mol_action
 		page_prev() {
-			if (this.page() > 0) this.page_go(this.page() - 1)
+			if (this.page() > 1) this.page(this.page() - 1)
 		}
 
 		@$mol_action

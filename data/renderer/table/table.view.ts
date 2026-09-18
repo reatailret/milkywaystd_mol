@@ -55,10 +55,20 @@ namespace $.$$ {
 			const col = this.column( id )
 			return !!( col?.filterable && col.field )
 		}
+
+		header_sort_enabled( id: string ): boolean {
+			const col = this.column( id )
+			return !!( col?.sortable && col.field )
+		}
 		
 		@$mol_mem_key
 		override header_filter_display( id: string ): string {
 			return this.header_filter_enabled( id ) ? '' : 'none'
+		}
+		
+		@$mol_mem_key
+		override header_sort_display( id: string ): string {
+			return this.header_sort_enabled( id ) ? '' : 'none'
 		}
 		
 		@$mol_mem_key
@@ -103,28 +113,7 @@ namespace $.$$ {
 			return grid.Cell_text( id )
 		}
 		
-		override page_text(): string {
-			const page = this.Datasource().page() + 1
-			const total = this.Datasource().page_count()
-			const count = this.Datasource().total()
-			return `Page ${page} of ${total} (${count} items)`
-		}
 		
-		override page_prev_enabled(): boolean {
-			return this.Datasource().page() > 0
-		}
-		
-		override page_next_enabled(): boolean {
-			return this.Datasource().page() < this.Datasource().page_count() - 1
-		}
-		
-		override page_prev() {
-			this.Datasource().page_prev()
-		}
-		
-		override page_next() {
-			this.Datasource().page_next()
-		}
 		
 	}
 	

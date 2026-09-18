@@ -1,19 +1,6 @@
 namespace $.$$
 {
 
-	/**
-	 * Конфигурация поля формы
-	 */
-	export type $mws_data_form_field_config<T = any> = {
-		id: string
-		name: string
-		field: keyof T
-		type: 'string' | 'number' | 'text' | 'check'
-		hint?: string
-		rules?: readonly $mws_form_rules_rule[]
-
-	}
-
 	export class $mws_data_form extends $.$mws_data_form
 	{
 		@$mol_mem
@@ -67,7 +54,7 @@ namespace $.$$
 		 * Конфигурация полей формы
 		 */
 		@$mol_mem
-		fields_config( next?: readonly $mws_data_form_field_config[] ): readonly $mws_data_form_field_config[]
+		fields_config( next?: readonly $mws_data_column_config[] ): readonly $mws_data_column_config[]
 		{
 			return next ?? []
 		}
@@ -80,12 +67,12 @@ namespace $.$$
 		@$mol_mem
 		override form_fields(): readonly any[]
 		{
-			return this.fields_config().map( config => this.Field( config.id ) )
+			return this.fields_config().filter( config => config.render_in_form ).map( config => this.Field( config.id ) )
 		}
 
 		override field_name( id: string ): string
 		{
-			return this.field_config( id )?.name ?? ''
+			return this.field_config( id )?.title ?? ''
 		}
 
 		/**
@@ -133,6 +120,11 @@ namespace $.$$
 		{
 			const config = this.field_config( id )
 			if( !config ) return null
+
+			if( config.form_renderer )
+			{
+				return config.form_renderer( id )
+			}
 
 			switch( config.type )
 			{

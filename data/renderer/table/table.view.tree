@@ -7,11 +7,10 @@ $mws_data_renderer_table $mws_data_renderer
 				cell_content* <= cell_content* /
 				col_head_content* <= col_head_content*
 				Cell* <= Cell* $mol_view
-				row_height 40
+				row_height 30
 	col_head_content* /
 		<= Header_cell*
 	Header_cell* $mol_view
-		attr * mol_theme \$mol_theme_accent
 		sub /
 			<= Header_cell_content* $mol_view
 				sub /
@@ -20,6 +19,8 @@ $mws_data_renderer_table $mws_data_renderer
 					<= Header_sort_btn* $mol_button_minor
 						title <= header_sort_icon* \
 						click <= header_sort_toggle* null
+						style *
+							display <= header_sort_display* \none
 			<= Header_filter* $mol_search
 				hint \Filter
 				query? <=> header_filter_query*? \

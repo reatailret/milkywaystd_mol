@@ -2,9 +2,11 @@ namespace $.$$
 {
 	export class $mws_data_book extends $.$mws_data_book
 	{
+		
 		auto()
 		{
-			this.Datasource().entity_name( this.entity_name() )
+			
+			this.Datasource().param_base( this.param_base() )
 		}
 		@$mol_mem
 		override list_tools() {
@@ -19,24 +21,26 @@ namespace $.$$
 		add_btn_arg(): Record<string, string>
 		{
 			return {
-				[ this.entity_name() + '_edit' ]: 'new'
+				[ this.selected_key() ]: 'new',
+				[this.param()]: 'edit'
 			}
 		}
-		@$mol_mem
-		filter_arg(): Record<string, string>
-		{
-			return {
-				[ this.entity_name() + '_filter' ]: 'true'
-			}
+		override param() {
+			return `${this.param_base()}_${super.param()}`
 		}
-		@$mol_mem
-		override columns_arg(): Record<string, string>
-		{
-			return {
-				[ this.entity_name() + '_columns' ]: 'true'
-			}
+		override filter_param_name() {
+			return this.param_base() + '_' + super.filter_param_name()
 		}
 
+		override columns_param_name() {
+			return this.param_base() + '_' + super.columns_param_name()
+		}
+		filter_enabled() {
+			return this.$.$mol_state_arg.value(this.filter_param_name()) !== null
+		}
+		columns_enabled() {
+			return this.$.$mol_state_arg.value(this.columns_param_name()) !== null
+		}
 		/**
 		 * Переопределяем pages для отображения формы редактирования
 		 */
@@ -44,59 +48,58 @@ namespace $.$$
 		override pages()
 		{
 			const base = [ this.List_page() ]
-			const edit_id = this.edit_id()
-			const details_id = this.details_id()
+			
+			
 			const pages = []
 			
-			if( this.show_column_config() && this.$.$mol_state_arg.value( this.entity_name() + '_columns' ) )
+			if( this.show_column_config() && this.columns_enabled() )
 				{
 					pages.push( this.Columns_page() )
 				}
-			if( this.$.$mol_state_arg.value( this.entity_name() + '_filter' ) )
+			if( this.filter_enabled() )
 			{
 				pages.push( this.Filter_page() )
 			}
 			
-			if( edit_id )
-				{
-					pages.push( this.Edit_page() )
-				}
-			if( details_id )
-				{
-					pages.push( this.Details_page() )
-				}
-			return [ ...base, ...pages ]
+			
+			
+			return [ ...base, ...pages, ...super.pages().slice(1) ]
 		}
 		
 		
-		/**
-		 * ID редактируемого элемента из URL параметра (пусто = форма закрыта, 'new' = создание нового)
-		 */
+		
+		
+		edit_arg(id: string): Record<string, string> {
+			return {
+				[ this.selected_key() ]: id,
+				[this.param()]: 'edit'
+			}
+		}
+		details_arg(id: string): Record<string, string> {
+			return {
+				[ this.selected_key() ]: id,
+				[this.param()]: 'details'
+			}
+		}
 		@$mol_mem
-		edit_id( next?: string ): string
+		selected_id( next?: string ): string
 		{
 			
-			return this.$.$mol_state_arg.value( this.edit_key(), next ) ?? ''
+			const value = this.$.$mol_state_arg.value( this.selected_key(), next ) ?? ''
+			
+			return value
 		}
 		@$mol_mem
-		details_id( next?: string ): string
-		{
-			return this.$.$mol_state_arg.value( this.details_key(), next ) ?? ''
-		}
-		@$mol_mem
-		edit_key(): string {
-			return this.entity_name() + '_edit'
+		selected_key(): string {
+			return this.param()+'_selected'
 		}
 
-		@$mol_mem
-		details_key(): string {
-			return this.entity_name() + '_details'
-		}
+		
 
 		@$mol_action
 		override edit_on_saved( id: string )
 		{
-			this.edit_id( id )
+			this.selected_id( id )
 			this.Datasource().reload()
 		}
 
@@ -108,32 +111,8 @@ namespace $.$$
 
 
 
-		/**
-		 * Возвращает arg для строки таблицы (для $mol_link)
-		 */
-		@$mol_mem_key
-		public override table_row_arg( id: string ): Record<string, string>
-		{
-			return { [this.edit_key()]: id }
-		}
-		@$mol_mem_key
-		public override details_arg( id: string ): Record<string, string>
-		{
-			return { [this.details_key()]: id }
-		}
-		override edit_close()
-		{
-			this.edit_id( '' )
-		}
-		override details_close() {
-			this.details_id( '' )
-		}
-		override filter_close() {
-			this.$.$mol_state_arg.value( this.entity_name() + '_filter', null )
-		}
-		override columns_close() {
-			this.$.$mol_state_arg.value( this.entity_name() + '_columns', null )
-		}
+		
+		
 
 		column_layout_key() {
 			return `$mws_data_book.column_layout.${ this.Datasource().storage_key() }`
@@ -237,7 +216,7 @@ namespace $.$$
 
 		@$mol_mem
 		filter_temp_bootstrap(): number {
-			const open = this.$.$mol_state_arg.value( this.entity_name() + '_filter' )
+			const open = this.$.$mol_state_arg.value( this.param_base() + '_filter' )
 			if( open ) {
 				this.temp_filters({ ...this.Datasource().filters() } as Record<string, string>)
 				return 1
@@ -280,8 +259,7 @@ namespace $.$$
 				return false;
 			}
 		    this.Datasource().repo().remove(id)
-			if( this.edit_id() == id ) this.edit_id( '' )
-			if( this.details_id() == id ) this.details_id( '' )
+			if( this.selected_id() == id ) this.selected_id( '' )
 			
 			this.$.$mol_dom_context.alert('Удалено '+id)
 
@@ -290,7 +268,7 @@ namespace $.$$
 		@$mol_mem
 		override edit_entity()
 		{
-			const id_str = this.edit_id()
+			const id_str = this.selected_id()
 			if( !id_str ) return null
 
 			let entity = null
@@ -319,7 +297,7 @@ namespace $.$$
 		@$mol_mem
 		override details_entity()
 		{
-			const id_str = this.details_id()
+			const id_str = this.selected_id()
 			if( !id_str ) return null
 
 			let entity = null
@@ -337,6 +315,72 @@ namespace $.$$
 			if( !entity ) return null
 			return entity.field( field )
 		}
+
+		override bind_cell_render_logic(col: $mws_data_column_config<any>, item: $mws_data_demo_memory_product) {
+			
+			this.Delete_btn(item.id).click = $mol_wire_sync( ()=> { (this as  unknown as $mws_data_book).delete(item.id) })
+			
+		}
+		@$mol_mem
+		override page_text(): string {
+			this.limit()
+			this.offset1()
+			const page = this.Datasource().page()
+			const total = this.Datasource().page_count()
+			const count = this.Datasource().total()
+			
+			return `Page ${page} of ${total} (${count} items)`
+		}
+		@$mol_mem
+		offset_param_name() {
+			return this.param_base() + '_offset'
+		}
+		@$mol_mem
+		override offset(next?: number): number {
+			
+			return parseInt(this.$.$mol_state_arg.value( this.offset_param_name(), next === undefined ? undefined : next.toString() ) as string | null | undefined ?? '10')
+		}
+		@$mol_mem
+		offset1(next?: number): number {
+			
+			return this.Datasource().offset(parseInt(this.$.$mol_state_arg.value( this.offset_param_name(), next === undefined ? undefined : next.toString() ) as string | null | undefined ?? '10'))
+		}
+		limit_param_name() {
+			return this.param_base() + '_limit'
+		}
+		@$mol_mem
+		override limit(next?: number): number {
+			
+			if(next !== undefined) {
+				this.offset(0)
+			}
+
+			return parseInt(this.$.$mol_state_arg.value( this.limit_param_name(),next === undefined ? undefined : next.toString() ) as string | null | undefined ?? '10')
+		}
+		@$mol_mem
+		page_prev_arg(): Record<string, string> {
+			return {
+				[this.offset_param_name()]: (this.offset() - this.limit()).toString()
+			}
+		}
+		@$mol_mem
+		page_next_arg(): Record<string, string> {
+			return {
+				[this.offset_param_name()]: (this.offset() + this.limit()).toString()
+			}
+		}
+		@$mol_mem
+		override page_prev_enabled(): boolean {
+			return this.Datasource().page() > 1
+		}
+		@$mol_mem
+		override page_next_enabled(): boolean {
+			return this.Datasource().page() < this.Datasource().page_count()
+		}
+		
+		
+
+		
 		
 	}
 

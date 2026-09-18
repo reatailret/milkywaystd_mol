@@ -59,10 +59,6 @@ $mws_data_form_search $mol_page
 	filter_value_inner*? null
 	autofilter true
 	tools /
-		<= Close_btn $mol_button_minor
-			title \Close
-			hint \Close
-			click? <=> close? null
 	body /
 		<= Error_container $mws_error_retry_container
 			error? <=> fetch_error? null

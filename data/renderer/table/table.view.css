@@ -21,7 +21,9 @@
 	background: var(--mol_theme_line);
 	border-radius: 4px;
 }
-
+[mws_data_renderer_table_table_col_head] {
+	border: 1px solid var(--mol_theme_line);
+}
 [mws_data_renderer_table_table] [mol_grid_head] > * {
 	background: var(--mol_theme_back);
 	border-bottom: 1px solid var(--mol_theme_line);

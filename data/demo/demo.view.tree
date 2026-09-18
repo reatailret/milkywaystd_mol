@@ -1,0 +1,21 @@
+$mws_data_demo $mol_example_large
+	title \Data Demo
+	param \app
+	sub /
+		<= Demo $mws_data_demo_app
+			param_prefix <= param
+	tags /
+	aspects /
+
+$mws_data_demo_app $yuf_catalog
+	param_suffix \data
+	menu_title \Data
+	spreads *
+		rest <= Rest $mws_data_demo_rest
+			param_prefix <= param
+			param_suffix \entities
+			addon_tools / ^ spread_close_content
+		memory <= Memory $mws_data_demo_memory
+			param_prefix <= param
+			param_suffix \entities2
+			addon_tools / ^ spread_close_content

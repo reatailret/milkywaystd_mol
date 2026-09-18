@@ -1,4 +1,6 @@
 $mws_data_demo_memory $mws_data_book
+	title \Memory
+	entity_name \entity2
 	Datasource $mws_data_demo_memory_source
 		client_side_processing true
 		columns /

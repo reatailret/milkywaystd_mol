@@ -1,14 +1,23 @@
-$mws_data_book $mol_book2
+$mws_data_book $yuf_catalog
 	entity_name \entity
+	param_suffix <= entity_name
+	param_prefix \book
+	param <= entity_name
 	title \Book
 	show_column_config true
-	table_row_arg* *
-	details_arg* *
-	plugins /
-		<= Theme $mol_theme_auto
+	-
 	edit_entity null
 	details_entity null
 	details_entity_field? null
+	-
+	columns_param_name \columns
+	filter_param_name \filter
+	offset_param_name \offset
+	limit_param_name \limit
+	-
+	offset 10
+	limit 10
+	-
 	Datasource $mws_data_source<any>
 		entity_name <= entity_name
 	Renderer $mws_data_renderer_table
@@ -16,39 +25,85 @@ $mws_data_book $mol_book2
 		Datasource <= Datasource
 		col_ids <= col_ids /
 	-
+	DefaultActions* $mws_data_renderer_cell
+		sub /
+			<= subsub* $mol_view
+				sub /
+					<= View_btn*
+					<= Edit_btn*
+					<= Delete_btn*
+		bind_cell_render_logic*? <=> bind_cell_render_logic*? null
+	Edit_btn* $yuf_link
+		title \Edit
+		arg <= edit_arg*
+		sub / <= Edit_btn_icon* $mol_icon_edit
+	Delete_btn* $mol_button_minor
+		title \Delete
+		sub / <= Delete_btn_icon* $mol_icon_delete
+	View_btn* $yuf_link
+		sub / <= View_btn_icon* $mol_icon_eye
+		title \View
+		arg <= details_arg*
+	-
 	List_page $mol_page
 		title <= title
 		tools <= list_tools /
 			<= Columns_enable $yuf_link
 				hint \Columns
 				sub / <= Columns_enable_icon $mol_icon_view_column
-				arg <= columns_arg *
+				param_name <= columns_param_name
 			<= Filter_enable $yuf_link
 				sub / <= Filter_enable_icon $mol_icon_filter
-				arg <= filter_arg *
+				param_name <= filter_param_name
 			<= Add_btn $yuf_link
 				title \+ Add
 				arg <= add_btn_arg *
 		body /
 			<= Renderer
+		foot /
+			<= PerPageSelector $mol_bar
+				sub /
+					<= perPageSelector $mol_select
+						value?val <=> per_page?val \10
+						hint \Records per page
+						dictionary *
+							5 \5
+							10 \10
+							15 \15
+			<= Pagination $mol_bar
+				sub /
+					<= Page_prev $yuf_link
+						title \Prev
+						enabled <= page_prev_enabled true
+						arg <= page_prev_arg *
+						sub / <= Page_prev_icon $mol_icon_arrow_left
+					<= Page_info $mol_view
+						sub /
+							<= Page_text $mol_paragraph
+								title <= page_text \
+					<= Page_next $yuf_link
+						title \Next
+						enabled <= page_next_enabled true
+						arg <= page_next_arg *
+						sub / <= Page_next_icon $mol_icon_arrow_right
 	-
 	Filter_page $mws_data_form_search
+		theme \$mol_theme_special
 		form_fields <= filter_form_fields /
 		filter_value_inner*? => filter_value*? null
 		Datasource <= Datasource
-		close? <=> filter_close? null
+		tools /
+			<= Filter_close $yuf_link_close
+				param_name <= filter_param_name
 		apply_filters? => filter_apply? null
 		clear_filters? => filter_clear? null
 	filter_form_fields /
 	Columns_page $mol_page
+		theme \$mol_theme_special
 		title \Columns
 		tools /
-			<= Columns_close $mol_button_minor
-				title \Close
-				hint \Close
-				sub /
-					<= Columns_close_icon $mol_icon_close
-				click? <=> columns_close? null
+			<= Columns_close $yuf_link_close
+				param_name <= columns_param_name
 		body /
 			<= Columns_list $mol_list
 				rows <= column_config_rows /
@@ -73,18 +128,17 @@ $mws_data_book $mol_book2
 				options *
 					on \On
 					off \Off
-	Edit_page $mws_data_form
-		entity <= edit_entity
-		close? <=> edit_close? null
-		on_saved? <=> edit_on_saved? null
-		fields_config <= fields_config /
-	Details_page $mol_page
-		title \Details
-		tools /
-			<= Details_close $mol_button_minor
-				title \Close
-				hint \Close
-				click? <=> details_close? null
-				sub /
-					<= Details_close_icon $mol_icon_close
-		body <= Details_body /
+	spreads * 
+		details <= Details_page $mol_page
+			param_base <= param
+			title \Details
+			tools /
+				<= Spread_close
+			body <= Details_body /
+		edit <= Edit_page $mws_data_form
+			tools /
+				<= Spread_close
+			entity <= edit_entity
+			close? <=> edit_close? null
+			on_saved? <=> edit_on_saved? null
+			fields_config <= fields_config /

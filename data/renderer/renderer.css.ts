@@ -12,10 +12,8 @@ namespace $.$$ {
 				grow: 1,
 			},
 		},	
-		Footer: {
-			
-
-		}
+		
+		
 		
 	} )
 	
