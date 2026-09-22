@@ -69,13 +69,21 @@ $mws_data_demo_rest $mws_data_book
 				<= details_entity_field*category
 		<= Attributes $yuf_link
 			title \Attributes
-			param_name \app_data_entities_details_docs
+			param_name <= docs_param_name
 			param_value \docs
-	- spreads *
-		docs <= Docs $mws_data_demo_memory
-			title \Docs
-			param_prefix \app_data_entities_details_docs
-			param_base => docs_param_name
+	spreads *
+		^
+		details <= Details $yuf_catalog
+			param_prefix <= param
 			param_suffix \docs
-			addon_tools / ^ spread_close_content
-
+			param_base => docs_param_name
+			Menu <= Details_page $mol_page
+				title \Details
+				tools /
+					<= Spread_close
+				body <= Details_body
+			spreads *
+				docs <= Docs $mws_data_demo_memory
+					title \Docs
+					param_prefix <= param
+					addon_tools / ^ spread_close_content

@@ -338,12 +338,12 @@ namespace $.$$
 		@$mol_mem
 		override offset(next?: number): number {
 			
-			return parseInt(this.$.$mol_state_arg.value( this.offset_param_name(), next === undefined ? undefined : next.toString() ) as string | null | undefined ?? '10')
+			return parseInt(this.$.$mol_state_arg.value( this.offset_param_name(), next === undefined ? undefined : next.toString() ) as string | null | undefined ?? '0')
 		}
 		@$mol_mem
 		offset1(next?: number): number {
 			
-			return this.Datasource().offset(parseInt(this.$.$mol_state_arg.value( this.offset_param_name(), next === undefined ? undefined : next.toString() ) as string | null | undefined ?? '10'))
+			return this.Datasource().offset(parseInt(this.$.$mol_state_arg.value( this.offset_param_name(), next === undefined ? undefined : next.toString() ) as string | null | undefined ?? '0'))
 		}
 		limit_param_name() {
 			return this.param_base() + '_limit'
