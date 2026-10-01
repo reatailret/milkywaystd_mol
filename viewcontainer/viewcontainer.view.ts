@@ -50,21 +50,7 @@ namespace $
 			return false
 		}
 
-		@ $mol_mem
-		override dom_tree( next? : Element ) : Element
-		{
-			return $mws_view_dom_tree_impl( this, next, {
-				handle_errors: $mws_view_flag( this, 'handle_errors' ),
-				before_render_end: () =>
-				{
-					if( this.loading() ) this.loading( false )
-				},
-				on_promise: () =>
-				{
-					if( !this.loading() ) this.loading( true )
-				},
-			} )
-		}
+		
 
 	}
 
