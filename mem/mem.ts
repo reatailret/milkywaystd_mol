@@ -9,6 +9,8 @@ namespace $
 	)
 	{
 
+		
+
 		if( !descr ) descr = Reflect.getOwnPropertyDescriptor( host, field )
 		const orig = descr?.value! ?? ( host as any )[ field ]
 
@@ -46,22 +48,12 @@ namespace $
 				} catch( error )
 				{
 					if( $mol_promise_like( error ) ) $mol_fail_hidden( error )
-					if(error instanceof $mol_error_mix)
-					{
-						error.cause.retry = atom.refresh()
+					if(error instanceof $mws_error) {
+						throw error
 					}
-					else
-					throw new $mol_error_mix(
-						( error as Error ).message,
-						{
-							retry: () =>
-							{
-
-								atom.refresh()
-
-							}
-						},
-						error as Error
+						throw $mws_error_with_atom(
+						error as Error,
+						atom,
 					)
 				}
 			}
@@ -86,6 +78,8 @@ namespace $
 		descr?: TypedPropertyDescriptor<( ...args: Args ) => any>
 	)
 	{
+
+		
 
 		if( !descr ) descr = Reflect.getOwnPropertyDescriptor( host, field )
 		const orig = descr?.value! ?? ( host as any )[ field ]
@@ -129,23 +123,14 @@ namespace $
 					return atom.resync( args )
 				} catch( error )
 				{
+					
 					if( $mol_promise_like( error ) ) $mol_fail_hidden( error )
-					if(error instanceof $mol_error_mix)
-					{
-						error.cause.retry = atom.refresh()
+					if(error instanceof $mws_error) {
+						throw error
 					}
-					else
-					throw new $mol_error_mix(
-						( error as Error ).message,
-						{
-							retry: () =>
-							{
-
-								atom.refresh()
-
-							}
-						},
-						error as Error
+					throw $mws_error_with_atom(
+						error as Error,
+						atom,
 					)
 				}
 
