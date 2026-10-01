@@ -12,3 +12,12 @@
 	text-align: center;
 	padding: 1rem;
 }
+[mws_app_hello_rows] {
+	min-height: 100px;
+}
+[mws_app_hello_requests] {
+	min-height: 100px;
+}
+[mws_app_hello_hint] {
+	min-height: 100px;
+}
