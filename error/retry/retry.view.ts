@@ -10,14 +10,12 @@ namespace $.$$
 			if( !this.error()?.value ) return ''
 			return `${ this.error()?.value.message }`
 		}
-		@$mol_mem
-		buttons()
+
+		@$mol_action
+		retry_handler()
 		{
-			const btns = super.buttons()
-			if( !btns.length ) return btns
-			const retry = ( this.error()?.value.cause as any )?.retry
-			btns[ 0 ].click = retry  ? retry : this.retry_handler
-			return btns
+			
+			$mws_error_retry_get(this.error()?.value)?.()
 		}
 	}
 }

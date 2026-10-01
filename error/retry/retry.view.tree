@@ -1,5 +1,5 @@
 $mws_error_retry $mol_view
-	error? null $mws_error_value
+	error? null $mws_error_value|null
 	retry_handler null
 	sub /
 		<= r1 $mol_row
@@ -9,3 +9,4 @@ $mws_error_retry $mol_view
 			sub <= buttons /
 				<= rb1 $mol_button_major
 					title \Повторить
+					click <= retry_handler null

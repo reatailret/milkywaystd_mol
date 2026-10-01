@@ -1,6 +1,6 @@
 $mws_error_retry_container $mol_view
-	error? null $mws_error_value|null
+	error_caller null
 	retry_block $mws_error_retry
-		error? <=> error? null $mws_error_value|null
+		error? <=> error? null
 	body null
 	sub <= subs /$mol_view
