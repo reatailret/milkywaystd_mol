@@ -172,7 +172,7 @@ namespace $ {
 				.map( id => this.item( id ) )
 				.filter( ( item ): item is T => item != null )
 		}
-		@$mol_mem
+		@$mws_mem
 		dataKeys(next?: $mol_wire_dict<string, T>): $mol_wire_dict<string, T>
 		{
 			$mol_wire_solid()
@@ -184,6 +184,7 @@ namespace $ {
 			if(next !== undefined) {
 				return next
 			}
+			
 			const data = this.list_fn()
 			const dict = new $mol_wire_dict<string, T>()
 			for( const item of data ) {

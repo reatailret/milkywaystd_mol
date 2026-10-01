@@ -11,28 +11,26 @@ $mws_data_form $mol_page
 				<= Close_btn_icon $mol_icon_close
 			click? <=> close? null
 	body /
-		<= Error_container $mws_error_retry_container
-			error? <=> fetch_error? null
-			body <= Form $mol_form_draft
-				model <= entity
-				model_pick*? <=> model_pick*? null
-				done? <=> done? null
-				message_done \Saved successfully
-				submit? => submit?
-				submit_allowed => submit_allowed
-				value*? => value*?
-				value_str*? => value_str*?
-				value_number*? => value_number*?
-				value_bool*? => value_bool*?
-				form_fields <= form_fields /
-				buttons <= form_buttons /
-					<= Save_btn $mol_button_major
-						title \Save
-						click? <=> submit?
-						enabled <= submit_allowed
-					<= Cancel_btn $mol_button_minor
-						title \Cancel
-						click? <=> cancel? null
+		<= Form $mol_form_draft
+			model <= entity
+			model_pick*? <=> model_pick*? null
+			done? <=> done? null
+			message_done \Saved successfully
+			submit? => submit?
+			submit_allowed => submit_allowed
+			value*? => value*?
+			value_str*? => value_str*?
+			value_number*? => value_number*?
+			value_bool*? => value_bool*?
+			form_fields <= form_fields /
+			buttons <= form_buttons /
+				<= Save_btn $mol_button_major
+					title \Save
+					click? <=> submit?
+					enabled <= submit_allowed
+				<= Cancel_btn $mol_button_minor
+					title \Cancel
+					click? <=> cancel? null
 	Validator $mws_form_validator
 		bids* => validator_bids*
 		model_value* <= field_validator_value* null

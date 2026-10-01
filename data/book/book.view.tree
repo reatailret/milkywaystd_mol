@@ -20,6 +20,7 @@ $mws_data_book $yuf_catalog
 	-
 	Datasource $mws_data_source<any>
 		entity_name <= entity_name
+		list => list_error
 	Renderer $mws_data_renderer_table
 		title \List
 		Datasource <= Datasource
@@ -59,7 +60,9 @@ $mws_data_book $yuf_catalog
 				title \+ Add
 				arg <= add_btn_arg *
 		body /
-			<= Renderer
+			<= List_error $mws_error_retry_container
+				error_caller <= list_error
+				body <= Renderer
 		foot /
 			<= PerPageSelector $mol_bar
 				sub /

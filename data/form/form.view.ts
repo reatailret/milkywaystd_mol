@@ -3,44 +3,6 @@ namespace $.$$
 
 	export class $mws_data_form extends $.$mws_data_form
 	{
-		@$mol_mem
-		reset( next?: number ): number
-		{
-			return next ?? Date.now()
-		}
-
-		@$mol_mem
-		fetch_error(): $mws_error_value | null
-		{
-			
-			try
-			{
-				this.reset()
-				this.entity()?.data()
-				return null
-
-			} catch( error )
-			{
-				if( $mol_promise_like( error ) )
-				{
-					$mol_fail_hidden( error )
-				}
-				const e = new $mol_error_mix(
-					( error as Error ).message,
-					{
-						retry: $mol_wire_async(() =>
-						{
-							
-							this.reset( Date.now())
-
-						})
-					},
-					error as Error)
-
-			return {value: e}
-
-			}
-		}
 
 		@$mol_mem
 		entity_model(): $mws_data_entity<any> | null
@@ -154,6 +116,42 @@ namespace $.$$
 				: entity.field( config.field, next )
 		}
 
+		@$mol_mem_key
+		field_value_empty( id: string ): boolean
+		{
+			const config = this.field_config( id )
+			if( !config ) return true
+
+			switch( config.type )
+			{
+				case 'number':
+					return Number.isNaN( this.value_number( id ) )
+				case 'check':
+					return false
+				default:
+					return !this.value_str( id ).trim()
+			}
+		}
+
+		@$mol_mem
+		form_has_data(): boolean
+		{
+			for( const config of this.fields_config() )
+			{
+				if( !config.render_in_form ) continue
+				if( !this.field_value_empty( config.id ) ) return true
+			}
+			return false
+		}
+
+		@$mol_mem
+		override submit_allowed()
+		{
+			if( !this.form_has_data() ) return false
+
+			return this.form_fields().every( field => !field.bid() )
+		}
+
 		@$mol_mem
 		override form_buttons()
 		{
@@ -186,6 +184,16 @@ namespace $.$$
 
 	export class $mws_data_form_search extends $.$mws_data_form_search
 	{
+
+		@$mol_mem
+		fetch_error( next?: $mws_error_value | null ): $mws_error_value | null
+		{
+			if( next !== undefined ) return next
+			const source = this.Datasource()
+			if( !source ) return null
+			return $mws_error_capture( () => { source.list() } )
+		}
+
 		auto(){
 			this.temp_filters(this.Datasource()?.filters())
 		}

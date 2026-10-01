@@ -2,18 +2,20 @@ namespace $.$$
 {
 	export class $mws_data_book extends $.$mws_data_book
 	{
-		
+
 		auto()
 		{
 			
-			this.Datasource().param_base( this.param_base() )
+				this.Datasource().param_base( this.param_base() )
+				
 		}
+
 		@$mol_mem
 		override list_tools() {
 			return [
 				... this.show_column_config() ? [ this.Columns_enable() ] : [],
 				this.Filter_enable(),
-				this.Add_btn(),
+				this.Add_btn()
 			]
 		}
 		

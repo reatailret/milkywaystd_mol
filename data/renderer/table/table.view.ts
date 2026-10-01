@@ -1,7 +1,7 @@
 namespace $.$$ {
 	
 	export class $mws_data_renderer_table extends $.$mws_data_renderer_table {
-		
+
 		@$mol_mem_key
 		column( id: string ) {
 			return this.Datasource().columns().find( col => col.id === id )

@@ -59,7 +59,7 @@ namespace $ {
 		/**
 		 * Данные сущности
 		 */
-		@$mol_mem
+		@$mws_mem
 		data(next?: T | null): T | null {
 			if (next !== undefined) return next
 			
