@@ -94,6 +94,9 @@ namespace $ {
 		columns(next?: readonly $mws_data_column_config<T>[]): readonly $mws_data_column_config<T>[] {
 			return next ?? []
 		}
+		filter_arg_key(id: string) {
+			return this.storage_key() + '_q_' + id
+		}
 		@$mol_mem_key
 		filter_value(id:string, next?: string): string {
 			if(next === undefined) {
@@ -111,11 +114,11 @@ namespace $ {
 					const old = this.$.$mol_wire_probe(()=>this.filters() )
 					if(old){
 						for(const key in old) {
-							this.$.$mol_state_arg.value( this.storage_key() + '_filter_' + key, null )
+							this.$.$mol_state_arg.value( this.filter_arg_key(key), null )
 						}
 					}
 					for(const key in next) {
-						this.$.$mol_state_arg.value( this.storage_key() + '_filter_' + key, next[key] )
+						this.$.$mol_state_arg.value( this.filter_arg_key(key), next[key] )
 					}
 				}
 				
@@ -124,9 +127,10 @@ namespace $ {
 				if(this.use_arg_filter()) {
 					const filters: Record<string, any> = {}
 					const dict = this.$.$mol_state_arg.dict()
+					const prefix = this.storage_key() + '_q_'
 					for(const key in dict) {
-						if(key.startsWith(this.storage_key() + '_filter_')) {
-							filters[key.substring((this.storage_key() + '_filter_').length)] = dict[key]
+						if(key.startsWith(prefix)) {
+							filters[key.substring(prefix.length)] = dict[key]
 						}
 					}
 					return filters

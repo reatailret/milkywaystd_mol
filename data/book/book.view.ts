@@ -217,31 +217,24 @@ namespace $.$$
 		}
 
 		@$mol_mem
-		filter_temp_bootstrap(): number {
+		filter_seed(): Record<string, string> {
 			const open = this.$.$mol_state_arg.value( this.param_base() + '_filter' )
-			if( open ) {
-				this.temp_filters({ ...this.Datasource().filters() } as Record<string, string>)
-				return 1
-			}
-			this.temp_filters({})
-			return 0
+			if( open == null ) return {}
+			return { ...this.Datasource().filters() } as Record<string, string>
 		}
 
 		@$mol_mem
 		temp_filters( next?: Record<string, string> ): Record<string, string> {
-			return next ?? {}
+			return next ?? { ...this.filter_seed() }
 		}
 
 		@$mol_mem_key
 		override filter_value( id: string, next?: string ): string {
-			this.filter_temp_bootstrap()
-			if( next === undefined ) {
-				return this.temp_filters()[ id ] ?? ''
-			}
-			const mut = this.$.$mol_mutable( this.temp_filters() )
+			if( next === undefined ) return this.temp_filters()[ id ] ?? ''
+			const mut = this.$.$mol_mutable( { ...this.temp_filters() } )
 			mut[ id ]( () => next )
 			this.temp_filters( mut() )
-			return this.temp_filters()[ id ]
+			return next
 		}
 
 		@$mol_action

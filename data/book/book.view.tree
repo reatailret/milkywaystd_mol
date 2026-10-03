@@ -98,8 +98,8 @@ $mws_data_book $yuf_catalog
 		tools /
 			<= Filter_close $yuf_link_close
 				param_name <= filter_param_name
-		apply_filters? => filter_apply? null
-		clear_filters? => filter_clear? null
+		apply_filters? <=> filter_apply? null
+		clear_filters? <=> filter_clear? null
 	filter_form_fields /
 	Columns_page $mol_page
 		theme \$mol_theme_special
