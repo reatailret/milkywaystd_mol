@@ -4,9 +4,7 @@ namespace $ {
 	 * File с потоковым чтением чанков без `sands_open` на весь список.
 	 *
 	 * Базовый `chunks()` / `buffer()` по-прежнему открывают все balls сразу —
-	 * для CRUD это ок. Play-путь: `read_range` / `readable` / `parts` —
-	 * open → copy → unload. Размер сырого чанка при записи — `raw_chunk` (2¹⁵),
-	 * как в `$giper_baza_file.buffer()`.
+	 
 	 */
 	export class $mws_baza_file extends $giper_baza_file {
 
@@ -40,7 +38,7 @@ namespace $ {
 
 		/**
 		 * Байты одного чанка: open → unpack → unload.
-		 * `sand_decode` не зовём — `@$mol_mem_key` держал бы чанк в кеше.
+		 * 
 		 */
 		async chunk_bytes( unit: $giper_baza_unit_sand ): Promise< Uint8Array< ArrayBuffer > > {
 			const land = this.land() as $mws_baza_land
@@ -52,14 +50,13 @@ namespace $ {
 			}
 		}
 
+		
 		chunk_bytes_sync( unit: $giper_baza_unit_sand ): Uint8Array< ArrayBuffer > {
 			const land = this.land() as $mws_baza_land
 			const open = $mol_wire_sync( land ).sand_open( unit ) as Uint8Array< ArrayBuffer >
-			try {
-				return this.unpack( open )
-			} finally {
-				land.sand_unload( unit )
-			}
+			const bytes = this.unpack( open )
+			land.sand_unload( unit )
+			return bytes
 		}
 
 		private _byte_length = -1
@@ -79,8 +76,8 @@ namespace $ {
 		}
 
 		/**
-		 * Полуинтервал [start, end) сырых байт. Открывает только чанки,
-		 * пересекающие окно; после каждого — unload.
+		 * Полуинтервал [start, end) сырых байт.
+		 * Open окна через `sands_open` (один suspend), copy, unload.
 		 */
 		read_range( start: number, end: number ): Uint8Array< ArrayBuffer > {
 			const units = this.chunk_units()
@@ -93,11 +90,16 @@ namespace $ {
 
 			const first = Math.floor( from / chunk )
 			const last = Math.min( units.length - 1, Math.floor( ( to - 1 ) / chunk ) )
+			const slice_units = units.slice( first, last + 1 )
+			const land = this.land() as $mws_baza_land
+
+			
+			land.sands_open( slice_units )
+
 			const out = new Uint8Array( to - from ) as Uint8Array< ArrayBuffer >
 			let offset = 0
-
 			for( let i = first; i <= last; i++ ) {
-				const bytes = this.chunk_bytes_sync( units[ i ] )
+				const bytes = this.unpack( units[ i ]._open! )
 				const base = i * chunk
 				const a = Math.max( 0, from - base )
 				const b = Math.min( bytes.byteLength, to - base )
@@ -106,6 +108,7 @@ namespace $ {
 					offset += b - a
 				}
 			}
+			for( const unit of slice_units ) land.sand_unload( unit )
 
 			return offset === out.byteLength ? out : out.subarray( 0, offset ) as Uint8Array< ArrayBuffer >
 		}
@@ -133,10 +136,11 @@ namespace $ {
 		 */
 		parts(): Uint8Array< ArrayBuffer >[] {
 			const units = this.chunk_units()
-			const parts = [] as Uint8Array< ArrayBuffer >[]
-			for( const unit of units ) {
-				parts.push( this.chunk_bytes_sync( unit ) )
-			}
+			if( !units.length ) return []
+			const land = this.land() as $mws_baza_land
+			land.sands_open( units )
+			const parts = units.map( unit => this.unpack( unit._open! ) )
+			for( const unit of units ) land.sand_unload( unit )
 			return parts
 		}
 
