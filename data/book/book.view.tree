@@ -49,6 +49,10 @@ $mws_data_book $yuf_catalog
 	List_page $mol_page
 		title <= title
 		tools <= list_tools /
+			<= Refresh_btn $mol_button_minor
+				hint \Refresh
+				sub / <= Refresh_btn_icon $mol_icon_refresh
+				click? <=> refresh_list? null
 			<= Columns_enable $yuf_link
 				hint \Columns
 				sub / <= Columns_enable_icon $mol_icon_view_column
@@ -56,9 +60,11 @@ $mws_data_book $yuf_catalog
 			<= Filter_enable $yuf_link
 				sub / <= Filter_enable_icon $mol_icon_filter
 				param_name <= filter_param_name
+				hint \Filter
 			<= Add_btn $yuf_link
-				title \+ Add
+				title \+
 				arg <= add_btn_arg *
+				hint \Add
 		body /
 			<= List_error $mws_error_retry_container
 				error_caller <= list_error

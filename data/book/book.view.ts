@@ -10,9 +10,16 @@ namespace $.$$
 				
 		}
 
+		@$mol_action
+		refresh_list()
+		{
+			this.Datasource().reload()
+		}
+
 		@$mol_mem
 		override list_tools() {
 			return [
+				this.Refresh_btn(),
 				... this.show_column_config() ? [ this.Columns_enable() ] : [],
 				this.Filter_enable(),
 				this.Add_btn()
