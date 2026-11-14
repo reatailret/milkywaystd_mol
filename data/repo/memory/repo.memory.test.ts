@@ -73,7 +73,7 @@ namespace $ {
 				title: 'Beta',
 				price: 25,
 			}, updated)
-			$mol_assert_equal(25, repo.item('2').price)
+			$mol_assert_equal(25, repo.item('2')!.price)
 		},
 
 		'update not found'() {
@@ -93,10 +93,7 @@ namespace $ {
 			repo.remove(2)
 
 			$mol_assert_equal(2, repo.list().length)
-			$mol_assert_fail(
-				() => repo.item('2'),
-				'Item not found',
-			)
+			$mol_assert_equal(null, repo.item('2'))
 		},
 
 		'list reload'() {
