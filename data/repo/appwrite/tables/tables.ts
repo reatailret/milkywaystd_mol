@@ -69,13 +69,6 @@ namespace $ {
 			return packed
 		}
 
-		row_id( data: Partial< T > ): string {
-			const id = ( data as Record< string, any > )[ this.id_key() ]
-			if( id !== undefined && id !== null && id !== '' ) return String( id )
-
-			return this.$.$mws_lib_appwrite_sdk.ID.unique()
-		}
-
 		@$mol_action
 		override list_fn(): readonly T[] {
 			// Позиционные аргументы: $mol_wire_sync оставляет последнюю перегрузку SDK.
@@ -105,12 +98,24 @@ namespace $ {
 
 		@$mol_action
 		override create_fn( data: Partial< T > ): T {
-			return $mol_wire_sync( this.client().tables() ).createRow(
+			const given = ( data as Record< string, any > )[ this.id_key() ]
+
+			// id рождается внутри задачи: при перезапуске action аргументы те же, запрос один.
+			return $mol_wire_sync( this ).create_row(
+				given ? String( given ) : '',
+				this.pack_data( data ),
+			) as T
+		}
+
+		create_row( id: string, data: Record< string, any > ) {
+			const row_id = id || this.$.$mws_lib_appwrite_sdk.ID.unique()
+
+			return this.client().tables().createRow(
 				this.database(),
 				this.table(),
-				this.row_id( data ),
-				this.pack_data( data ),
-			) as unknown as T
+				row_id,
+				data,
+			)
 		}
 
 		@$mol_action
